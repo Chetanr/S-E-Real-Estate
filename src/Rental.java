@@ -4,6 +4,7 @@ public class Rental extends Property
 	private static final double DISCOUNT1 = 0.07;
 	private static final double DISCOUNT2 = 0.06;
 	private double fee;
+	private double rental_amount;
 	private int contract_months;
 	private int contract_years;
 	private int acceptable_contract_months;
@@ -30,9 +31,19 @@ public class Rental extends Property
 	
 	
 	//calculate the management fee for a property
-	public void calculateMgmtFee()
+	public double calculateMgmtFee(int property)
 	{
+		fee = rental_amount * MANAGEMENT_FEE;
+		if (property >= 2)
+		{
+			fee = fee * DISCOUNT1;
+		}
+		else if (property == 1)
+		{
+			fee = rental_amount * MANAGEMENT_FEE;
+		}
 		
+		return fee;
 	}
 	
 	
@@ -62,5 +73,10 @@ public class Rental extends Property
 	public double getIncome() 
 	{
 		return this.income;
+	}
+	
+	public double getManagementFee() 
+	{
+		return this.fee;
 	}
 }

@@ -33,7 +33,7 @@ class RentalTest
 	@Test
 	public void testcalculateMgmtFee() throws Exception
 	{
-		fail("calculateMgmtFee() Method not yet implemented");
+		assertEquals(r.calculateMgmtFee(2), r.getManagementFee());
 	}
 	
 	@Test
