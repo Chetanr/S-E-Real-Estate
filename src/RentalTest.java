@@ -13,7 +13,7 @@ class RentalTest
 	@BeforeEach
 	void setUp() throws Exception 
 	{
-		r = new Rental (6, 1, 6, 0, 50000.0, "Software Engineer", "RMIT");
+		r = new Rental (6, 1, 6, 0, 50000.0, "Software Engineer", "RMIT", 1200);
 	}
 
 	@AfterEach
@@ -34,6 +34,7 @@ class RentalTest
 	public void testcalculateMgmtFee() throws Exception
 	{
 		assertEquals(r.calculateMgmtFee(2), r.getManagementFee());
+		System.out.println(r.getManagementFee());
 	}
 	
 	@Test
@@ -47,6 +48,16 @@ class RentalTest
 	{
 		fail("negotiateOffer() Method not yet implemented");
 	}
+	
+	
+	@Test
+	public void testfinaliseOffer() throws Exception
+	{
+		fail("negotiateOffer() Method not yet implemented");
+	}
+	
+	
+	
 
 
 }

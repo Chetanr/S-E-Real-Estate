@@ -18,7 +18,7 @@ public class Rental extends Property
 	private static final int BOND_PAY_DURATION = 1;
 	private String Section32_bondStatus;
 	
-	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double income, String occupation, String present_employer)
+	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double income, String occupation, String present_employer, double rental_amount)
 	{
 		this.contract_months = contract_months;
 		this.contract_years = contract_years;
@@ -27,6 +27,7 @@ public class Rental extends Property
 		this.income = income;
 		this.occupation = occupation;
 		this.present_employer = present_employer;
+		this.rental_amount = rental_amount;;
 	}
 	
 	
@@ -55,9 +56,9 @@ public class Rental extends Property
 	
 	
 	//settle the payment
-	public void payAdvance()
+	public boolean payAdvance()
 	{
-		
+		return true;
 	}
 	
 
@@ -67,6 +68,16 @@ public class Rental extends Property
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	//finalise offer and transfer to tenant
+	public void finaliseOffer()
+	{
+		if (payAdvance())
+		{
+			setTenant_name("abc");
+		}
 	}
 
 
