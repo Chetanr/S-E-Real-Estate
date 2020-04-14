@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Sale extends Property {
 	
@@ -19,6 +20,11 @@ public class Sale extends Property {
 	private static final double deduce_reserveprice=10000;
 	private double maxbid;
 	private boolean under_contract=false;
+	private static final int daylimit=3;
+	private double formaloffer;
+	private int No_ofDays;
+	
+	Scanner sc=new Scanner(System.in);
 	
 	
 	public Sale(String present_employer,String auction_negotiation_ID,String inspection_id, double sale_commissionrate,double property_sellingprice,String auction_negotiation_date)
@@ -32,8 +38,25 @@ public class Sale extends Property {
 		
 	}
 	 
-	public void Negotiation()
+	public boolean Negotiation()
 	{
+		
+		try {
+			if(section32(1)) {
+				
+				
+			}
+			else
+			{
+				System.out.println(" Kindly avail section 32");
+			}
+			
+			
+		}catch(Exception e)
+		{
+			System.out.println("Error:" + e.getMessage());
+		}
+		return false;
 	
 		
 		//Algo for negotiation
@@ -43,6 +66,22 @@ public class Sale extends Property {
 	public void Auction()
 	{
 		//Algo for auction
+		
+	}
+	
+	public boolean section32(int number)  {
+		
+		if(number== 1)
+		{
+			System.out.println("section32_bondstatus is present ");	
+			return true;
+		
+		}
+		else
+		{
+			return false;
+		}
+		 
 		
 	}
 	
@@ -63,6 +102,14 @@ public class Sale extends Property {
 	public double getSale_commissionrate() {
 		return sale_commissionrate;
 	}
+	
+	public double getNo_ofDays() {
+		return No_ofDays ;
+	}
+	
+	public int setNo_ofDays(int No_ofDays ) {
+		return this.No_ofDays;
+	}
 
 
 
@@ -80,7 +127,8 @@ public class Sale extends Property {
 	}
 	
 	public void setminimum_sellingprice(double minimum_sellingprice) {
-		this.minimum_sellingprice = minimum_sellingprice;
+	this.minimum_sellingprice=minimum_sellingprice;
+		
 	}
 
 
@@ -109,6 +157,29 @@ public class Sale extends Property {
 		//can be used in negotiation
 	}
 	
+	public void acceptoffer()
+	{
+		if(minimum_sellingprice>formaloffer)
+			System.out.println("Offer cannot be made as threshold not met");
+		else
+		{
+			if(section32(1))
+			{
+				if(getNo_ofDays()<daylimit)
+				{
+					System.out.println("Select if the you want to accept the offer by 1");
+					String answer=sc.next();
+					 
+				}
+			}
+			else
+			{
+				System.out.println("Kindly avail the section32 form");
+			}
+		}
+			
+	}
+	
 	public boolean manageinspection()
 	{
 		return true;
@@ -125,6 +196,7 @@ public class Sale extends Property {
 	{ 
 		
 	}
+	
 	
 	}
 
