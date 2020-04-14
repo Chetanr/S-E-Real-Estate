@@ -17,7 +17,12 @@ public class Rental extends Property
 	private static final int ACCEPT_DAYS = 3;
 	private static final int BOND_PAY_DURATION = 1;
 	private String Section32_bondStatus;
+	private static final int DAY_LIMIT = 3;
+	private int No_of_Days;
 	
+
+
+
 	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double income, String occupation, String present_employer, double rental_amount)
 	{
 		this.contract_months = contract_months;
@@ -34,24 +39,35 @@ public class Rental extends Property
 	//calculate the management fee for a property
 	public double calculateMgmtFee(int property)
 	{
-		fee = rental_amount * MANAGEMENT_FEE;
+		double fees;
+		fees = rental_amount * MANAGEMENT_FEE;
 		if (property >= 2)
 		{
-			fee = fee * DISCOUNT1;
+			fees = fees * DISCOUNT1;
 		}
 		else if (property == 1)
 		{
-			fee = rental_amount * MANAGEMENT_FEE;
+			fees = rental_amount * MANAGEMENT_FEE;
 		}
 		
+		fees = negotiateManagementFee(property, fees);
+		setFee(fee);
 		return fee;
+	}
+	
+
+	//negotiate management fee
+	public double negotiateManagementFee(int property, double fees)
+	{
+		//implementing this method
+		return fees;
 	}
 	
 	
 	//get the applicant details for the property under rent
 	public void getApplicantDetails() 
 	{
-		
+		//yet to implement the method
 	}
 	
 	
@@ -79,6 +95,18 @@ public class Rental extends Property
 			setTenant_name("abc");
 		}
 	}
+	
+	
+	//accepting the offer
+	@Override
+	public boolean acceptOffer() 
+	{
+		if(getNo_of_Days() > DAY_LIMIT)
+		{
+			return false;
+		}
+		return true;
+	}
 
 
 	public double getIncome() 
@@ -86,8 +114,32 @@ public class Rental extends Property
 		return this.income;
 	}
 	
+	
+	//getter to get the management fee
 	public double getManagementFee() 
 	{
 		return this.fee;
 	}
+	
+	
+	//getter for No_of_Days
+	public int getNo_of_Days() 
+	{
+		return No_of_Days;
+	}
+	
+	
+	//getter for fee
+	public double getFee() {
+		return fee;
+	}
+
+
+	//setter for fee
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
+
+	
+	
 }

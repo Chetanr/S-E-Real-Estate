@@ -9,6 +9,7 @@ abstract class Property
 	private int num_car_space;
 	private String house_type;
 	private String tenant_name;
+
 	
 	
 	//abstract class to negotiate the offer between buyer and seller
@@ -17,6 +18,9 @@ abstract class Property
 	
 	//transfer the property contract to tenant
 	public abstract void finaliseOffer();
+	
+	
+	public abstract boolean acceptOffer();
 
 
 	public String getTenant_name() {
