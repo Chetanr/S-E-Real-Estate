@@ -1,4 +1,3 @@
-
 abstract class Property 
 {
 	private static int property_id;
@@ -8,6 +7,7 @@ abstract class Property
 	private int num_bath;
 	private int num_car_space;
 	private String house_type;
+	private String tenant_name;
 	
 	
 	//abstract class to negotiate the offer between buyer and seller
@@ -15,8 +15,17 @@ abstract class Property
 	
 	
 	//transfer the property contract to tenant
-	public void finaliseOffer()
-	{
-		
+	public abstract void finaliseOffer();
+
+
+	public String getTenant_name() {
+		return tenant_name;
 	}
+
+
+	public void setTenant_name(String tenant_name) {
+		this.tenant_name = tenant_name;
+	}
+	
+	
 }
