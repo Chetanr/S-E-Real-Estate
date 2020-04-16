@@ -6,13 +6,12 @@ public class Sale extends Property {
 	private String present_employer;
 	private String inspection_id;
 	private double sale_commissionrate;
-	private boolean section32_bondstatus;
 	private double property_sellingprice;
 	private double minimum_sellingprice;
 	private String auction_negotiation_date;
 	private Double property_askingvalue;
 	private boolean offer_status;
-	private static final double downpayment = 0.10;
+	private static final double downpaymentpercentage = 0.10;
 	private double deposit;
 	private String auction_inspection_date;
 	private String minimum_reserveprice;
@@ -20,9 +19,15 @@ public class Sale extends Property {
 	private static final double deduce_reserveprice=10000;
 	private double maxbid;
 	private boolean under_contract=false;
+	
+	
+
 	private static final int daylimit=3;
 	private double formaloffer;
 	private int No_ofDays;
+	private boolean flag=false;
+	private double downpayment;
+	
 	
 	Scanner sc=new Scanner(System.in);
 	
@@ -38,25 +43,23 @@ public class Sale extends Property {
 		
 	}
 	 
-	public boolean Negotiation()
+	public void Negotiation()
 	{
 		
 		try {
-			if(section32(1)) {
-				
-				
-			}
-			else
-			{
-				System.out.println(" Kindly avail section 32");
-			}
+			System.out.println("Kindly enter the type of sale");
 			
+				
+				
+				
+				
+		
 			
 		}catch(Exception e)
 		{
 			System.out.println("Error:" + e.getMessage());
 		}
-		return false;
+		
 	
 		
 		//Algo for negotiation
@@ -71,6 +74,7 @@ public class Sale extends Property {
 	
 	public boolean section32(int number)  {
 		
+		
 		if(number== 1)
 		{
 			System.out.println("section32_bondstatus is present ");	
@@ -83,6 +87,38 @@ public class Sale extends Property {
 		}
 		 
 		
+	}
+	
+	public boolean isUnder_contract() {
+		return under_contract;
+	}
+
+	public void setUnder_contract(boolean under_contract) {
+		this.under_contract = under_contract;
+	}
+	
+	public boolean checkdownpayment() 
+	{
+		downpayment=property_sellingprice*downpaymentpercentage;
+		
+		if (acceptoffer())
+		{
+				if(No_ofDays<1)
+				{
+					flag=true;
+					System.out.println("Downpayment is done");
+					
+				}
+				else {
+					System.out.println("you have exceeded the 24 hour limit");
+				}
+	
+		}
+		else {
+			System.out.println("Offer is not accepted ");
+			
+		}
+		return flag;	
 	}
 	
 	
@@ -157,26 +193,52 @@ public class Sale extends Property {
 		//can be used in negotiation
 	}
 	
-	public void acceptoffer()
+	public void checkdeposit() {
+		deposit=property_sellingprice-downpayment;
+		if(acceptoffer())
+		{
+			if(checkdownpayment()==true)
+			{
+				//legal formalities
+				System.out.println("If you want to make a deposit");
+				String reply=sc.next();
+				if(reply.equalsIgnoreCase("YES"))
+				{
+					System.out.println("Deposit made");
+					setUnder_contract(true);
+					System.out.println("The property is under undercontract");
+				}
+				else
+				{
+				System.out.println("Deposit not made");	
+				}
+				
+			}
+			else
+			{
+				System.out.println("Downpayment not done");
+			}
+		}
+		
+	}
+	
+	public boolean acceptoffer()
 	{
 		if(minimum_sellingprice>formaloffer)
 			System.out.println("Offer cannot be made as threshold not met");
 		else
 		{
-			if(section32(1))
-			{
 				if(getNo_ofDays()<daylimit)
 				{
 					System.out.println("Select if the you want to accept the offer by 1");
 					String answer=sc.next();
-					 
+					return true;
 				}
-			}
-			else
-			{
-				System.out.println("Kindly avail the section32 form");
-			}
+			
+		
 		}
+		
+		return false;
 			
 	}
 	
@@ -194,8 +256,15 @@ public class Sale extends Property {
 	
 	public void managecontract()
 	{ 
+	
+	{
 		
 	}
+		
+		
+	}
+	
+	
 	
 	
 	}
