@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Rental extends Property 
 {
 	private static final double MANAGEMENT_FEE = 0.08;
@@ -16,7 +18,6 @@ public class Rental extends Property
 	private String present_employer;
 	private static final int ACCEPT_DAYS = 3;
 	private static final int BOND_PAY_DURATION = 1;
-	private String Section32_bondStatus;
 	private static final int DAY_LIMIT = 3;
 	private int No_of_Days;
 	
@@ -43,11 +44,7 @@ public class Rental extends Property
 		fees = rental_amount * MANAGEMENT_FEE;
 		if (property >= 2)
 		{
-			fees = fees * DISCOUNT1;
-		}
-		else if (property == 1)
-		{
-			fees = rental_amount * MANAGEMENT_FEE;
+			fees = fees - (fees * DISCOUNT1);
 		}
 		
 		fees = negotiateManagementFee(property, fees);
@@ -59,7 +56,28 @@ public class Rental extends Property
 	//negotiate management fee
 	public double negotiateManagementFee(int property, double fees)
 	{
+		Scanner sc = new Scanner (System.in);
+		String ch;
+		int offer;
 		//implementing this method
+		System.out.println("Do you want to negotiate the management fee?: (Y/N)");
+		ch = sc.next();
+		if (ch.equals("Y"))
+		{
+			System.out.println("Enter your offer in %: ");
+			offer = sc.nextInt();
+			if (property >= 2)
+			{
+				if (offer > DISCOUNT1)
+				{
+					System.out.println("Offer is no acceptable.!");
+				} 
+				else
+				{
+					fees = fees - (fees * offer);
+				}
+			}
+		}
 		return fees;
 	}
 	
@@ -83,13 +101,13 @@ public class Rental extends Property
 	public void negotiateOffer() 
 	{
 		// TODO Auto-generated method stub
-		
 	}
 	
 	
 	//finalise offer and transfer to tenant
 	public void finaliseOffer()
 	{
+		//working on this method
 		if (payAdvance())
 		{
 			setTenant_name("abc");
