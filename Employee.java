@@ -1,27 +1,40 @@
 import java.util.*;
-public abstract class Employee 
+public class Employee 
 {
 	private String ID;
+	private String password;
 	private String name;
 	private double salary;
 	private double hours;
 	private double hourlyRate;
 	private String type;
-	//private BranchManager bm;
 	
-	public Employee(String name, String type, double salary, double hourlyRate)
+	public Employee(String ID,String password , String name,String type, double salary, double hourlyRate)
 	{
-		this.ID = setID();
+		this.ID = ID;
 		this.name = name;
+		this.password = password;
 		this.type = type;
 		this.salary = salary;
 		this.hourlyRate = hourlyRate;
 		this.hours = 0.0;
 	}
 	
-	public abstract String setID();
-	//Hours should be approved by branch manager
-	//Salary calculation of part time employees
+	public void setPassword(String password) 
+	{
+		this.password = password;
+	}
+
+	public String getPassword() 
+	{
+		return this.password;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
 	public double calculateSalary()
 	{
 		if(type.equalsIgnoreCase("FT"))
@@ -36,17 +49,18 @@ public abstract class Employee
 		
 	}
 	
-	public void enterHours(BranchManager bm) throws HourException
+	public void checkType(BranchManager bm) throws HourException
 	{
 		if(type.equalsIgnoreCase("PT"))
 		{
 			Scanner scan = new Scanner(System.in);
-			System.out.println("Enter the number of hours");
+			System.out.println("Please enter the number of hours.(Part time employees can work upto 40 hours a month)");
 			double hours = scan.nextDouble();
-			if(bm.approveHours(hours))
+			if(bm.approveHours(this.hours + hours))
 			{
-				setHours(hours);
-				System.out.println("Hours Approved");
+				this.hours = this.hours + hours;
+				setHours(this.hours);
+				System.out.println("Branch Manager has approved the Hours");
 			}
 			else
 			{
@@ -78,4 +92,41 @@ public abstract class Employee
 	{
 		this.salary = salary;
 	}
+
+	public String getID() 
+	{
+		return ID;
+	}
+
+	public void setID(String iD) 
+	{
+		ID = iD;
+	}
+
+	public double getHourlyRate() 
+	{
+		return hourlyRate;
+	}
+
+	public void setHourlyRate(double hourlyRate)
+	{
+		this.hourlyRate = hourlyRate;
+	}
+
+	public String getType() 
+	{
+		return type;
+	}
+
+	public void setType(String type) 
+	{
+		this.type = type;
+	}
+
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	
+	
 }
