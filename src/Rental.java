@@ -6,86 +6,117 @@ public class Rental extends Property
 	private static final double DISCOUNT1 = 0.07;
 	private static final double DISCOUNT2 = 0.06;
 	private double fee;
-	private double rental_amount;
+	private static double rental_amount;
 	private int contract_months;
 	private int contract_years;
 	private int acceptable_contract_months;
 	private int acceptable_contract_years;
 	private int proposed_contract_months;
 	private int proposed_contract_years;
-	private double income;
-	private String occupation;
-	private String present_employer;
 	private static final int ACCEPT_DAYS = 3;
 	private static final int BOND_PAY_DURATION = 1;
 	private static final int DAY_LIMIT = 3;
 	private int No_of_Days;
+	private String customer_id ;
+	private String firstname;
+	private String surename;
+	private String income;
+	private String occupation;
+	private String present_employer;
+	
 	
 
 
 
-	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double income, String occupation, String present_employer, double rental_amount)
+	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double rental_amount)
 	{
 		this.contract_months = contract_months;
 		this.contract_years = contract_years;
 		this.proposed_contract_months = proposed_contract_months;
 		this.proposed_contract_years = proposed_contract_years;
-		this.income = income;
-		this.occupation = occupation;
-		this.present_employer = present_employer;
 		this.rental_amount = rental_amount;;
 	}
 	
 	
 	//calculate the management fee for a property
-	public double calculateMgmtFee(int property)
+	public static void calculateMgmtFee(int property, int rental)
 	{
 		double fees;
-		fees = rental_amount * MANAGEMENT_FEE;
+		fees = rental * MANAGEMENT_FEE;
 		if (property >= 2)
 		{
 			fees = fees - (fees * DISCOUNT1);
 		}
 		
 		fees = negotiateManagementFee(property, fees);
-		setFee(fee);
-		return fee;
+		System.out.println("Management fees is : " + fees);
 	}
 	
 
 	//negotiate management fee
-	public double negotiateManagementFee(int property, double fees)
+	public static double negotiateManagementFee(int property, double fees)
 	{
 		Scanner sc = new Scanner (System.in);
-		String ch;
-		int offer;
+		String ch = "Y";
+		double offer;
 		//implementing this method
-		System.out.println("Do you want to negotiate the management fee?: (Y/N)");
-		ch = sc.next();
-		if (ch.equals("Y"))
+		while(ch.equals("Y"))
 		{
-			System.out.println("Enter your offer in %: ");
-			offer = sc.nextInt();
-			if (property >= 2)
+			System.out.println("Do you want to negotiate the management fee?: (Y/N)");
+			ch = sc.next();
+			if (ch.equals("Y"))
 			{
-				if (offer > DISCOUNT1)
+				System.out.println("Enter your offer: ");
+				offer = sc.nextDouble();
+				if (property == 1)
 				{
-					System.out.println("Offer is no acceptable.!");
-				} 
-				else
+					if (offer > DISCOUNT1)
+					{
+						System.out.println("Offer is not acceptable.!");
+					} 
+					else
+					{
+						fees = fees - (fees * offer);
+						return fees;
+					}
+				}
+				else if (property >= 2)
 				{
-					fees = fees - (fees * offer);
+					if (offer > DISCOUNT2)
+					{
+						System.out.println("Offer is not acceptable.!");
+					} 
+					else
+					{
+						fees = fees - (fees * offer);
+					}
+						
 				}
 			}
 		}
+		
 		return fees;
 	}
 	
 	
 	//get the applicant details for the property under rent
-	public void getApplicantDetails() 
+	public void getApplicantDetails(Customer customer) 
 	{
-		//yet to implement the method
+		
+		/* retrieve the data from the file
+		foreach (Customer c :)
+		{
+			if (customer.customer_id.Equals(c)) 
+			{*/
+				setCustomer_id(customer.getCustomer_id());
+				setFirstname(customer.getFirstname());
+				setSurename(customer.getSurename());
+				setIncome(customer.getIncome());
+				setOccupation(customer.getOccupation());
+				setPresent_employer(customer.getPresent_employer());
+			//}
+		//}
+		
 	}
 	
 	
@@ -94,6 +125,9 @@ public class Rental extends Property
 	{
 		return true;
 	}
+	
+
+
 	
 
 
@@ -107,14 +141,18 @@ public class Rental extends Property
 	//finalise offer and transfer to tenant
 	public void finaliseOffer()
 	{
-		//working on this method
 		if (payAdvance())
 		{
-			setTenant_name("abc");
+			setTenant_name(getFirstname());
 		}
 	}
 	
 	
+	private String getFirstname() {
+		return firstname;
+	}
+
+
 	//accepting the offer
 	@Override
 	public boolean acceptOffer() 
@@ -126,11 +164,6 @@ public class Rental extends Property
 		return true;
 	}
 
-
-	public double getIncome() 
-	{
-		return this.income;
-	}
 	
 	
 	//getter to get the management fee
@@ -157,7 +190,35 @@ public class Rental extends Property
 	public void setFee(double fee) {
 		this.fee = fee;
 	}
-
 	
+	private void setCustomer_id(String customer_id) {
+		this.customer_id = customer_id;
+	}
+
+
+	private void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+
+	private void setSurename(String surename) {
+		this.surename = surename;
+	}
+
+
+	private void setIncome(String income) {
+		this.income = income;
+	}
+
+
+	private void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+
+	private void setPresent_employer(String present_employer) {
+		this.present_employer = present_employer;
+	}
+
 	
 }

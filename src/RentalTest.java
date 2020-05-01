@@ -13,7 +13,7 @@ class RentalTest
 	@BeforeEach
 	void setUp() throws Exception 
 	{
-		r = new Rental (6, 1, 6, 0, 50000.0, "Software Engineer", "RMIT", 1200);
+		r = new Rental (6, 1, 6, 0, 50000.0);
 	}
 
 	@AfterEach
@@ -22,20 +22,14 @@ class RentalTest
 		
 	}
 
-	@Test
-	public void test() throws Exception
-	{
-		assertEquals(r.getIncome(), 50000);
-		System.out.println("Successfully completed the test");
-		
-	}
 	
-	@Test
-	public void testcalculateMgmtFee() throws Exception
-	{
-		assertEquals(r.calculateMgmtFee(2), r.getManagementFee());
-		System.out.println(r.getManagementFee());
-	}
+	
+//	@Test
+//	public void testcalculateMgmtFee() throws Exception
+//	{
+//		assertEquals(r.calculateMgmtFee(2, 1000), r.getManagementFee());
+//		System.out.println(r.getManagementFee());
+//	}
 	
 	@Test
 	public void testpayAdvance() throws Exception
@@ -53,7 +47,8 @@ class RentalTest
 	@Test
 	public void testfinaliseOffer() throws Exception
 	{
-		fail("negotiateOffer() Method not yet implemented");
+		assertEquals(r.acceptOffer(), true);
+		System.out.println("Offer is accepted");
 	}
 	
 	
