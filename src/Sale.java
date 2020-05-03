@@ -79,17 +79,7 @@ public class Sale extends Property {
 		return minimum_reserveprice;
 	}
 
-	public void setMinimum_reserveprice(String Minimum_reserveprice)//auction
-	{
-		try {
-			int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
-		if(minimum_reserveprice>=0) 
-		this.minimum_reserveprice = Minimum_reserveprice;
-		}catch(Exception e)
-		{
-			System.out.println("You have entered a negative value,Try again");
-		}
-	}
+	
 	
 	Scanner sc=new Scanner(System.in);
 	
@@ -281,6 +271,18 @@ public class Sale extends Property {
 				}			
 			}
 	
+	public void setMinimum_reserveprice(String Minimum_reserveprice)//auction
+	{
+		try {
+			int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
+		if(minimum_reserveprice>=0) 
+		this.minimum_reserveprice = Minimum_reserveprice;
+		}catch(Exception e)
+		{
+			System.out.println("You have entered a negative value,Try again");
+		}
+	}
+	
 	public boolean confirmJoin(String replyID)//auction
 	//checks if already a buyer and bidded
 	{
@@ -369,7 +371,9 @@ public class Sale extends Property {
 	    }
 	
 	public void propertyreply(String customer)//auction
+	//customer will come when u login 
 	{
+		
 		Scanner rw=new Scanner(System.in);
 		System.out.println("Enter Property ID or quit");
 		String auctionID=rw.nextLine();
