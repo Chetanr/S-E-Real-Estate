@@ -79,12 +79,12 @@ public class Sale extends Property {
 		return minimum_reserveprice;
 	}
 
-	public void setMinimum_reserveprice(String Minimum_reserveprice) {
+	public void setMinimum_reserveprice(String Minimum_reserveprice)//auction
+	{
 		try {
 			int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
 		if(minimum_reserveprice>=0) 
 		this.minimum_reserveprice = Minimum_reserveprice;
-		
 		}catch(Exception e)
 		{
 			System.out.println("You have entered a negative value,Try again");
@@ -102,28 +102,9 @@ public class Sale extends Property {
 		
 	}
 	 
-	public void Negotiation()
-	{
-		
-		try {
-			System.out.println("Kindly enter the type of sale");	
-		}catch(Exception e)
-		{
-			System.out.println("Error:" + e.getMessage());
-		}
-		//Algo for negotiation
-		
-	}
 	
-	public void Auction()
-	{
-		
-		
-		//Algo for auction
-		
-	}
-	
-	public void checkcommisionrate()
+	public void checkcommisionrate()//negotiation
+	//commission rate between vendor and sales consultant is decided 
 	{
 		Scanner bo=new Scanner(System.in);
 	  System.out.println("Enter the commision rate that is negotiated between the Sale Consultant and the vendor ");
@@ -131,7 +112,7 @@ public class Sale extends Property {
 	  try {
 		  if(SaleCommisionrate>=2 && SaleCommisionrate<=5)
 		  {
-			  setSale_commissionrate(SaleCommisionrate);
+			  setSale_commissionrate(SaleCommisionrate);// this is given to sale consultant for the final selling price
 		  }
 		  
 	  }catch(Exception e)
@@ -206,14 +187,17 @@ public class Sale extends Property {
 	}
 
 	
-	public void manageAuctionInspection(Property property_id) throws ParseException
+	public void manageAuctionInspection(Property property_id) throws ParseException //auction
 	{
 		Scanner ur=new Scanner(System.in);
-		//if(propertyID.equals(getauction_negotiation_ID()))
-	    System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
+		
+		// a vendor enters the inspection date for his property before the auction date comparing the inspection date and auction date
+	    
+		System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
 	    String D=ur.next();  
 	    if(compareDates(D,getAuction_negotiation_date())== true)
 	    {
+	    	//setting of inspection date is done
 	    	setAuction_negotiation_inspection_date(D);
 	    }
 	    else
@@ -223,7 +207,8 @@ public class Sale extends Property {
 	}
 	
 	public static boolean compareDates(String psDate1, String psDate2) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");
+       //method to compare dates
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");
         Date date1 = dateFormat.parse(psDate1);
         Date date2 = dateFormat.parse(psDate2);
         if(date2.after(date1)) {
@@ -232,7 +217,7 @@ public class Sale extends Property {
             return false;
         }
     }
-	public static boolean acceptoffer()
+	public static boolean acceptoffer() //negotiation
 	{ 	
 		
 		Scanner no=new Scanner(System.in);
@@ -261,7 +246,8 @@ public class Sale extends Property {
 		}	
 		return false;	
 	}
-	public static boolean section32()  {
+	public static boolean section32() //negotiation
+	{
 		Scanner io= new Scanner(System.in);		
 		System.out.println("Enter response to section 32");
 		String rep=io.next();
@@ -276,7 +262,7 @@ public class Sale extends Property {
 			return false;
 		}
 	}
-	public static boolean checkdownpayment() 
+	public static boolean checkdownpayment() //negotiation
 	{
 		Scanner uo=new Scanner(System.in);
 		property_sellingprice=formaloffer;
@@ -302,7 +288,8 @@ public class Sale extends Property {
 				}
 		return test1;	
 	}	
-	public static void checkdeposit() {
+	public static void checkdeposit() //negotiation
+	{
 		Scanner dep=new Scanner(System.in);
 		deposit=property_sellingprice-downpayment;		
 				//legal formalities
@@ -321,7 +308,7 @@ public class Sale extends Property {
 				}			
 			}
 	
-	public boolean confirmJoin(String replyID)
+	public boolean confirmJoin(String replyID) //checks if already a buyer and bidded
 	{
 		for(int i=0;i<this.responseList.size();i++)
 		{
@@ -335,7 +322,7 @@ public class Sale extends Property {
 	}
 	
 	
-	public boolean auctionreply(reply Reply) {
+	public boolean auctionreply(reply Reply) { //auction
 	 int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
 	int replyValue = Integer.parseInt(Reply.getreplyValue());
 	int maxbid=0;
@@ -376,7 +363,7 @@ public class Sale extends Property {
 		
 	}
 	
-	public void propertyreply(String customer)
+	public void propertyreply(String customer)//auction
 	{
 		Scanner rw=new Scanner(System.in);
 		System.out.println("Enter Property ID or quit");
@@ -482,13 +469,5 @@ public class Sale extends Property {
 		}	
 	}
 
-	public void setSalesConsultant(String salesConsultantID) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getPropertyID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	}
