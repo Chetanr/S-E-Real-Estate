@@ -187,36 +187,9 @@ public class Sale extends Property {
 	}
 
 	
-	public void manageAuctionInspection(Property property_id) throws ParseException //auction
-	{
-		Scanner ur=new Scanner(System.in);
-		
-		// a vendor enters the inspection date for his property before the auction date comparing the inspection date and auction date
-	    
-		System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
-	    String D=ur.next();  
-	    if(compareDates(D,getAuction_negotiation_date())== true)
-	    {
-	    	//setting of inspection date is done
-	    	setAuction_negotiation_inspection_date(D);
-	    }
-	    else
-	    {
-	    	System.out.println("The auction Date can't be before the initial auction Date");
-	    }
-	}
 	
-	public static boolean compareDates(String psDate1, String psDate2) throws ParseException {
-       //method to compare dates
-		SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");
-        Date date1 = dateFormat.parse(psDate1);
-        Date date2 = dateFormat.parse(psDate2);
-        if(date2.after(date1)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	
+	
 	public static boolean acceptoffer() //negotiation
 	{ 	
 		
@@ -308,7 +281,8 @@ public class Sale extends Property {
 				}			
 			}
 	
-	public boolean confirmJoin(String replyID) //checks if already a buyer and bidded
+	public boolean confirmJoin(String replyID)//auction
+	//checks if already a buyer and bidded
 	{
 		for(int i=0;i<this.responseList.size();i++)
 		{
@@ -362,6 +336,37 @@ public class Sale extends Property {
 				return false;
 		
 	}
+	
+	public void manageAuctionInspection(Property property_id) throws ParseException //auction
+	{
+		Scanner ur=new Scanner(System.in);
+		
+		// a vendor enters the inspection date for his property before the auction date comparing the inspection date and auction date
+	    
+		System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
+	    String D=ur.next();  
+	    if(compareDates(D,getAuction_negotiation_date())== true)
+	    {
+	    	//setting of inspection date is done
+	    	setAuction_negotiation_inspection_date(D);
+	    }
+	    else
+	    {
+	    	System.out.println("The auction Date can't be before the initial auction Date");
+	    }
+	}
+	
+	public static boolean compareDates(String psDate1, String psDate2) throws ParseException {
+	       //method to compare dates
+			SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");
+	        Date date1 = dateFormat.parse(psDate1);
+	        Date date2 = dateFormat.parse(psDate2);
+	        if(date2.after(date1)) {
+	            return true;
+	        } else {
+	            return false;
+	        }
+	    }
 	
 	public void propertyreply(String customer)//auction
 	{
