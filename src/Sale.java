@@ -7,17 +7,13 @@ import java.util.Date;
 
 public class Sale extends Property {
 	
-	private String auction_negotiation_ID;
-	private String present_employer;
-	private String inspection_id;
 	private double sale_commissionrate;
 	private static double property_sellingprice;
 	private static double minimum_sellingprice=5000;
 	private String auction_negotiation_date;
 	private String auction_negotiation_inspection_date;
-	private Double property_askingvalue;
+	private double property_askingvalue;
 	private int auction_status;
-	
 	private static final double downpaymentpercentage = 0.10;
 	private static double deposit;
 	private String auction_inspection_date;
@@ -25,11 +21,11 @@ public class Sale extends Property {
 	private int increasebid_reserveprice=1000;
 	private static final double deduce_reserveprice=10000;
 	private String maxbid;
+	private static int No_ofDays=1;
 	private boolean under_contract=false;
 	private static final int daylimit=3;
 	private static double formaloffer;
-	private static int No_ofDays;
-	private static boolean flag=false;
+	private static boolean test1=false;
 	private static double downpayment;
 	private String creator;
 	
@@ -43,7 +39,7 @@ public class Sale extends Property {
 		return creator;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(String creator) {	
 		this.creator = creator;
 	}
 	
@@ -100,9 +96,6 @@ public class Sale extends Property {
 	
 	public Sale(String present_employer,String auction_negotiation_ID,String inspection_id, double sale_commissionrate,double property_sellingprice,String auction_negotiation_date)
 	{
-		this.present_employer=present_employer;	
-		this.auction_negotiation_ID=auction_negotiation_ID;
-		this.inspection_id=inspection_id;
 		this.sale_commissionrate=sale_commissionrate;
 		this.property_sellingprice=property_sellingprice;
 		this.auction_negotiation_date=auction_negotiation_date;
@@ -133,7 +126,7 @@ public class Sale extends Property {
 	public void checkcommisionrate()
 	{
 		Scanner bo=new Scanner(System.in);
-	  System.out.println("Enter the commision rate that is negotiated between the Sale Consultant an dthe vendor ");
+	  System.out.println("Enter the commision rate that is negotiated between the Sale Consultant and the vendor ");
 	  double SaleCommisionrate= bo.nextDouble();
 	  try {
 		  if(SaleCommisionrate>=2 && SaleCommisionrate<=5)
@@ -157,21 +150,8 @@ public class Sale extends Property {
 		under_contract = under_contract;
 	}
 	
-	
-	public String getauction_negotiation_ID() {
-		return auction_negotiation_ID;
-	}
-	public void setauction_negotiation_ID(String auction_negotiation_ID) {
-		this.auction_negotiation_ID = auction_negotiation_ID;
-	}
 	public double getSale_commissionrate() {
 		return sale_commissionrate;
-	}
-	public double getNo_ofDays() {
-		return No_ofDays ;
-	}	
-	public int setNo_ofDays(int No_ofDays ) {
-		return this.No_ofDays;
 	}
 	public void setSale_commissionrate(double sale_commissionrate) {
 		this.sale_commissionrate = sale_commissionrate;
@@ -226,11 +206,11 @@ public class Sale extends Property {
 	}
 
 	
-	public void manageAuctionInspection(Property propertyID) throws ParseException
+	public void manageAuctionInspection(Property property_id) throws ParseException
 	{
 		Scanner ur=new Scanner(System.in);
 		//if(propertyID.equals(getauction_negotiation_ID()))
-	    System.out.println("Enter the auction date that you want for the " + propertyID + "in the format (yyyy-mm-dd)");
+	    System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
 	    String D=ur.next();  
 	    if(compareDates(D,getAuction_negotiation_date())== true)
 	    {
@@ -305,7 +285,7 @@ public class Sale extends Property {
 
 				if(No_ofDays <= 1)
 				{
-					flag=true;
+					test1=true;
 					System.out.println("Accept downpayment from the buyer?");
 					String accept=uo.next();
 					if(accept.equalsIgnoreCase("yes"))
@@ -320,7 +300,7 @@ public class Sale extends Property {
 				else {
 					System.out.println("you have exceeded the 24 hour limit");
 				}
-		return flag;	
+		return test1;	
 	}	
 	public static void checkdeposit() {
 		Scanner dep=new Scanner(System.in);
@@ -356,7 +336,7 @@ public class Sale extends Property {
 	
 	
 	public boolean auctionreply(reply Reply) {
-	int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
+	 int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
 	int replyValue = Integer.parseInt(Reply.getreplyValue());
 	int maxbid=0;
 	if(this.getMaxbid()!="")
@@ -452,7 +432,7 @@ public class Sale extends Property {
 					{
 						reply replyObject=new reply(auctionID,bid,customer);
 						boolean test=propertyList.get(i).auctionreply(replyObject);
-						if(flag==true)
+						if(test1==true)
 							validatebid=false;
 					}
 				}
