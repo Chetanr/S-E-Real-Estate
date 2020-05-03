@@ -16,7 +16,8 @@ public class Sale extends Property {
 	private String auction_negotiation_date;
 	private String auction_negotiation_inspection_date;
 	private Double property_askingvalue;
-	private boolean offer_status;
+	private int auction_status;
+	
 	private static final double downpaymentpercentage = 0.10;
 	private static double deposit;
 	private String auction_inspection_date;
@@ -24,17 +25,36 @@ public class Sale extends Property {
 	private int increasebid_reserveprice=1000;
 	private static final double deduce_reserveprice=10000;
 	private String maxbid;
-	
-
 	private boolean under_contract=false;
 	private static final int daylimit=3;
 	private static double formaloffer;
 	private static int No_ofDays;
 	private static boolean flag=false;
 	private static double downpayment;
+	private String creator;
 	
 	
+	
+
 	private ArrayList<reply> responseList=new ArrayList<reply>();
+	private ArrayList<Sale> propertyList=new ArrayList<Sale>();
+	
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+	
+	public int getAuction_status() {
+		return auction_status;
+	}
+
+	public void setAuction_status(int auction_status) {
+		this.auction_status = auction_status;
+	}
+
 	
 	public String getMaxbid() {
 		return maxbid;
@@ -375,6 +395,91 @@ public class Sale extends Property {
 				return false;
 		
 	}
+	
+	public void propertyreply(String customer)
+	{
+		Scanner rw=new Scanner(System.in);
+		System.out.println("Enter Property ID or quit");
+		String auctionID=rw.nextLine();
+		if(auctionID.equals("q"))
+		{
+			//implement displaymenu
+			System.out.println("Go to main menu");
+		}
+		boolean propertyNotPresent=false;
+		boolean auctionClosed=false;
+		boolean selfProperty=false;
+		boolean validatebid=true;
+		for(int i=0;i<propertyList.size();i++)
+		{
+			if(propertyList.get(i).getProperty_id().equals(auctionID))
+			{
+				propertyNotPresent=true;
+			}
+			if(propertyList.get(i).getAuction_status()==1)
+			{
+				auctionClosed=true;
+				break;
+			}
+			if(propertyList.get(i).getCreator().equals(customer))
+			{
+				selfProperty=true;
+				break;
+			}
+			while(validatebid==true)
+			{
+				System.out.println("Enter your offer or q to quit");
+				String bid =rw.nextLine();
+				System.out.println("Your Bid is " + bid);
+				boolean checkDouble =true;
+				try
+				{
+					Double bidoffer=Double.parseDouble(bid);
+					
+				}catch(NumberFormatException e)
+				{
+					checkDouble=false;
+				}
+				if(bid.equals("q"))
+				{
+					System.out.println("Quit from sale");
+					validatebid=false;
+				}
+				else if(checkDouble==true)
+				{
+					boolean checkExisting=propertyList.get(i).confirmJoin(customer);
+					if(checkExisting==true)
+					{
+						reply replyObject=new reply(auctionID,bid,customer);
+						boolean test=propertyList.get(i).auctionreply(replyObject);
+						if(flag==true)
+							validatebid=false;
+					}
+				}
+					else {
+						System.out.println("Invalid Bid!");
+					}
+				}
+			}
+		     if(propertyNotPresent==false)
+		     {
+		    	 System.out.println("Property not found. Kindly Try again");
+		    	 propertyreply(customer);	    	 
+		     }
+		     else if(auctionClosed==true) {
+		    	 System.out.println("You cannot reply to a closed post");
+		    	 //main menu
+		     }
+		     else if(selfProperty==true)
+		     {
+		    	 System.out.println("You can't do a bid for your own property");
+		     }
+		     else
+		     {      
+		    	 System.out.println("We should be in main menu");
+		     }	
+		}
+	
 	
 
 	public static void main(String[] args) {
