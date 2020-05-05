@@ -6,99 +6,138 @@ public class Rental extends Property
 	private static final double DISCOUNT1 = 0.07;
 	private static final double DISCOUNT2 = 0.06;
 	private double fee;
-	private static double rental_amount;
-	private int contract_months;
-	private int contract_years;
-	private int acceptable_contract_months;
-	private int acceptable_contract_years;
-	private int proposed_contract_months;
-	private int proposed_contract_years;
+	private static double rentalAmount;
+	private int contractMonths;
+	private int contractYears;
+	private int acceptableContractMonths;
+	private int acceptableContractYears;
+	private int proposedContractMonths;
+	private int proposedContractYears;
 	private static final int ACCEPT_DAYS = 3;
-	private static final int BOND_PAY_DURATION = 1;
-	private static final int DAY_LIMIT = 3;
-	private int No_of_Days;
+	private static final int BOND_PAY_DURATION = 1;	
 	private String customer_id ;
 	private String firstname;
 	private String surename;
-	private String income;
+	private double income;
 	private String occupation;
-	private String present_employer;
+	private String presentEmployer;
+	
+	protected static boolean exception = false;
 	
 	
 
-
+	
 
 	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double rental_amount)
 	{
-		this.contract_months = contract_months;
-		this.contract_years = contract_years;
-		this.proposed_contract_months = proposed_contract_months;
-		this.proposed_contract_years = proposed_contract_years;
-		this.rental_amount = rental_amount;;
+		this.contractMonths = contract_months;
+		this.contractYears = contract_years;
+		this.proposedContractMonths = proposed_contract_months;
+		this.proposedContractYears = proposed_contract_years;
+		this.rentalAmount = rental_amount;
 	}
 	
 	
+	
+	
+	public Rental() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
 	//calculate the management fee for a property
-	public static void calculateMgmtFee(int property, int rental)
+	public double calculateMgmtFee(int property, int rental) throws Exception
 	{
-		double fees;
-		fees = rental * MANAGEMENT_FEE;
+		double temp;
+		temp = rental * MANAGEMENT_FEE;
 		if (property >= 2)
 		{
-			fees = fees - (fees * DISCOUNT1);
+			temp = temp - (temp * DISCOUNT1);
 		}
 		
-		fees = negotiateManagementFee(property, fees);
-		System.out.println("Management fees is : " + fees);
+		temp = negotiateManagementFee(property, temp);
+		System.out.println("Management fees is : " + temp);
+		setFee(temp);
+		
+		return temp;
 	}
 	
 
 	//negotiate management fee
-	public static double negotiateManagementFee(int property, double fees)
+	public static double negotiateManagementFee(int property, double fees) throws Exception
 	{
 		Scanner sc = new Scanner (System.in);
-		String ch = "Y";
+		char ch = 'Y';
+		
 		double offer;
-		//implementing this method
-		while(ch.equals("Y"))
+		if (ch == 'Y')
 		{
-			System.out.println("Do you want to negotiate the management fee?: (Y/N)");
-			ch = sc.next();
-			if (ch.equals("Y"))
+			while(ch == 'Y')
 			{
-				System.out.println("Enter your offer: ");
-				offer = sc.nextDouble();
-				if (property == 1)
+				System.out.println("Do you want to negotiate the management fee?: (Y/N)");
+				ch = sc.next().charAt(0);
+				if (ch == 'Y')
 				{
-					if (offer > DISCOUNT1)
+					System.out.println("Enter your offer: ");
+					offer = sc.nextDouble();
+					if (property == 1)
 					{
-						System.out.println("Offer is not acceptable.!");
-					} 
-					else
+						if (offer > DISCOUNT1)
+						{
+							System.out.println("Offer is not acceptable.!");
+						} 
+						else
+						{
+							fees = fees - (fees * offer);
+							System.out.println("Offer Accepted.!");
+							return fees;
+						}
+					}
+					else if (property >= 2)
 					{
-						fees = fees - (fees * offer);
-						return fees;
+						if (offer > DISCOUNT2)
+						{
+							System.out.println("Offer is not acceptable.!");
+						} 
+						else
+						{
+							fees = fees - (fees * offer);
+							return fees;
+						}
+							
 					}
 				}
-				else if (property >= 2)
+				else
 				{
-					if (offer > DISCOUNT2)
-					{
-						System.out.println("Offer is not acceptable.!");
-					} 
-					else
-					{
-						fees = fees - (fees * offer);
-					}
-						
+					exception = true;
 				}
+		
 			}
-		}
+		} 
+		
+			
+		
 		
 		return fees;
 	}
 	
 	
+	protected boolean isException() {
+		return exception;
+	}
+
+
+
+
+	protected void setException(boolean exception) {
+		this.exception = exception;
+	}
+
+
+
+
 	//get the applicant details for the property under rent
 	public void getApplicantDetails(Customer customer) 
 	{
@@ -206,8 +245,8 @@ public class Rental extends Property
 	}
 
 
-	private void setIncome(String income) {
-		this.income = income;
+	private void setIncome(double string) {
+		this.income = string;
 	}
 
 
@@ -217,8 +256,12 @@ public class Rental extends Property
 
 
 	private void setPresent_employer(String present_employer) {
-		this.present_employer = present_employer;
+		this.presentEmployer = present_employer;
 	}
+	
+
+	
+
 
 	
 }

@@ -6,7 +6,7 @@ public class Customer {
 	private String surename;
 	private String email_address;
 	String password;
-	private String income;
+	private double income;
 	private String occupation;
 	private String present_employer;
 	
@@ -29,10 +29,10 @@ public class Customer {
 	protected void setSurename(String surename) {
 		this.surename = surename;
 	}
-	protected String getIncome() {
+	protected double getIncome() {
 		return income;
 	}
-	protected void setIncome(String income) {
+	protected void setIncome(double income) {
 		this.income = income;
 	}
 	protected String getOccupation() {
