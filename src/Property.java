@@ -1,9 +1,9 @@
 
 abstract class Property 
 {
-	private static String property_id;
-	private static String address;
-	private static String suburb;
+	private String property_id;
+	private String address;
+	private String suburb;
 	private int num_bed;
 	private int num_bath;
 	private int num_car_space;

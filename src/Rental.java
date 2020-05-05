@@ -6,7 +6,7 @@ public class Rental extends Property
 	private static final double DISCOUNT1 = 0.07;
 	private static final double DISCOUNT2 = 0.06;
 	private double fee;
-	private static double rentalAmount;
+	private double rentalAmount;
 	private int contractMonths;
 	private int contractYears;
 	private int acceptableContractMonths;
