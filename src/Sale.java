@@ -3,10 +3,23 @@ import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class Sale extends Property {
 	
+	private String property_id;
+	public String getProperty_id() {
+		return property_id;
+	}
+
+	public String setProperty_id(String property_id) {
+		return this.property_id = property_id;
+	}
+
+
+
+
 	private double sale_commissionrate;
 	private static double property_sellingprice;
 	private static double minimum_sellingprice=5000;
@@ -17,8 +30,8 @@ public class Sale extends Property {
 	private static final double downpaymentpercentage = 0.10;
 	private static double deposit;
 	private String auction_inspection_date;
-	private String minimum_reserveprice;
-	private int increasebid_reserveprice=1000;
+	
+	private static int increasebid_reserveprice=1000;
 	private static final double deduce_reserveprice=10000;
 	private String maxbid;
 	private static int No_ofDays=1;
@@ -33,8 +46,10 @@ public class Sale extends Property {
 	
 
 	private ArrayList<reply> responseList=new ArrayList<reply>();
-	private ArrayList<Sale> propertyList=new ArrayList<Sale>();
+	private static ArrayList<Sale> propertyList=new ArrayList<Sale>();
 	
+	
+		
 	public String getCreator() {
 		return creator;
 	}
@@ -75,17 +90,17 @@ public class Sale extends Property {
 	public  String setAuction_negotiation_date(String auction_negotiation_date) {
 		return this.auction_negotiation_date = auction_negotiation_date;
 	}
-	public String getMinimum_reserveprice() {
-		return minimum_reserveprice;
-	}
+	
 
 	
 	
 	Scanner sc=new Scanner(System.in);
 	
 	
-	public Sale(String present_employer,String auction_negotiation_ID,String inspection_id, double sale_commissionrate,double property_sellingprice,String auction_negotiation_date)
+	public Sale(String property_id,String address)
 	{
+		this.property_id=property_id;
+		this.address=address;
 		this.sale_commissionrate=sale_commissionrate;
 		this.property_sellingprice=property_sellingprice;
 		this.auction_negotiation_date=auction_negotiation_date;
@@ -228,7 +243,8 @@ public class Sale extends Property {
 	public static boolean checkdownpayment() //negotiation
 	{
 		Scanner uo=new Scanner(System.in);
-		property_sellingprice=formaloffer;
+		//property_sellingprice=formaloffer;
+		//property_sellingprice=highestoffer;
 		downpayment=property_sellingprice*downpaymentpercentage;
 		
 
@@ -271,19 +287,9 @@ public class Sale extends Property {
 				}			
 			}
 	
-	public void setMinimum_reserveprice(String Minimum_reserveprice)//auction
-	{
-		try {
-			int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
-		if(minimum_reserveprice>=0) 
-		this.minimum_reserveprice = Minimum_reserveprice;
-		}catch(Exception e)
-		{
-			System.out.println("You have entered a negative value,Try again");
-		}
-	}
+
 	
-	public boolean confirmJoin(String replyID)//auction
+	/*public boolean confirmJoin(String replyID)//auction
 	//checks if already a buyer and bidded
 	{
 		for(int i=0;i<this.responseList.size();i++)
@@ -296,48 +302,10 @@ public class Sale extends Property {
 		}
 		return true;
 	}
-	
-	
-	public boolean auctionreply(reply Reply) { //auction
-	 int minimum_reserveprice=Integer.parseInt(this.getMinimum_reserveprice());
-	int replyValue = Integer.parseInt(Reply.getreplyValue());
-	int maxbid=0;
-	if(this.getMaxbid()!="")
-	maxbid=Integer.parseInt(this.getMaxbid());
+	*/
 	
 	
 	
-	if(replyValue<0)
-	{
-		System.out.println("The Bid can never be negative");
-	}
-	else if(replyValue<increasebid_reserveprice)
-	{
-		System.out.println("Offer is below minimum raise");
-	}
-	else if(replyValue<increasebid_reserveprice+maxbid)
-	{
-		System.out.println("Bid is not accepted");
-		return false;
-	}
-	else if(replyValue>increasebid_reserveprice+maxbid)
-	{
-		this.responseList.add(Reply);
-		System.out.println("Bid acknowledged, Auction continues");
-	}
-	
-	else
-	{
-		if(this.getMaxbid()=="")
-			this.setMaxbid(Reply.getreplyValue());
-		else if(Integer.parseInt(this.getMaxbid())>Integer.parseInt(Reply.getreplyValue()))
-		this.setMaxbid(Reply.getreplyValue());	
-	}
-	this.responseList.add(Reply);
-	System.out.println("Highest bid is obtained");
-				return false;
-		
-	}
 	
 	public void manageAuctionInspection(Property property_id) throws ParseException //auction
 	{
@@ -349,7 +317,7 @@ public class Sale extends Property {
 	    String D=ur.next();  
 	    if(compareDates(D,getAuction_negotiation_date())== true)
 	    {
-	    	//setting of inspection date is done
+	    	//setting of inspection date is done for buyers to come
 	    	setAuction_negotiation_inspection_date(D);
 	    }
 	    else
@@ -370,10 +338,23 @@ public class Sale extends Property {
 	        }
 	    }
 	
-	public void propertyreply(String customer)//auction
-	//customer will come when u login 
+	private static void NewProperty(String customer)//to add a property
 	{
+		Scanner np=new Scanner(System.in);
+		System.out.println("Enter the specs of the property");
+		System.out.println("Address");
+		String propertyAddress=np.nextLine();
+		int count=1;
+		String auctionID="AUC"+String.format("%03d", count);
+		Property propertyobject=new Sale(auctionID,address);
+		propertyList.add((Sale) propertyobject);
+		System.out.println("Success!! Property has been added with id " + auctionID );
 		
+	}
+	
+	public static void propertyreply(String customer)//auction
+	//customer will come when u login 
+	{	
 		Scanner rw=new Scanner(System.in);
 		System.out.println("Enter Property ID or quit");
 		String auctionID=rw.nextLine();
@@ -389,28 +370,124 @@ public class Sale extends Property {
 		for(int i=0;i<propertyList.size();i++)
 		{
 			if(propertyList.get(i).getProperty_id().equals(auctionID))
-			{
+			
 				propertyNotPresent=true;
-			}
-			if(propertyList.get(i).getAuction_status()==1)
-			{
+			
+			  if(propertyList.get(i).getAuction_status()==1)
+			    {
 				auctionClosed=true;
 				break;
-			}
-			if(propertyList.get(i).getCreator().equals(customer))
+			    }
+			/*if(propertyList.get(i).getCreator().equals(customer))
 			{
 				selfProperty=true;
 				break;
-			}
+			}*/
 			while(validatebid==true)
 			{
 				System.out.println("Enter your offer or q to quit");
-				String bid =rw.nextLine();
+				double bid =rw.nextDouble();
+				
+				
 				System.out.println("Your Bid is " + bid);
-				boolean checkDouble =true;
-				try
+				double highestoffer=100000;
+			    double asking_price=20000;
+				
+				if(bid <0)
 				{
-					Double bidoffer=Double.parseDouble(bid);
+					System.out.println("Kindly try a valid positive bid above asking price");
+				}
+				else if(bid<increasebid_reserveprice)//increasebid_reserve=1000
+			    {
+						System.out.println("Offer is below minimum raise");
+			    }
+				else if(bid < asking_price) {
+					System.out.println("Your Bid is below the asking price ");	
+				}
+				else if(bid>(increasebid_reserveprice + highestoffer) && bid<asking_price)//if highestoffer=1300 asking price=2000
+				{
+					System.out.println("Offer is below asking price");
+				}
+				else if(bid>increasebid_reserveprice + highestoffer)//bid=
+				{
+					
+					System.out.println("Highest bid is recorded");
+					highestoffer=bid;
+					Scanner po=new Scanner(System.in);
+					System.out.println("check if no one else is biding for the next 30 seconds");
+					String check=po.nextLine();
+					if(check.equalsIgnoreCase("No"))
+					{
+						System.out.println("Property Sold to you,Selling Price for the Propert is "+highestoffer);
+						property_sellingprice=highestoffer;
+						double initiadownpayment=property_sellingprice*0.10;
+						System.out.println("Your initial downpayment is " +initiadownpayment);
+						System.out.println("Do u wish to pay the downpayment $"+initiadownpayment+ "within 1 day");
+						String check1=po.nextLine();
+						if(check1.equalsIgnoreCase("yes"))
+						{
+							if(No_ofDays <= 1)
+							
+								{
+									System.out.println("Downpayment is received");
+									
+									deposit=(property_sellingprice-initiadownpayment);
+									
+									System.out.println(" Do you want to submit the deposit which is $" +deposit);
+									String check2=po.next();
+									if(check2.equalsIgnoreCase("YES"))
+									{
+										System.out.println("Deposit made");
+										setUnder_contract(true);
+										System.out.println("The property is under undercontract");
+										//assignSaleEmployee();
+										break;
+									}
+									else
+									{
+									System.out.println("Deposit not made");	
+									System.out.println("You refued to pay the deposit Property again goes to auction");
+									double newAskingPrice=asking_price-10000;
+									System.out.println("New asking Price foe the property is"+ newAskingPrice );
+									
+									}			
+								}
+							else {
+								System.out.println("you have exceeded the 24 hour limit");
+							}
+						}
+						else {
+							System.out.println("You refued to pay the downpayment Property again goes to auction");
+							double newAskingPrice=asking_price-10000;
+							System.out.println("New asking Price foe the property is"+ newAskingPrice );
+						}
+						}	
+					}
+				else if(bid<highestoffer && bid>asking_price)
+				{
+					System.out.println("offer accepted and recorded however not heightest ");
+					double secondHighestBid=bid;
+					
+				}
+				else {
+					System.out.println("invalid Bid");
+				}
+				
+				
+			
+				
+				
+				//reply responseobject=new reply(auctionID, bid, customer);
+				//boolean test=propertyList.get(i).auctionreply(responseobject);
+			}
+		}
+				
+			/*	//boolean checkDouble =true;
+				/*try
+				{
+					//Double bidoffer=double.parseDouble(bid);
+					double bidd=Double.parseDouble(bid);
+					
 					
 				}catch(NumberFormatException e)
 				{
@@ -420,24 +497,21 @@ public class Sale extends Property {
 				{
 					System.out.println("Quit from sale");
 					validatebid=false;
-				}
-				else if(checkDouble==true)
-				{
-					boolean checkExisting=propertyList.get(i).confirmJoin(customer);
-					if(checkExisting==true)
-					{
-						reply replyObject=new reply(auctionID,bid,customer);
-						boolean test=propertyList.get(i).auctionreply(replyObject);
-						if(test1==true)
-							validatebid=false;
-					}
-				}
-					else {
-						System.out.println("Invalid Bid!");
-					}
-				}
+				}*/
+				//if(checkDouble==true)
+				//{
+					//{	
+						//boolean test=propertyList.get(i).auctionreply(replyObject);
+						//if(test==true)
+							//validatebid=false;
+					//}
+				//}
+				//	else {
+						//System.out.println("Invalid Bid!");
+				//	}
+				//}
 			}
-		     if(propertyNotPresent==false)
+		    /* if(propertyNotPresent==false)
 		     {
 		    	 System.out.println("Property not found. Kindly Try again");
 		    	 propertyreply(customer);	    	 
@@ -454,13 +528,78 @@ public class Sale extends Property {
 		     {      
 		    	 System.out.println("We should be in main menu");
 		     }	
+		}*/
+	/*public boolean auctionreply() { //auction
+		System.out.println("Enter the Minimum asking price ");
+		 int asking_price=5000;
+		
+		 
+		 
+		
+		int maxbid=0;
+		if(this.getMaxbid()!="")
+		{
+		maxbid=Integer.parseInt(this.getMaxbid());
 		}
+		
+		
+		
+		if(replyValue<0)
+		{
+			System.out.println("The Bid can never be negative");
+		}
+		else if(replyValue<increasebid_reserveprice)
+		{
+			System.out.println("Offer is below minimum raise");
+		}
+		else if(replyValue<increasebid_reserveprice+maxbid)
+		{
+			System.out.println("Bid is not accepted");
+			return false;
+		}
+		else if(replyValue>increasebid_reserveprice+maxbid)
+		{
+			this.responseList.add(Reply);
+			System.out.println("Bid acknowledged, Auction continues");
+		}
+		
+		else
+		{
+			if(this.getMaxbid()=="")
+				this.setMaxbid(Reply.getreplyValue());
+			else if(Integer.parseInt(this.getMaxbid())>Integer.parseInt(Reply.getreplyValue()))
+			this.setMaxbid(Reply.getreplyValue());	
+		}
+		this.responseList.add(Reply);
+		System.out.println("Highest bid is obtained");
+					return false;
+			
+		}*/
+	
+	public String getReplyDetails() {
+		String Offer_History = "Offer History: ";
+		String Asking_price = "Asking price: " + this.getAskingPrice()+"\n";
+		
+		ArrayList<reply> replyLists = this.responseList;
+		Collections.sort(replyLists, reply.ReplyComparatorDesc);
+		
+		for(int i = 0; i < replyLists.size(); i++)
+		{
+			Offer_History += replyLists.get(i).getreplyID()+ " : " + replyLists.get(i).getreplyValue()+"\n";
+		}
+		return Asking_price + Offer_History+"\n";
+	}
 	
 	
 
+	private String getAskingPrice() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 	public static void main(String[] args) {
 		Scanner sc =new Scanner(System.in);
-		System.out.println(" Welcome! Type yes if u a vendor ");
+	/*	System.out.println(" Welcome! Type yes if u a vendor ");
 		String ans=sc.next();
 		if(ans.equalsIgnoreCase("yes"))
 		{
@@ -476,7 +615,13 @@ public class Sale extends Property {
 		{
 			System.out.println("Functionality not implemented");
 		}	
+	
+	*/
+		System.out.println("Enter the customer name");
+		String customername= sc.nextLine();
+		NewProperty(customername);
+		propertyreply(customername);
+		
 	}
-
 	
 	}
