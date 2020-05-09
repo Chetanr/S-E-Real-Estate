@@ -25,7 +25,7 @@ class RentalTest
 	public void testcalculateMgmtFee1() throws Exception
 	{
 		assertEquals(3534.0, r.calculateMgmtFee(2, 50000));
-		System.out.println(r.getManagementFee());
+		//System.out.println(r.getManagementFee());
 	}
 	
 	
@@ -34,49 +34,25 @@ class RentalTest
 	public void testcalculateMgmtFee2() throws Exception
 	{
 		assertEquals(3800.0, r.calculateMgmtFee(1, 50000));
-		System.out.println(r.getManagementFee());
+		//System.out.println(r.getManagementFee());
 	}
 	
 	/*negative test case for calculating management fee with 5% offer and 1 property
-	  When the user enter an invalid input in negotiating management fee */
+	  When the user enter an invalid input other than 'Y' or 'N' in negotiating management fee */
 	@Test
 	public void testcalculateMgmtFee3() throws Exception
 	{
 		
-		r.calculateMgmtFee(2, 50000);
+		r.negotiateManagementFee(2, 50000);
 		assertEquals(true, r.isException());
 	}
-		
-	//negative test case for calculating management fee with 5% offer and 1 property
-//	@Test
-//	public void testcalculateMgmtFee4() throws Exception
-//	{
-//		assertEquals(3500.0, r.calculateMgmtFee(1, 50000));
-//		System.out.println("Wrong output");
-//	}
-	
-//	@Test
-//	public void testpayAdvance() throws Exception
-//	{
-//		fail("payAdvance() Method not yet implemented");
-//	}
-//	
-//	@Test
-//	public void testnegotiateOffer() throws Exception
-//	{
-//		fail("negotiateOffer() Method not yet implemented");
-//	}
-//	
-//	
-//	@Test
-//	public void testfinaliseOffer() throws Exception
-//	{
-//		assertEquals(r.acceptOffer(), true);
-//		System.out.println("Offer is accepted");
-//	}
 	
 	
-	
-
-
+	/*negative test case for calculating management fee with 5% offer and 1 property
+	  When the user enter an invalid input in negotiating management fee */
+	@Test ()
+	public void testcalculateMgmtFee4() throws Exception
+	{		
+		r.negotiateManagementFee(2, 50000);	
+	}
 }
