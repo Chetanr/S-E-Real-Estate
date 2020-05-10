@@ -22,7 +22,6 @@ public class Rental extends Property
 	private String occupation;
 	private String presentEmployer;
 	
-	protected static boolean exception = false;
 	
 	
 
@@ -76,50 +75,52 @@ public class Rental extends Property
 		{
 			while(ch == 'Y')
 			{
-				System.out.println("Do you want to negotiate the management fee?: (Y/N)");
-				ch = sc.next().charAt(0);
-				if (ch == 'Y')
+				try
 				{
-					try
+					System.out.println("Do you want to negotiate the management fee?: (Y/N)");
+					ch = sc.next().charAt(0);
+					if (ch == 'Y')
 					{
-						System.out.println("Enter your offer: ");
-						offer = sc.nextDouble();
-						if (property == 1)
+						try
 						{
-							if (offer > DISCOUNT1)
+							System.out.println("Enter your offer: ");
+							offer = sc.nextDouble();
+							if (property == 1)
 							{
-								System.out.println("Offer is not acceptable.!");
-							} 
-							else
-							{
-								fees = fees - (fees * offer);
-								System.out.println("Offer Accepted.!");
-								return fees;
+								if (offer > DISCOUNT1)
+								{
+									System.out.println("Offer is not acceptable.!");
+								} 
+								else
+								{
+									fees = fees - (fees * offer);
+									System.out.println("Offer Accepted.!");
+									return fees;
+								}
 							}
-						}
-						else if (property >= 2)
-						{
-							if (offer > DISCOUNT2)
+							else if (property >= 2)
 							{
-								System.out.println("Offer is not acceptable.!");
-							} 
-							else
-							{
-								fees = fees - (fees * offer);
-								return fees;
+								if (offer > DISCOUNT2)
+								{
+									System.out.println("Offer is not acceptable.!");
+								} 
+								else
+								{
+									fees = fees - (fees * offer);
+									return fees;
+								}
+									
 							}
-								
+						} catch (Exception e) {
+							System.out.println("Invalid input. Please enter a valid offer");
 						}
-					} catch (Exception e) {
-						System.out.println("Invalid input. Please enter a valid offer");
+						
 					}
 					
-				}
-				else
+				} catch (Exception e)
 				{
-					exception = true;
+					System.out.println("Please enter valid input.");
 				}
-		
 			}
 		} 
 		
@@ -128,20 +129,6 @@ public class Rental extends Property
 		
 		return fees;
 	}
-	
-	
-	protected boolean isException() {
-		return exception;
-	}
-
-
-
-
-	protected void setException(boolean exception) {
-		this.exception = exception;
-	}
-
-
 
 
 	//get the applicant details for the property under rent
