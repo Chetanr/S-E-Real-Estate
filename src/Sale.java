@@ -31,6 +31,8 @@ public class Sale extends Property {
 	private boolean test1=false;
 	private double downPayment;
 	private String creator;
+	private double propertyNegoPrice;
+	private double negoDownPayment;
 	
 	
 	private ArrayList<reply> responseList=new ArrayList<reply>();
@@ -133,61 +135,72 @@ public class Sale extends Property {
 	{
 		//tobe used in auction if no valid bids left
 		//also handle the situation in which no minimum reserve can be introduced if previously failed to sell without a reserve
-	}	
+	}	  
 	public void managecontract() {
 		//method to manage the contract
 	}
-	public boolean acceptoffer() //negotiation
+	public void acceptoffer(Customer cnego,Property prnego,Vendor vnego, double formaloffer ) //negotiation
 	{ 	
 		
-		Scanner no=new Scanner(System.in);
-		System.out.println("Enter an offer: ");
-		double formaloffer = no.nextDouble();	
-		setformalOffer(formaloffer);
-		if(minimumSellingPrice>formaloffer)
-			System.out.println("Offer cannot be made as threshold not met");
-		else
+		//Scanner no=new Scanner(System.in);
+		//System.out.println("Enter an offer: ");
+		//double formaloffer = no.nextDouble();	
+		//setformalOffer(formaloffer);
+		System.out.println("Welcome "+cnego.getcustomerID() + "for the negotition of " + prnego.getpropertyID());
+		System.out.println("Currently asking Price for the property is $5000");
+		System.out.println("You entered th property price to be  "+ formalOffer);
+		boolean validFormalOffer=false;
+		while(validFormalOffer=true)
 		{
+		 if(minimumSellingPrice>formaloffer)
+			System.out.println("Offer cannot be made as threshold not met");
+		 else
+		{
+			 propertyNegoPrice= formaloffer;
 			System.out.println("Enter the no days vendor took to respond");
-			int No_ofDays=no.nextInt();
-				if(No_ofDays<daylimit)
+			//int noOfDays=no.nextInt();
+				if(noOfDays<daylimit)
 				{
 					System.out.println("type yes if you want to accept the offer");
-					String answer=no.next();
+					//String answer=no.next();
+					String answer="yes";
 					if(answer.equalsIgnoreCase("yes"))
 					{
-						System.out.println("Offer is ACCepted");				
+						System.out.println("Offer is accepted by the vendor " + vnego.getcustomerID());	
 					}
-					return true;
+				
 				}
 				else {
 					System.out.println("Offer not accepted! No of days exceed the day limit");
+					System.out.println("Consider the Formal offer of another user");
 				}
 		}	
-		return false;	
+		}
 	}
-	public boolean section32() //negotiation
+	public boolean section32(Customer cnego,Property prnego) //negotiation
 	{
 		Scanner io= new Scanner(System.in);		
-		System.out.println("Enter response to section 32");
-		String rep=io.next();
+		System.out.println("Verify if the customer "+ cnego.getcustomerID()+" has section 32");
+		String rep="yes";
+		//String rep=io.next();
 		if(rep== ("yes"))
 		{
-			System.out.println("section32_bondstatus is present ");	
+			System.out.println("section32_bondstatus is present for  "+ prnego.getpropertyID());	
 			return true;
 		
 		}
 		else
 		{
+			System.out.println("Kindly get your section 32 form ready");
 			return false;
 		}
 	}
-	public boolean checkdownpayment() //negotiation
+	public boolean checkdownpayment(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
 	{
 		Scanner uo=new Scanner(System.in);
 		//property_sellingprice=formaloffer;
 		//property_sellingprice=highestoffer;
-		downPayment=propertySellingPrice*downPaymentPercentage;
+		 negoDownPayment=propertyNegoPrice*downPaymentPercentage;
 		
 
 				if(noOfDays <= 1)
@@ -209,18 +222,21 @@ public class Sale extends Property {
 				}
 		return test1;	
 	}	
-	public void checkdeposit() //negotiation
+	public void checkdeposit(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
 	{
-		Scanner dep=new Scanner(System.in);
-		deposit=propertySellingPrice-downPayment;		
+		//Scanner dep=new Scanner(System.in);
+		deposit=propertyNegoPrice-negoDownPayment;		
 				//legal formalities
 				System.out.println("Customer is making a deposit do u want to accept which is $" +deposit);
-				String reply=dep.next();
+				//String reply=dep.next();
+				String reply="Yes";
 				if(reply.equalsIgnoreCase("YES"))
 				{
 					System.out.println("Deposit made");
 					setunderContract(true);
 					System.out.println("The property is under undercontract");
+					prnego.setPropertyOwnerID(cnego.getcustomerID());
+					System.out.println(prnego.toString());
 					//assignSaleEmployee();
 				}
 				else
@@ -579,7 +595,7 @@ public class Sale extends Property {
 		
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		//Scanner sc =new Scanner(System.in);
 	/*	System.out.println(" Welcome! Type yes if u a vendor ");
 		String ans=sc.next();
@@ -597,19 +613,22 @@ public class Sale extends Property {
 		{
 			System.out.println("Functionality not implemented");
 		}	
+		*/
 	
 
 
 		Customer cus = new Customer("CUS001", "Pavan", "KA", "pavan.7185@gmail.com", "password",1000000, "occupation", "present_employer");
+		Customer cnego = new Customer("CUS010", "Virat", "K", "virat@gmail.com", "password",1200000, "occupation", "present_employer");
 		Property pr = new Sale("PRID001", "address", 2, 2, 2, "house_type", "tenant_name", "CUST007");
+		Property prnego = new Sale("PRID002", "205 Henry Street", 2, 2, 2, "apartment", "tenant_name", "CUST020");
 		Employee Sc=new SalesConsultant("SALC001","Auction",10000,25);
 		Sale s=new Sale("PRID002", "address", 2, 2, 2, "house_type", "tenant_name", "CUST008");
-		Customer ve=new Vendor("VEN001", "Rahul", "S", "rahul@gmail.com", "password",1000000, "occupation", "present_employer");
+		Customer v=new Vendor("VEN001", "Rahul", "S", "rahul@gmail.com", "password",1000000, "occupation", "present_employer");
 		//SalesConsultant sac=new ("SALC001","Auction",10000,25);
-		//vendor v=new 
+		Vendor vnego=new Vendor("VEN002", "Simon", "S", "simon@gmail.com", "password",1500000, "occupation", "present_employer");
 		
 		s.propertyreply(cus, s,260000);
 		
 	}
-	*/
+	
 	}
