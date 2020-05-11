@@ -1,19 +1,29 @@
 import static org.junit.jupiter.api.Assertions.*;
-
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 
 
 class SaleTest {
 	
-	Sale s;
+	Sale s ;
+	Property p;
+	Customer c;
+	Customer c2;
+	Customer c3;
+	
 	
 	@BeforeEach
 	void setup() throws Exception
 	{
-		s=new Sale("RMIT","12","2",4.50,300000.0,"08/04/2020");
+		 s = new Sale("PRID009", "address", 3, 2, 2, "flat", "fantastic4", "propertyOwnerID");
+		 p =new Sale("PRID001", "address", 2, 2, 2, "flat", "tenant_name", "CUST007");
+		//Property p1=new Sale("PRID002", "address", 2, 2, 2, "apartment", "tenant_name", "CUST008");
+		 c =new Customer("CUS001", "Pavan", "KA", "pavan.7185@gmail.com", "password",1100000, "occupation", "present_employer");
+		 c2=new Customer("CUS002", "kunz", "p", "kunal@gmail.com", "password",1200000, "occupation", "present_employer");
+		 c3=new Customer("CUS003", "Gagz", "p", "gagz@gmail.com", "password",1300000, "occupation", "present_employer");
 	}
 	
 	@AfterEach
@@ -22,54 +32,31 @@ class SaleTest {
 		
 	}
 	
-	@Test
+	@Test //Positive Junit Test case
 	void test1() throws Exception {
-		assertEquals(s.manageinspection(),true);
-		System.out.println("success");
 		
-	}
-	@Test
-	void test() throws Exception {
-		assertEquals(s.getproperty_sellingprice(),300000.0);
+		s.propertyreply(c,p,260000);
 		System.out.println("success");
+	}
 		
-		}
-	@Test
-	void testnegotiateoffer() throws Exception
-	{
-		fail(" negotiateoffer() Method not yet implemented");
+	@Test  //Positive Junit Test Case
+	void test2() throws Exception {
+			
+    s.propertyreply(c2,p,280000);
+    System.out.println("**Customer 2 with higer bid is given the property/n**");	
 	}
 	
-	@Test
-	void testfinaliseOffer() throws Exception
-	{
-		fail(" finaliseOffer() Method not yet implemented");
+	@Test  //Negative Junit Test Case
+	void test3() throws Exception {
+    s.propertyreply(c2,p,0);
+    System.out.println("**Auction continues**");	
 	}
 	
-	@Test
-	void testwithdrawoffer() throws Exception
-	{
-		fail(" withdrawoffer() Method not yet implemented");
+	@Test  //Negative Junit Test Case
+	void test4() throws Exception {
+    s.propertyreply(c3,p,225000);
+    System.out.println("**Auction won by customer 3 with 10000 less asking price of the previous value**");	
 	}
 	
-	@Test
-	void testmanageinspection() throws Exception
-	{
-		fail(" manageinspection() Method not yet implemented");
-	}
-	
-	@Test
-	void testmanage_failedauction() throws Exception
-	{
-		fail(" manage_failedauction() Method not yet implemented");
-	}
-	
-	@Test
-	void testmanagecontract() throws Exception
-	{
-		fail(" managecontract() Method not yet implemented");
-	}
-	
-	
-
 }
+	
