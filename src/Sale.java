@@ -321,7 +321,7 @@ public class Sale extends Property {
 				selfProperty=true;
 				break;
 			}*/
-		System.out.println("Welcome " + cus.getCustomer_id() + " for the auction of " + pr.getpropertyID());
+		System.out.println("Welcome " + cus.getcustomerID() + " for the auction of " + pr.getpropertyID());
 		double highestoffer=250000;
 	    double asking_price=200000;
 	    System.out.println("Current asking price :" + asking_price);
@@ -393,7 +393,7 @@ public class Sale extends Property {
 										setunderContract(true);
 										System.out.println("The property is under undercontract");
 										//assignSaleEmployee();
-										pr.setPropertyOwnerID(cus.getCustomer_id());
+										pr.setPropertyOwnerID(cus.getcustomerID());
 										System.out.println("*****Updated property details*****");
 										System.out.println("Property Owner Changed to " + pr.getPropertyOwnerID());
 										System.out.println(pr.toString());
@@ -427,7 +427,7 @@ public class Sale extends Property {
 					System.out.println("Your initial downpayment is " +secondHighestBid*0.10);
 					System.out.println("your Deposit is "+(secondHighestBid-(secondHighestBid*0.10)));
 					setunderContract(true);
-					pr.setPropertyOwnerID(cus.getCustomer_id());
+					pr.setPropertyOwnerID(cus.getcustomerID());
 					System.out.println("*****Updated property details*****");
 					System.out.println("Property Owner Changed to " + pr.getPropertyOwnerID());
 					System.out.println(pr.toString());
