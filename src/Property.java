@@ -9,6 +9,11 @@ abstract class Property
 	private int num_car_space;
 	private String house_type;
 	private String tenant_name;
+	private Buyer buyerId;
+	private Rentee renteeId;
+	private Vendor vendorId;
+	private Landlord landlordId;
+	private Inspection inspectionId;
 	protected int No_of_Days;
 	protected static final int DAY_LIMIT = 3;
 	

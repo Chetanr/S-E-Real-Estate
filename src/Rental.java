@@ -21,7 +21,9 @@ public class Rental extends Property
 	private double income;
 	private String occupation;
 	private String presentEmployer;
+	private String accept;
 	
+	static Scanner sc = new Scanner (System.in);
 	
 	
 
@@ -67,7 +69,6 @@ public class Rental extends Property
 	//negotiate management fee
 	public static double negotiateManagementFee(int property, double fees) throws Exception
 	{
-		Scanner sc = new Scanner (System.in);
 		char ch = 'Y';
 		
 		double offer;
@@ -129,44 +130,54 @@ public class Rental extends Property
 		
 		return fees;
 	}
+	
+	
+	//get the applicant details for the property under rent
+	public void makeApplication() 
+	{
+				
+	}
+	
+	
+	//view offers by the landlord
+	public void viewOffer()
+	{
+		System.out.println("Rental Amount: " + getRentalAmount());
+		System.out.println("Proposed Contract: " + getRentalAmount());
+		System.out.println(getProposedContractYears() + " months and " + getProposedContractMonths() + " months");
+		System.out.println("Do you want to accept offer?");
+		setAccept(sc.next());	
+	}
 
 
 	//get the applicant details for the property under rent
 	public void getApplicantDetails(Customer customer) 
 	{
-		
-		/* retrieve the data from the file
-		foreach (Customer c :)
-		{
-			if (customer.customer_id.Equals(c)) 
-			{*/
 				setCustomer_id(customer.getCustomer_id());
 				setFirstname(customer.getFirstname());
 				setSurename(customer.getSurename());
 				setIncome(customer.getIncome());
 				setOccupation(customer.getOccupation());
-				setPresent_employer(customer.getPresent_employer());
-			//}
-		//}
-		
+				setPresentEmployer(customer.getPresent_employer());
 	}
 	
 	
+	@Override
+	public void negotiateOffer() {
+		
+	}
+
+
+	@Override
+	public boolean acceptOffer() {
+		return false;
+	}
+	
+
 	//settle the payment
 	public boolean payAdvance()
 	{
 		return true;
-	}
-	
-
-
-	
-
-
-	@Override
-	public void negotiateOffer() 
-	{
-		// TODO Auto-generated method stub
 	}
 	
 	
@@ -181,21 +192,8 @@ public class Rental extends Property
 	
 	
 	private String getFirstname() {
-		return firstname;
+		return this.firstname;
 	}
-
-
-	//accepting the offer
-	@Override
-	public boolean acceptOffer() 
-	{
-		if(getNo_of_Days() > DAY_LIMIT)
-		{
-			return false;
-		}
-		return true;
-	}
-
 	
 	
 	//getter to get the management fee
@@ -208,13 +206,13 @@ public class Rental extends Property
 	//getter for No_of_Days
 	public int getNo_of_Days() 
 	{
-		return No_of_Days;
+		return this.No_of_Days;
 	}
 	
 	
 	//getter for fee
 	public double getFee() {
-		return fee;
+		return this.fee;
 	}
 
 
@@ -235,26 +233,63 @@ public class Rental extends Property
 
 	private void setSurename(String surename) {
 		this.surename = surename;
+	}	
+	
+	
+	private double getRentalAmount() {
+		return this.rentalAmount;
 	}
 
 
-	private void setIncome(double string) {
-		this.income = string;
+	public void setRentalAmount(double rentalAmount) {
+		this.rentalAmount = rentalAmount;
 	}
 
 
-	private void setOccupation(String occupation) {
+	public int getProposedContractMonths() {
+		return this.proposedContractMonths;
+	}
+
+
+	public void setProposedContractMonths(int proposedContractMonths) {
+		this.proposedContractMonths = proposedContractMonths;
+	}
+
+
+	public int getProposedContractYears() {
+		return this.proposedContractYears;
+	}
+
+	
+	public void setProposedContractYears(int proposedContractYears) {
+		this.proposedContractYears = proposedContractYears;
+	}
+	
+	
+	public String getAccept() {
+		return this.accept;
+	}
+
+
+	public void setAccept(String accept) {
+		this.accept = accept;
+	}
+	
+	
+	public void setIncome(double income) {
+		this.income = income;
+		
+	}
+
+
+	public void setOccupation(String occupation) {
 		this.occupation = occupation;
+		
 	}
 
 
-	private void setPresent_employer(String present_employer) {
-		this.presentEmployer = present_employer;
+	public void setPresentEmployer(String presentEmployer) {
+		this.presentEmployer = presentEmployer;
+		
 	}
-	
-
-	
-
-
-	
 }
