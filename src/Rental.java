@@ -21,6 +21,8 @@ public class Rental extends Property
 	private double income;
 	private String occupation;
 	private String presentEmployer;
+	private Rentee renteeId;
+	private Landlord landlordId;
 	private String accept;
 	
 	static Scanner sc = new Scanner (System.in);
@@ -36,9 +38,7 @@ public class Rental extends Property
 		this.proposedContractMonths = proposed_contract_months;
 		this.proposedContractYears = proposed_contract_years;
 		this.rentalAmount = rental_amount;
-	}
-	
-	
+	}		
 	
 	
 	public Rental() {
@@ -200,13 +200,6 @@ public class Rental extends Property
 	public double getManagementFee() 
 	{
 		return this.fee;
-	}
-	
-	
-	//getter for No_of_Days
-	public int getNo_of_Days() 
-	{
-		return this.No_of_Days;
 	}
 	
 	

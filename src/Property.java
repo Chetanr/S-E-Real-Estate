@@ -1,20 +1,14 @@
-
 abstract class Property 
 {
 	private String property_id;
 	private String address;
 	private String suburb;
-	private int num_bed;
-	private int num_bath;
-	private int num_car_space;
-	private String house_type;
-	private String tenant_name;
-	private Buyer buyerId;
-	private Rentee renteeId;
-	private Vendor vendorId;
-	private Landlord landlordId;
+	private int numBed;
+	private int numBath;
+	private int numCarSpace;
+	private String houseType;
+	private String tenantName;
 	private Inspection inspectionId;
-	protected int No_of_Days;
 	protected static final int DAY_LIMIT = 3;
 	
 	
@@ -29,14 +23,7 @@ abstract class Property
 	public abstract boolean acceptOffer();
 
 
-	public String getTenant_name() {
-		return tenant_name;
-	}
-
-
 	public void setTenant_name(String tenant_name) {
-		this.tenant_name = tenant_name;
-	}
-	
-	
+		this.tenantName = tenant_name;
+	}	
 }
