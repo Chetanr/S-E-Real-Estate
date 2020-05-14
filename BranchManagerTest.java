@@ -58,6 +58,8 @@ public class BranchManagerTest
 	{
 		System.out.println("-------testAssignEmployee1-----");
 		branchManager.assignEmployee(propertyManager1, rentalProperty1);
+		Rental rentalProperty = (Rental)rentalProperty1;
+		assertEquals(propertyManager1,rentalProperty.getPropertyManager());
 	}
 	
 	//Positive JUnit Test case
@@ -67,6 +69,8 @@ public class BranchManagerTest
 	{
 		System.out.println("-------testAssignEmployee2-----");
 		branchManager.assignEmployee(saleConsultant1, saleProperty1);
+		Sale saleProperty = (Sale)saleProperty1;
+		assertEquals(saleConsultant1,saleProperty.getSalesConsultant());
 	}
 		
 	//Negative JUnit Test case
@@ -81,19 +85,22 @@ public class BranchManagerTest
 	//Negative JUnit Test case
 	//Trying to assign another Property Manager to a rental property
 	@Test (expected = PropertyAlreadyAssignedEmployee.class)
-	public void testAssignEmployee5() throws Exception
+	public void testAssignEmployee4() throws Exception
 	{
-		System.out.println("-------testAssignEmployee5-----");
+		System.out.println("-------testAssignEmployee4-----");
 		branchManager.assignEmployee(propertyManager1, rentalProperty1);
 		branchManager.assignEmployee(propertyManager2, rentalProperty1);
 	}
 	//Positive test case showing that salesconsultant can be assigned more than one property
 	@Test
-	public void testAssignEmployee6() throws Exception
+	public void testAssignEmployee5() throws Exception
 	{
-		System.out.println("-------testAssignEmployee6-----");
+		System.out.println("-------testAssignEmployee5-----");
 		branchManager.assignEmployee(saleConsultant1, saleProperty1);
 		branchManager.assignEmployee(saleConsultant1, saleProperty2);
+		SalesConsultant salesConsultant = (SalesConsultant) saleConsultant1;
+		assertEquals(salesConsultant.getProperty().get(0), saleProperty1);
+		assertEquals(salesConsultant.getProperty().get(1), saleProperty2);
 	}
 		
 		
