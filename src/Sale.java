@@ -20,7 +20,7 @@ public class Sale extends Property {
 	private String auctionNegotiationInspectionDate;
 	private double propertyAskingValue;
 	private int auctionStatus;
-	private final double downPaymentPercentage = 0.10;
+	private final double DOWN_PAYMENT_PERCENTAGE = 0.10;
 	private double deposit;
 	private int increaseBidReserveprice=1000;
 	private String maxBid;
@@ -33,6 +33,8 @@ public class Sale extends Property {
 	private String creator;
 	private double propertyNegoPrice;
 	private double negoDownPayment;
+	private final double DEDUCE_RESERVEPRICE=10000;
+	private double initialDownpayment;
 	
 	
 	private ArrayList<reply> responseList=new ArrayList<reply>();
@@ -139,7 +141,7 @@ public class Sale extends Property {
 	public void managecontract() {
 		//method to manage the contract
 	}
-	public void acceptoffer(Customer cnego,Property prnego,Vendor vnego, double formaloffer ) //negotiation
+	public void acceptOffer(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
 	{ 	
 		
 		//Scanner no=new Scanner(System.in);
@@ -195,12 +197,12 @@ public class Sale extends Property {
 			return false;
 		}
 	}
-	public boolean checkdownpayment(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
+	public void checkDownPayment(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
 	{
 		Scanner uo=new Scanner(System.in);
 		//property_sellingprice=formaloffer;
 		//property_sellingprice=highestoffer;
-		 negoDownPayment=propertyNegoPrice*downPaymentPercentage;
+		 negoDownPayment=propertyNegoPrice*DOWN_PAYMENT_PERCENTAGE;
 		
 
 				if(noOfDays <= 1)
@@ -219,10 +221,9 @@ public class Sale extends Property {
 				}
 				else {
 					System.out.println("you have exceeded the 24 hour limit");
-				}
-		return test1;	
+				}	
 	}	
-	public void checkdeposit(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
+	public void checkDeposit(Customer cnego,Property prnego,Vendor vnego, double formaloffer) //negotiation
 	{
 		//Scanner dep=new Scanner(System.in);
 		deposit=propertyNegoPrice-negoDownPayment;		
@@ -265,13 +266,13 @@ public class Sale extends Property {
 	
 	
 	
-	public void manageAuctionInspection(Property property_id) throws ParseException //auction
+	public void manageAuctionInspection(Property propertyID) throws ParseException //auction
 	{
 		Scanner ur=new Scanner(System.in);
 		
 		// a vendor enters the inspection date for his property before the auction date comparing the inspection date and auction date
 	    
-		System.out.println("Enter the auction date that you want for the " + property_id + "in the format (yyyy-mm-dd)");
+		System.out.println("Enter the auction date that you want for the " + propertyID + "in the format (yyyy-mm-dd)");
 	    String D=ur.next();  
 	    if(compareDates(D,getauctionNegotiationDate())== true)
 	    {
@@ -296,7 +297,7 @@ public class Sale extends Property {
 	        }
 	    }
 	
-	private void NewProperty(String customer)//to add a property
+	private void newProperty(String customer)//to add a property
 	{
 		Scanner np=new Scanner(System.in);
 		System.out.println("Enter the specs of the property");
@@ -310,7 +311,7 @@ public class Sale extends Property {
 		
 	}
 	
-	public void propertyreply(Customer cus, Property pr,double bid)//auction
+	public void propertyReply(Customer cus, Property pr,double bid)//auction
 	//customer will come when u login 
 	{	
 		Scanner rw=new Scanner(System.in);
@@ -341,7 +342,7 @@ public class Sale extends Property {
 		double highestoffer=250000;
 	    double asking_price=200000;
 	    System.out.println("Current asking price :" + asking_price);
-	    System.out.println("Minimum raise needed for the offer" + increaseBidReserveprice);
+	    System.out.println("Minimum raise needed for the offer is " + increaseBidReserveprice);
 	    
 		boolean propertyNotPresent=false;
 		boolean auctionClosed=false;
@@ -387,9 +388,9 @@ public class Sale extends Property {
 					{
 						System.out.println("Property Sold to you,Selling Price for the Propert is "+highestoffer);
 						propertySellingPrice=highestoffer;
-						double initiadownpayment=propertySellingPrice*0.10;
-						System.out.println("Your initial downpayment is " +initiadownpayment);
-						System.out.println("Do u wish to pay the downpayment $"+initiadownpayment+ " within 1 day");
+						 initialDownpayment=propertySellingPrice*0.10;
+						System.out.println("Your initial downpayment is " +initialDownpayment);
+						System.out.println("Do u wish to pay the downpayment $"+initialDownpayment+ " within 1 day");
 						String check1="Yes";
 						if(check1.equalsIgnoreCase("yes"))
 						{
@@ -398,7 +399,7 @@ public class Sale extends Property {
 								{
 									System.out.println("Downpayment is received");
 									
-									deposit=propertySellingPrice-initiadownpayment;
+									deposit=propertySellingPrice-initialDownpayment;
 									
 									
 									//System.out.println(" Do you want to submit the deposit which is $" +deposit);
@@ -418,8 +419,26 @@ public class Sale extends Property {
 									else
 									{
 									System.out.println("Deposit not made/n");	
-									System.out.println("Property "+pr.getpropertyID()+"not assigned to anyone/n");
-									System.out.println("So again available for auction with asking price $" + (asking_price-10000));
+									System.out.println("Property "+pr.getpropertyID()+" will be assigned to the second highest bidder/n");
+									double secondHighestBid=bid;
+									 if(secondHighestBid>=asking_price)
+									 {
+									   System.out.println("Property Sold to second highest bid,Selling Price for the Property is "+secondHighestBid);
+									   System.out.println("Your initial downpayment is " +secondHighestBid*0.10);
+									   System.out.println("your Deposit is "+(secondHighestBid-(secondHighestBid*0.10)));
+									   setunderContract(true);
+									   pr.setPropertyOwnerID(cus.getcustomerID());
+									   
+									   System.out.println("*****Updated property details*****");
+									   System.out.println("Property Owner Changed to " + pr.getPropertyOwnerID());
+									   System.out.println(pr.toString());
+									   break;
+									 }
+									   else
+									   {
+										   System.out.println("So again available for auction with asking price $" + (asking_price-10000));
+									   }
+									
 									}			
 								}
 							else {
@@ -438,6 +457,7 @@ public class Sale extends Property {
 				else if(bid<highestoffer && bid>asking_price)
 				{
 					System.out.println("offer accepted and recorded however not heightest ");
+					System.out.println("Current asking price was : $" + asking_price+" reduced to "+(asking_price-DEDUCE_RESERVEPRICE) );	
 					double secondHighestBid=bid;
 					System.out.println("Property Sold to you,Selling Price for the Property is "+secondHighestBid);
 					System.out.println("Your initial downpayment is " +secondHighestBid*0.10);
@@ -572,7 +592,7 @@ public class Sale extends Property {
 				// TODO Auto-generated method stub
 				return null;
 			}
-	public void checkcommisionrate()//negotiation
+	public void checkCommisionrate()//negotiation
 	//commission rate between vendor and sales consultant is decided 
 	{
 		Scanner bo=new Scanner(System.in);
@@ -613,13 +633,14 @@ public class Sale extends Property {
 		{
 			System.out.println("Functionality not implemented");
 		}	
-		*/
-	
+		
+	*/
 
 
-		Customer cus = new Customer("CUS001", "Pavan", "KA", "pavan.7185@gmail.com", "password",1000000, "occupation", "present_employer");
+		Customer cus = new Customer("BUY001", "Pavan", "KA", "pavan.7185@gmail.com", "password",1000000, "occupation", "present_employer");
+		Customer cus1 = new Customer("BUY002", "Sanjay", "K", "sanjay.7185@gmail.com", "password",1100000, "occupation", "present_employer");
 		Customer cnego = new Customer("CUS010", "Virat", "K", "virat@gmail.com", "password",1200000, "occupation", "present_employer");
-		Property pr = new Sale("PRID001", "address", 2, 2, 2, "house_type", "tenant_name", "CUST007");
+		Property pr = new Sale("PRID001", "address", 2, 2, 2, "house_type", "tenant_name", "EVEN007");
 		Property prnego = new Sale("PRID002", "205 Henry Street", 2, 2, 2, "apartment", "tenant_name", "CUST020");
 		Employee Sc=new SalesConsultant("SALC001","Auction",10000,25);
 		Sale s=new Sale("PRID002", "address", 2, 2, 2, "house_type", "tenant_name", "CUST008");
@@ -627,8 +648,10 @@ public class Sale extends Property {
 		//SalesConsultant sac=new ("SALC001","Auction",10000,25);
 		Vendor vnego=new Vendor("VEN002", "Simon", "S", "simon@gmail.com", "password",1500000, "occupation", "present_employer");
 		
-		s.propertyreply(cus, s,260000);
+		s.propertyReply(cus, pr,260000);
 		
-	}
 	
 	}
+	
+	
+}
