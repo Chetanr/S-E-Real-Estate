@@ -35,28 +35,29 @@ class SaleTest {
 	@Test //Positive Junit Test case
 	void test1() throws Exception {
 		
-		s.propertyreply(c,p,260000);
+		s.propertyReply(c,p,260000);
 		System.out.println("success");
 	}
 		
 	@Test  //Positive Junit Test Case
 	void test2() throws Exception {
 			
-    s.propertyreply(c2,p,280000);
+    s.propertyReply(c2,p,280000);
     System.out.println("**Customer 2 with higer bid is given the property/n**");	
 	}
 	
 	@Test  //Negative Junit Test Case
 	void test3() throws Exception {
-    s.propertyreply(c2,p,0);
+    s.propertyReply(c2,p,0);
     System.out.println("**Auction continues**");	
 	}
 	
 	@Test  //Negative Junit Test Case
 	void test4() throws Exception {
-    s.propertyreply(c3,p,225000);
+    s.propertyReply(c3,p,225000);
     System.out.println("**Auction won by customer 3 with 10000 less asking price of the previous value**");	
 	}
+	
 	
 }
 	
