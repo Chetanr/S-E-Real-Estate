@@ -2,32 +2,21 @@ import java.util.ArrayList;
 
 public class PropertyManager extends Employee
 {
-	private String property;
+	private ArrayList<Rental> properties;
 	private ArrayList<Inspection> inspection;
 	private boolean createInspection;
 	public PropertyManager(String ID,String password , String name, String type, double salary, double hourlyRate)
 	{
 		super(ID, password, name, type, salary, hourlyRate);
-		property = null;
 		createInspection = false;
 		inspection = new ArrayList<Inspection>();
+		properties = new ArrayList<Rental>();
 	}
 	
 	
-	public void advertiseProperty(Rental prop)
-	{
-		if(this.getID().equalsIgnoreCase(prop.getPropertyManager()))
-		{
-			System.out.println("The property details are: \n"+prop);
-		}
-		else
-		{
-			System.out.println("You cannot advertise the property as you are not assigned to it");
-		}
-	}
 	public void createInspection(Rental rental)
 	{
-		if(this.getID().equalsIgnoreCase(rental.getPropertyManager()))
+		if(this.getID().equalsIgnoreCase(rental.getPropertyManager().getID()))
 		{
 			System.out.println(this.getID());
 			System.out.println(rental.getPropertyManager());
@@ -92,36 +81,16 @@ public class PropertyManager extends Employee
 		return inspection;
 	}
 
-	public String getProperty() 
+	public ArrayList<Rental> getProperty() 
 	{
-		return property;
+		return this.properties;
 	}
 
 
-	public void setProperty(String property) 
+	public void setProperty(Rental property) 
 	{
-		this.property = property;
+		properties.add(property);
 	}
 
 
-	public boolean reviewApplication()
-	{
-		return true;
-	}
-	public boolean checkReport()
-	{
-		return true;
-	}
-	public boolean organiseWork()
-	{
-		return true;
-	}
-	public void payBill()
-	{
-		
-	}
-	public void deductFee()
-	{
-		
-	}
 }
