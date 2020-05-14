@@ -3,25 +3,22 @@ import java.util.ArrayList;
 public class SalesConsultant extends Employee
 {
 	private static final double RATE = 0.4;
-	private String property;
+	private ArrayList<Sale> properties;
 	private ArrayList<Inspection> inspection;
-	private boolean createInspection = false;
+	private boolean createInspection;
+	private double commission;
 	public SalesConsultant(String ID,String password , String name, String type, double salary, double hourlyRate)
 	{
 		super(ID, password, name, type, salary, hourlyRate);
-		property = null;
 		inspection = new ArrayList<Inspection>();
+		properties = new ArrayList<Sale>();
+		createInspection = false;
 	}
 
 	
-	public void commission()
-	{
-		
-	}
-	
 	public void advertiseProperty(Sale sale)
 	{
-		if(this.getID().equalsIgnoreCase(sale.getSalesConsultant()))
+		if(this.getID().equalsIgnoreCase(sale.getSalesConsultant().getID()))
 		{
 			System.out.println("The property details are: \n"+sale);
 		}
@@ -34,13 +31,10 @@ public class SalesConsultant extends Employee
 	{
 		
 	}
-	public boolean organiseDocs()
-	{
-		return true;
-	}
 	public void createInspection(Sale sale)
 	{
-		if(this.getID().equalsIgnoreCase(sale.getSalesConsultant()))
+		String salesConsultantID = sale.getSalesConsultant().getID();
+		if(this.getID().equalsIgnoreCase(salesConsultantID))
 		{
 			
 			inspection.add(new Inspection (sale, "22/08/1994", this.getID()));
@@ -103,16 +97,42 @@ public class SalesConsultant extends Employee
 	{
 		
 	}
+	public double getRate()
+	{
+		return RATE;
+	}
 	
-	public String getProperty() 
+	public ArrayList<Sale> getProperty() 
 	{
-		return property;
+		return this.properties;
 	}
 
 
-	public void setProperty(String property) 
+	public void setProperty(Sale property) 
 	{
-		this.property = property;
+		properties.add(property);
+		
 	}
+	
+	public void calculateCommission()
+	{
+		for(int i = 0; i < properties.size(); i++)
+		{
+			commission += properties.get(i).getSalesConsultantCommission();
+		}
+	}
+	@Override
+	public void calculateMonthlySalary()
+	{
+		if(getType().equalsIgnoreCase("PT"))
+		{
+			setSalaryForMonth((getHourlyRate() * getHours()) + commission);
+		}
+		else
+		{
+			setSalaryForMonth((getSalary() * getHours()) + commission);
+		}
+	}
+	
 	
 }
