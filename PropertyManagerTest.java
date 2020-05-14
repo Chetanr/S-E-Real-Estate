@@ -28,7 +28,7 @@ public class PropertyManagerTest
 	public void setUp() throws Exception 
 	{
 	
-		pm = new PropertyManager("Joseph Isaac", "FT", 90000.0, 0.0);
+		pm = new PropertyManager("pm001", "welcome123","Joseph Isaac", "FT", 90000.0, 0.0);
 	}
 	@After
 	public void tearDown() throws Exception 
@@ -48,12 +48,6 @@ public class PropertyManagerTest
 	{
 		fail("conductInspection() Method not yet implemented");
 		
-	}
-
-	@Test
-	public void testSetID() throws Exception
-	{
-		fail("setID() Method not yet implemented");
 	}
 	
 	@Test
