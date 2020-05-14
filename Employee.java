@@ -8,6 +8,7 @@ public class Employee
 	private double hours;
 	private double hourlyRate;
 	private String type;
+	private double salaryForMonth;
 	
 	public Employee(String ID,String password , String name,String type, double salary, double hourlyRate)
 	{
@@ -19,6 +20,7 @@ public class Employee
 		this.hourlyRate = hourlyRate;
 		this.hours = 0.0;
 	}
+	
 	
 	public void setPassword(String password) 
 	{
@@ -35,21 +37,20 @@ public class Employee
 		return this.name;
 	}
 	
-	public double calculateSalary()
+	public void viewSalary()
 	{
-		if(type.equalsIgnoreCase("FT"))
+		if(salaryForMonth == 0)
 		{
-			return this.salary;
+			System.out.println("Salary is 0 as no hours were entered for this month");
 		}
 		else
 		{
-			this.salary = hourlyRate * hours;
-			return this.salary;
+			System.out.println("Salary is "+salaryForMonth);
 		}
 		
 	}
-	
-	public void checkType(BranchManager bm) throws HourException
+	//change method name to enter hours
+	public void enterHours(BranchManager bm) throws HourException
 	{
 		if(type.equalsIgnoreCase("PT"))
 		{
@@ -98,11 +99,6 @@ public class Employee
 		return ID;
 	}
 
-	public void setID(String iD) 
-	{
-		ID = iD;
-	}
-
 	public double getHourlyRate() 
 	{
 		return hourlyRate;
@@ -126,6 +122,27 @@ public class Employee
 	public void setName(String name) 
 	{
 		this.name = name;
+	}
+	public void calculateMonthlySalary()
+	{
+		if(type.equalsIgnoreCase("PT"))
+		{
+			salaryForMonth = hourlyRate * hours;
+		}
+		else
+		{
+			salaryForMonth = salary;
+		}
+	}
+	
+	public double getSalaryForMonth()
+	{
+		return salaryForMonth;
+	}
+	
+	public void setSalaryForMonth(double salaryForMonth)
+	{
+		this.salaryForMonth = salaryForMonth;
 	}
 	
 	
