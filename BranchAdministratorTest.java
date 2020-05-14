@@ -29,9 +29,9 @@ public class BranchAdministratorTest
 	public void setUp() throws Exception 
 	{
 	
-		ba1 = new BranchAdministrator("James Isaac", "PT", 0, 25);  //Part Time employee
-		ba2 = new BranchAdministrator("John Lever", "FT", 2000, 0); //Full time employee
-		bm = new BranchManager("Branch Manager", "FT", 5000, 0);
+		ba1 = new BranchAdministrator("ba001", "welcome123","James Isaac", "PT", 0.0, 25.0);  //Part Time employee
+		ba2 = new BranchAdministrator("ba002", "welcome456","John Lever", "FT", 2000.0, 0.0); //Full time employee
+		bm = new BranchManager("bm001","welcome789","Branch Manager", "FT", 5000.0, 0.0);
 	}
 	@After
 	public void tearDown() throws Exception 
@@ -44,7 +44,7 @@ public class BranchAdministratorTest
 	public void testCalculateSalary()  throws Exception
 	{
 		ba1.enterHours(bm);      //Entering hours as 10
-		ba1.calculateSalary();
+		ba1.viewSalary();
 		assertEquals(ba1.getSalary(), 250);
 		System.out.println("Test successful");
 	}
@@ -54,7 +54,7 @@ public class BranchAdministratorTest
 	public void testCalculateSalary1()  throws Exception
 	{
 		ba2.enterHours(bm);      //Entering hours as 10
-		ba2.calculateSalary();
+		ba2.viewSalary();
 		assertEquals(ba2.getSalary(), 2000);
 		System.out.println("Test successful");
 	}
@@ -73,12 +73,6 @@ public class BranchAdministratorTest
 	{
 		fail("creditAmount() Method not yet implemented");
 		
-	}
-
-	@Test
-	public void testSetID() throws Exception
-	{
-		fail("setID() Method not yet implemented");
 	}
 	
 	@Test
