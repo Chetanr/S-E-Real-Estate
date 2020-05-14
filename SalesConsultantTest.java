@@ -31,7 +31,7 @@ public class SalesConsultantTest
 	public void setUp() throws Exception 
 	{
 		System.out.println("Before each method");
-		sc1 = new SalesConsultant("James Isaac", "PT", 0, 25);  //Part Time employee
+		sc1 = new SalesConsultant("sc001", "welcome123","James Isaac", "PT", 0, 25);  //Part Time employee
 	}
 
 	@After
@@ -76,15 +76,6 @@ public class SalesConsultantTest
 	{
 		fail("organiseDocs() Method not yet implemented");
 	}
-
-	@Test
-	public void testSetID() throws Exception
-	{
-		fail("setID() Method not yet implemented");
-	}
-
-
-
 
 }
 
