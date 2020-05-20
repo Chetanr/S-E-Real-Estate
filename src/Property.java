@@ -1,4 +1,4 @@
-abstract class Property 
+abstract class Property
 {
 	private String property_id;
 	private String address;
