@@ -1,15 +1,17 @@
+import java.util.ArrayList;
 
 public class Landlord extends Customer{
 
 	private String landlordId;
-	private String landlordProperty;
+	//private String landlordProperty;
+	private ArrayList<Property> landlordProperty = new ArrayList<Property>();
 	
 	public Landlord(String customer_id, String firstname, String surename, String email_address, String password,
-			double income, String occupation, String present_employer, String landlordId, String landlordProperty) {
+			String income, String occupation, String present_employer) {
 		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
 		
-		this.landlordId       = landlordId;
-		this.landlordProperty = landlordProperty;
+		this.landlordId       = customer_id;
+		//this.landlordProperty = landlordProperty;
 	}
 	
 	public String getLandlordId() {
@@ -19,12 +21,15 @@ public class Landlord extends Customer{
 		this.landlordId = landlordId;
 	}
 	
+	/*
 	public String getLandlordProperty() {
 		return landlordProperty;
 	}
+	
 	public void setLandlordProperty(String LandlordProperty) {
 		this.landlordProperty = landlordProperty;
 	}
+	*/
 	
 	public String createProfile() {
 		

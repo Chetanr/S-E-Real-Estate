@@ -4,11 +4,11 @@ public class Vendor extends Customer{
     private String vendorProperty;
     
 	public Vendor(String customer_id, String firstname, String surename, String email_address, String password,
-			double income, String occupation, String present_employer, String vendorId, String vendorProperty) {
+			String income, String occupation, String present_employer) {
 		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
 		
-		this.vendorId       = vendorId;
-		this.vendorProperty = vendorProperty;
+		this.vendorId = customer_id;
+		//this.vendorProperty = vendorProperty;
 	}
 
 	public String getVendorId() {

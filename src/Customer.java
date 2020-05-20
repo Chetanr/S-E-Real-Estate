@@ -5,12 +5,12 @@ public class Customer {
 	protected String surename;
 	protected String email_address;
 	protected String password;
-	protected double income;
+	protected String income;
 	protected String occupation;
 	protected String present_employer;
 	
 	public Customer(String customer_id, String firstname, String surename, String email_address, String password,
-			double income, String occupation, String present_employer) {
+			String income, String occupation, String present_employer) {
 
 		this.customer_id      = customer_id;
 		this.firstname        = firstname;
@@ -40,10 +40,10 @@ public class Customer {
 	public void setSurename(String surename) {
 		this.surename = surename;
 	}
-	public double getIncome() {
+	public String getIncome() {
 		return income;
 	}
-	public void setIncome(double income) {
+	public void setIncome(String income) {
 		this.income = income;
 	}
 	public String getOccupation() {
@@ -60,9 +60,9 @@ public class Customer {
 	}
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", firstname=" + firstname + ", surename=" + surename
-				+ ", email_address=" + email_address + ", income=" + income + ", occupation="
-				+ occupation + ", present_employer=" + present_employer + "]";
+		return customer_id + "," + firstname + "," + surename
+				+ "," + email_address + "," + income + ","
+				+ occupation + "," + present_employer;
 	}
 	
 	

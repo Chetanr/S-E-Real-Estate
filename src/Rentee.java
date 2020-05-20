@@ -4,10 +4,10 @@ public class Rentee extends Customer{
 	private String renteeId;
 	
 	public Rentee(String customer_id, String firstname, String surename, String email_address, String password,
-			double income, String occupation, String present_employer, String renteeId) {
+			String income, String occupation, String present_employer) {
 		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
 		
-		this.renteeId = renteeId;
+		this.renteeId = customer_id;
 	}
 	
 	public String getRenteeId() {

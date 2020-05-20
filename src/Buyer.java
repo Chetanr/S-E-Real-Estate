@@ -4,10 +4,10 @@ public class Buyer extends Customer{
 	private String buyerId;
 	
 	public Buyer(String customer_id, String firstname, String surename, String email_address, String password,
-			double income, String occupation, String present_employer, String buyerId) {
+			String income, String occupation, String present_employer) {
 		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
 		
-		this.buyerId = buyerId;
+		this.buyerId = customer_id;
 	}
 	
 	public String getBuyerId() {

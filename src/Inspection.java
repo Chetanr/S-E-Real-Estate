@@ -1,28 +1,33 @@
+import java.util.ArrayList;
 
 public class Inspection {
 
-	private int inspectionId;
+	private String inspectionId;
 	private String description;
 	private String date;
 	private String time;
 	private String agentId;
 	private int status; // 0- created, 1 - cancelled, 2 - completed
+	private ArrayList<Property> propertyList = new ArrayList<Property>();
 	
-	public Inspection( int inspectionId, String description, String date, String time, String agentId) {
+	public Inspection( String inspectionId, String description, String date, 
+			String time, String agentId, Property propertyObj) {
 		this.inspectionId = inspectionId;
 		this.description  = description;
 		this.date         = date;
 		this.time         = time;
 		this.agentId      = agentId;
 		this.status       = 0;
+		
+		this.propertyList.add(propertyObj);
 		notifyBuyerOrRentee();
 	}
 	
-    public int getInspectionId() {
+    public String getInspectionId() {
 	    return inspectionId;
 	}
 
-	public void setInspectionId(int inspectionId) {
+	public void setInspectionId(String inspectionId) {
 	    this.inspectionId = inspectionId;
 	}
 	
@@ -68,7 +73,7 @@ public class Inspection {
 	}
 	
 	public void notifyBuyerOrRentee() {
-		
+		System.out.println("Notify Buyer and Rentee");
 		
 	}
 	
