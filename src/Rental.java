@@ -9,8 +9,6 @@ public class Rental extends Property
 	private double rentalAmount;
 	private int contractMonths;
 	private int contractYears;
-	private int acceptableContractMonths;
-	private int acceptableContractYears;
 	private int proposedContractMonths;
 	private int proposedContractYears;
 	private static final int ACCEPT_DAYS = 3;
@@ -23,27 +21,20 @@ public class Rental extends Property
 	private String presentEmployer;
 	private Rentee renteeId;
 	private Landlord landlordId;
-	private String accept;
+	private String status;
 	
 	static Scanner sc = new Scanner (System.in);
 	
-	
 
-	
-
-	public Rental(int contract_months, int contract_years, int proposed_contract_months, int proposed_contract_years, double rental_amount)
+	public Rental(String propertyId, int numBed, int numBath, int numCarSpace, String addr, String suburb, String houseType,  int contract_months, int contract_years, double rental_amount)
 	{
+		super (propertyId, addr, suburb, numBed, numBath, numCarSpace, houseType);
 		this.contractMonths = contract_months;
 		this.contractYears = contract_years;
-		this.proposedContractMonths = proposed_contract_months;
-		this.proposedContractYears = proposed_contract_years;
 		this.rentalAmount = rental_amount;
 	}		
 	
 	
-	public Rental() {
-		// TODO Auto-generated constructor stub
-	}
 
 
 
@@ -142,35 +133,61 @@ public class Rental extends Property
 	//view offers by the landlord
 	public void viewOffer()
 	{
+		String response;
 		System.out.println("Rental Amount: " + getRentalAmount());
 		System.out.println("Proposed Contract: " + getRentalAmount());
-		System.out.println(getProposedContractYears() + " months and " + getProposedContractMonths() + " months");
+		System.out.println(getProposedContractYears() + " years and " + getProposedContractMonths() + " months");
 		System.out.println("Do you want to accept offer?");
-		setAccept(sc.next());	
+		response = sc.next();
+		setStatus(response);	
 	}
 
 
 	//get the applicant details for the property under rent
-	public void getApplicantDetails(Customer customer) 
+//	public void setApplicantDetails(Customer customer) 
+//	{
+//		setCustomer_id(customer.getCustomer_id());
+//		setFirstname(customer.getFirstname());
+//		setSurename(customer.getSurename());
+//		setIncome(customer.getIncome());
+//		setOccupation(customer.getOccupation());
+//		setPresentEmployer(customer.getPresent_employer());
+//	}
+	
+	public void setApplicantDetails(String cid, String firstName, String surName, 
+			double income, String occupation, String presentEmp, int proposedMonths, int proposedYears)
 	{
-				setCustomer_id(customer.getCustomer_id());
-				setFirstname(customer.getFirstname());
-				setSurename(customer.getSurename());
-				setIncome(customer.getIncome());
-				setOccupation(customer.getOccupation());
-				setPresentEmployer(customer.getPresent_employer());
+		setCustomer_id(cid);
+		setFirstname(firstName);
+		setSurename(surName);
+		setIncome(income);
+		setOccupation(occupation);
+		setPresentEmployer(presentEmp);
+		setProposedContractMonths(proposedMonths);
+		setProposedContractYears(proposedYears);
 	}
 	
-	
-	@Override
-	public void negotiateOffer() {
-		
+	public void getApplicantDetails() 
+	{
+		System.out.println("Proposed Contract months: " + getProposedContractMonths());
+		System.out.println("Proposed Contract years: " + getProposedContractYears());
+		System.out.println("Income : " + getIncome());
 	}
+
+
+	private double getIncome() {
+		return this.income;
+	}
+
+
+
+
 
 
 	@Override
 	public boolean acceptOffer() {
-		return false;
+		setStatus("accept");
+		return true;
 	}
 	
 
@@ -184,7 +201,7 @@ public class Rental extends Property
 	//finalise offer and transfer to tenant
 	public void finaliseOffer()
 	{
-		if (payAdvance())
+		if (payAdvance() && getStatus().equalsIgnoreCase("accept"))
 		{
 			setTenant_name(getFirstname());
 		}
@@ -214,22 +231,22 @@ public class Rental extends Property
 		this.fee = fee;
 	}
 	
-	private void setCustomer_id(String customer_id) {
+	public void setCustomer_id(String customer_id) {
 		this.customer_id = customer_id;
 	}
 
 
-	private void setFirstname(String firstname) {
+	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
 
-	private void setSurename(String surename) {
+	public void setSurename(String surename) {
 		this.surename = surename;
 	}	
 	
 	
-	private double getRentalAmount() {
+	public double getRentalAmount() {
 		return this.rentalAmount;
 	}
 
@@ -259,13 +276,13 @@ public class Rental extends Property
 	}
 	
 	
-	public String getAccept() {
-		return this.accept;
+	public String getStatus() {
+		return this.status;
 	}
 
 
-	public void setAccept(String accept) {
-		this.accept = accept;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

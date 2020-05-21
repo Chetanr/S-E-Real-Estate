@@ -10,10 +10,21 @@ abstract class Property
 	private String tenantName;
 	private Inspection inspectionId;
 	protected static final int DAY_LIMIT = 3;
-	
-	
-	//abstract class to negotiate the offer between buyer and seller
-	public abstract void negotiateOffer();
+
+
+	public Property(String propertyId, String addr, String suburb, int numBed, int numBath, int numCarSpace,
+			String houseType) {
+		this.property_id = propertyId;
+		this.address = addr;
+		this.suburb = suburb;
+		this.numBed = numBed;
+		this.numBath = numBath;
+		this.numCarSpace = numCarSpace;
+		this.houseType = houseType;
+		this.tenantName = null;
+		
+		
+	}
 	
 	
 	//transfer the property contract to tenant
@@ -26,4 +37,8 @@ abstract class Property
 	public void setTenant_name(String tenant_name) {
 		this.tenantName = tenant_name;
 	}	
+	
+	public String getProperty_id() {
+		return property_id;
+	}
 }
