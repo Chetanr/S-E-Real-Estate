@@ -72,9 +72,10 @@ public class Inspection
 	
 	public String toString()
 	{
-		return "Property ID :"+propID+'\n'+"Inspection ID :"+inspectionID+"Status :"+status+
+		System.out.println("----Inspection Details-----");
+		return "Property ID :"+propID+'\n'+"Inspection ID :"+inspectionID+'\n'+"Status :"+status+
 				'\n'+"DateTime :"
-				+dateTime+'\n'+"Employee id :"+empID;
+				+dateTime+'\n'+"Employee id :"+empID+'\n';
 	}
 	
 	
