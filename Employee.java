@@ -21,6 +21,7 @@ public class Employee
 		this.hours = 0.0;
 	}
 	
+
 	
 	public void setPassword(String password) 
 	{
@@ -39,9 +40,13 @@ public class Employee
 	
 	public void viewSalary()
 	{
-		if(salaryForMonth == 0)
+		if(salaryForMonth == 0 && type.equalsIgnoreCase("PT"))
 		{
-			System.out.println("Salary is 0 as no hours were entered for this month");
+			System.out.println("Salary is calculated at the end of month.Please ensure to enter hours");
+		}
+		else if(salaryForMonth == 0 && type.equalsIgnoreCase("FT")) 
+		{
+			System.out.println("Salary is "+salary);
 		}
 		else
 		{
@@ -143,6 +148,13 @@ public class Employee
 	public void setSalaryForMonth(double salaryForMonth)
 	{
 		this.salaryForMonth = salaryForMonth;
+	}
+	public void printDetails()
+	{
+		if(type.equalsIgnoreCase("FT"))
+			System.out.println("Name: "+name+"\nID:"+ID+"\nSalary: "+salary+"\nType:"+type);
+		else
+			System.out.println("Name: "+name+"\nID:"+ID+"\nHourly Rate: "+hourlyRate+"\nType:"+type);
 	}
 	
 	
