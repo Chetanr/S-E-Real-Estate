@@ -15,7 +15,7 @@ public class Rental extends Property
 	private static final int BOND_PAY_DURATION = 1;	
 	private String customer_id ;
 	private String firstname;
-	private String surename;
+	private String surName;
 	private double income;
 	private String occupation;
 	private String presentEmployer;
@@ -33,10 +33,6 @@ public class Rental extends Property
 		this.contractYears = contract_years;
 		this.rentalAmount = rental_amount;
 	}		
-	
-	
-
-
 
 
 	//calculate the management fee for a property
@@ -114,19 +110,11 @@ public class Rental extends Property
 					System.out.println("Please enter valid input.");
 				}
 			}
-		} 
-		
+		} 		
 			
 		
 		
 		return fees;
-	}
-	
-	
-	//get the applicant details for the property under rent
-	public void makeApplication() 
-	{
-				
 	}
 	
 	
@@ -157,7 +145,7 @@ public class Rental extends Property
 	public void setApplicantDetails(String cid, String firstName, String surName, 
 			double income, String occupation, String presentEmp, int proposedMonths, int proposedYears)
 	{
-		setCustomer_id(cid);
+		setCustomerId(cid);
 		setFirstname(firstName);
 		setSurename(surName);
 		setIncome(income);
@@ -204,6 +192,7 @@ public class Rental extends Property
 		if (payAdvance() && getStatus().equalsIgnoreCase("accept"))
 		{
 			setTenant_name(getFirstname());
+			setStatus("let");
 		}
 	}
 	
@@ -231,7 +220,7 @@ public class Rental extends Property
 		this.fee = fee;
 	}
 	
-	public void setCustomer_id(String customer_id) {
+	public void setCustomerId(String customer_id) {
 		this.customer_id = customer_id;
 	}
 
@@ -242,7 +231,7 @@ public class Rental extends Property
 
 
 	public void setSurename(String surename) {
-		this.surename = surename;
+		this.surName = surename;
 	}	
 	
 	
