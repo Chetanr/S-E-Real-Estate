@@ -113,7 +113,7 @@ public class Sale extends Property {
 		else {
 			
 			this.replyList.add(reply);
-		    System.out.println("Highest Bid");
+		    System.out.println("Valid Bid Recorded");
 		    this.finalizeSaleOffer=Double.parseDouble(reply.getReplyValue());
 		    System.out.println("the Selling Price of the property is $" + finalizeSaleOffer);
 		    initialDownpayment=finalizeSaleOffer*0.10;
