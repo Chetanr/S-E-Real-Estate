@@ -122,8 +122,11 @@ public class Rental extends Property
 	public void viewOffer()
 	{
 		String response;
+		System.out.println("Applicant name: " + getFirstname());
+		System.out.println("Occupation: " + getOccupation());
+		System.out.println("Income: " + getIncome());
 		System.out.println("Rental Amount: " + getRentalAmount());
-		System.out.println("Proposed Contract: " + getRentalAmount());
+		System.out.println("Proposed Contract: ");
 		System.out.println(getProposedContractYears() + " years and " + getProposedContractMonths() + " months");
 		System.out.println("Do you want to accept offer?");
 		response = sc.next();
@@ -142,12 +145,17 @@ public class Rental extends Property
 //		setPresentEmployer(customer.getPresent_employer());
 //	}
 	
+	private String getOccupation() {
+		return occupation;
+	}
+
+
 	public void setApplicantDetails(String cid, String firstName, String surName, 
 			double income, String occupation, String presentEmp, int proposedMonths, int proposedYears)
 	{
 		setCustomerId(cid);
 		setFirstname(firstName);
-		setSurename(surName);
+		setSurname(surName);
 		setIncome(income);
 		setOccupation(occupation);
 		setPresentEmployer(presentEmp);
@@ -230,7 +238,7 @@ public class Rental extends Property
 	}
 
 
-	public void setSurename(String surename) {
+	public void setSurname(String surename) {
 		this.surName = surename;
 	}	
 	

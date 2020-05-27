@@ -10,16 +10,18 @@ public class Main {
 	
 	static ArrayList<Property> property = new ArrayList<Property>();
 	
+	static Rental rent1 = new Rental ("P1", 2, 2, 1, "33 Rose Lane", "Melbourne",  "flat" , 
+			6, 1, 1000);
+	Rental rent2 = new Rental ("P2", 2, 2, 1, "44 Cleve Lane", "Melbourne",  "flat" , 
+			6, 0, 1000);
+	
 	
 	public static void main(String[] args) {
 		
-		Rental rent1 = new Rental ("P1", 2, 2, 1, "33 Rose Lane", "Melbourne",  "flat" , 
-				6, 1, 1000);
-		Rental rent2 = new Rental ("P2", 2, 2, 1, "44 Cleve Lane", "Melbourne",  "flat" , 
-				6, 0, 1000);
 		
-		property.add(rent1);
-		property.add(rent2);
+		
+		//property.add(rent1);
+		//property.add(rent2);
 		while(ch != 3)
 		{
 			System.out.println("1. Rentee Login");
@@ -42,7 +44,6 @@ public class Main {
 		String pid = "P";
 		System.out.println("1. Add Property");
 		System.out.println("2. View offers");
-		System.out.println("3. ");
 		ch = sc.nextInt();
 		
 		if (ch == 1)
@@ -54,18 +55,20 @@ public class Main {
 			System.out.println("Enter property id: ");
 			pid = sc.next();
 			
-			for (Property i : property)
-			{
-				if(i.getProperty_id().equals(pid))
-				{
-					((Rental) i).viewOffer();
-					break;
-				}	
-				else
-				{
-					System.out.println("Property id not found.");
-				}
-			}				
+//			for (Property i : property)
+//			{
+//				if(i.getProperty_id().equals(pid))
+//				{
+//					((Rental) i).viewOffer();
+//					break;
+//				}	
+//				else
+//				{
+//					System.out.println("Property id not found.");
+//				}
+//			}	
+			
+			rent1.viewOffer();
 		}
 	}
 	private static void addProperty() {
@@ -103,6 +106,7 @@ public class Main {
 		Rental rental = new Rental(pid, numBed, numBath, numCarSpace, addr, suburb, houseType, contractMonth,
 				contractYear, rentalAmount);
 		property.add(rental);
+		System.out.println("Property successfully added.");
 		
 	}
 
@@ -121,50 +125,54 @@ public class Main {
 			pid = sc.next();
 			System.out.println("Enter the proposed contract months: ");
 			months = sc.nextInt();
-			System.out.println("Enter the proposed contract months: ");
+			System.out.println("Enter the proposed contract years: ");
 			years = sc.nextInt();
 			
-			if(searchproperty(pid))
-			{
-				for (Property i : property)
-				{
-					if(i.getProperty_id().equals(pid))
-					{
-						//enter customer details here
-						((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
-					}
-					
-				}
+//			if(searchproperty(pid))
+//			{
+//				for (Property i : property)
+//				{
+//					if(i.getProperty_id().equals(pid))
+//					{
+//						//enter customer details here
+//						((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
+//					}
+//					
+//				}
+				
+				rent1.setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
 				System.out.println("Successfully applied to property " + pid);
-			}
-			else
-			{
-				System.out.println("property not found. Please try again");
-			}
+//			}
+//			else
+//			{
+//				System.out.println("property not found. Please try again");
+//			}
 		}
 		else if (ch == 2)
 		{
 			System.out.println("Enter property id you want to view update: ");
 			pid = sc.next();
-			if(searchproperty(pid))
-			{
-				for (Property i :property)
-				{
-					if(i.getProperty_id().equals(pid))
-					{
-						if(((Rental) i).getStatus().equals(null))
-						{
-							System.out.println("No update available");
-						}
-						else if (((Rental) i).getStatus().equalsIgnoreCase("accept"))
+//			if(searchproperty(pid))
+//			{
+//				for (Property i :property)
+//				{
+//					if(i.getProperty_id().equals(pid))
+//					{
+////						if(((Rental) i).getStatus().equals(null))
+////						{
+////							System.out.println("No update available");
+////						}
+//						if (((Rental) i).getStatus().equalsIgnoreCase("accept"))
+			            if (rent1.getStatus().equalsIgnoreCase("accept"))
 						{
 							System.out.println("Congrats.! Your application has been accepted.!");
 							System.out.println("Please pay the advance to the landlord");
+//							break;
 						}
-					}
-				}
+//					}
+//				}
 				
-			}	
+//			}	
 		}
 		else if (ch == 3)
 		{
@@ -175,18 +183,25 @@ public class Main {
 			ch = sc.nextInt();
 			if (ch == 1)
 			{
-				for (Property i : property)
-				{
-					if(i.getProperty_id().equals(pid))
-					{
-						i.finaliseOffer();
-						System.out.println("Yuu are now the tenant of the house. You are now responsible "
-								+ "for the property. Please discuss the"
-								+ "terms and conditions with the landlord."
-								+ "Congratulation again.!");
-					}
-					
-				}
+//				for (Property i : property)
+//				{
+//					if(i.getProperty_id().equals(pid))
+//					{
+//						i.finaliseOffer();
+//						System.out.println("Yuu are now the tenant of the house. You are now responsible "
+//								+ "for the property. Please discuss the"
+//								+ "terms and conditions with the landlord."
+//								+ "Congratulation again.!");
+//						break;
+//					}
+//					
+//				}
+				rent1.finaliseOffer();
+				System.out.println("Yuu are now the tenant of the house. You are now responsible "
+						+ "for the property. Please discuss the"
+						+ "terms and conditions with the landlord."
+						+ "Congratulation again.!");
+				
 				
 			}
 			else if (ch == 2)

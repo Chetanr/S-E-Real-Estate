@@ -75,7 +75,10 @@ public class RealEstate {
 	
 	//menu for rentee
 	private static  void fullRenteeMenu() {
+	
 	String pid;
+	String propertyStr = "";
+	
 	int months;
 	int years;
 	System.out.println("1. apply to property");
@@ -98,7 +101,13 @@ public class RealEstate {
 				if(i.getProperty_id().equals(pid))
 				{
 					//enter customer details here
+					
 					((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
+					
+				}
+				else
+				{
+					System.out.println("Property id not found. Please try again");
 				}
 				
 			}
@@ -217,6 +226,8 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
+			
+			customerList.add(customerObj);
 		}
 		else if(custType.equals("2")) {
 			Customer customerObj = new Landlord(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -226,6 +237,8 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
+			
+			customerList.add(customerObj);
 		}
 		else if(custType.equals("3")) {
 			Customer customerObj = new Rentee(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -235,6 +248,8 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
+			
+			customerList.add(customerObj);
 		}
 		else if(custType.equals("4")) {
 			Customer customerObj = new Buyer(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -244,7 +259,11 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
+			
+			customerList.add(customerObj);
 		}
+		
+		
 		
 		try
 		{
@@ -256,10 +275,7 @@ public class RealEstate {
 		catch(IOException ioe)
 		{
 		    System.err.println("IOException: " + ioe.getMessage());
-		}
-		
-		//sc.close();
-		
+		}		
 	}
 	
 	
@@ -268,7 +284,6 @@ public class RealEstate {
 		String pid = "P";
 		System.out.println("1. Add Property");
 		System.out.println("2. View offers");
-		System.out.println("3. ");
 		ch = sc.nextInt();
 		
 		if (ch == 1)
@@ -305,6 +320,9 @@ public class RealEstate {
 		int contractMonth;
 		int contractYear;
 		int rentalAmount;
+		
+		String propertyStr = "";
+		
 		String addr;
 		String suburb;
 		String houseType;
@@ -333,6 +351,20 @@ public class RealEstate {
 				contractYear, rentalAmount);
 		property.add(rental);
 		
+		propertyStr = rental.toString() + ",";
+		
+		try
+		{
+		    String filename= "Property.txt";
+		    FileWriter fw = new FileWriter(filename,true);
+		    fw.write(propertyStr + "\n");
+		    fw.close();
+		}
+		catch(IOException ioe)
+		{
+		    System.err.println("IOException: " + ioe.getMessage());
+		}
+		
 	}
 
 
@@ -340,25 +372,25 @@ public class RealEstate {
 	//menu for employee
 	public static void employeeMenu()
 	{
-		System.out.println("----------------------");
-		System.out.println("1.Login");
-		
-		try
-		{
-			ch = sc.nextInt();
-			
-			if (ch == 1)
-			{
-					
-			}
-			else if (ch == 2)
-			{
-				
-			}
-		} catch (Exception e)
-		{				
-			System.out.println("Invalid input. Please enter a valid input");
-		}		
+//		System.out.println("----------------------");
+//		System.out.println("1.Login");
+//		
+//		try
+//		{
+//			ch = sc.nextInt();
+//			
+//			if (ch == 1)
+//			{
+//					
+//			}
+//			else if (ch == 2)
+//			{
+//				
+//			}
+//		} catch (Exception e)
+//		{				
+//			System.out.println("Invalid input. Please enter a valid input");
+//		}		
 	}
 	
 	
@@ -452,11 +484,11 @@ public class RealEstate {
 	 	       }
 	 	       else if(user.contains("BUY"))
 	 	       {
-	    		
+	    		 //method for buyer menu
 	 	       }
 	 	       else if (user.contains("VEN"))
 	 	       {
-	    		
+	    		 //method for vendor menu
 	 	       }
 	    	}
 	    }
