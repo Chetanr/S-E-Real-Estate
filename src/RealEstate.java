@@ -14,16 +14,18 @@ public class RealEstate {
 	
 	static int propCount = 1;
 	
-	static ArrayList<Property> property = new ArrayList<Property>() ;
+	static String user;
+    static String pass;
+	
+	static ArrayList<Property> property = new ArrayList<Property>();
 	static ArrayList<Customer> customerList = new ArrayList<Customer>();
-	static ArrayList<Property> propertyList = new ArrayList<Property>();
 	static ArrayList<Inspection> inspectionList = new ArrayList<Inspection>();
 
 	public static void main(String[] args) throws Exception {
 		
 		System.out.println("Welcome.!");
-		System.out.println("1. Customer Login");
-		System.out.println("2. Employee Login");			
+		System.out.println("1. Customer Menu");
+		System.out.println("2. Employee Menu");			
 		System.out.println("3. Quit");
 		
 		while (ch != 3)
@@ -50,26 +52,31 @@ public class RealEstate {
 	//menu for customer
 	public static void customerMenu() throws FileNotFoundException, IOException
 	{
-		System.out.println("----------------------");
-		System.out.println("1.Register");
-		System.out.println("2.Login");
-		
-		try
+		while(ch != 3)
 		{
-			ch = sc.nextInt();
+			System.out.println("----------------------");
+			System.out.println("1.Register");
+			System.out.println("2.Login");
+			System.out.println("3. Exit");
 			
-			if (ch == 1)
+			try
 			{
-				register();
-			}
-			else if (ch == 2)
+				ch = sc.nextInt();
+				
+				switch(ch)
+				{
+					case 1 :register();
+							break;
+					case 2 :login();
+							break;
+					default: break;
+				}
+			} catch (InputMismatchException e)
 			{
-				login();
+				System.out.println("Invalid input. Please enter a valid input");
 			}
-		} catch (InputMismatchException e)
-		{
-			System.out.println("Invalid input. Please enter a valid input");
 		}
+		
 		
 	}
 	
@@ -101,8 +108,14 @@ public class RealEstate {
 				if(i.getProperty_id().equals(pid))
 				{
 					//enter customer details here
+					for(Customer j : customerList)
+					{
+						if(j.getCustomer_id().equals(user))
+						{
+							((Rental) i).setApplicantDetails(j.getCustomer_id(), j.getFirstname(), j.getSurename(), j.getIncome(), j.getOccupation(), j.getPresent_employer(), months, years);
+						}
+					}
 					
-					((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
 					
 				}
 				else
@@ -190,6 +203,7 @@ public class RealEstate {
 	//register a customer
 	public static void register() throws FileNotFoundException , IOException {
 		
+	
 		
 		System.out.println("Enter Name: ");
 		String custName = sc.next();
@@ -212,7 +226,7 @@ public class RealEstate {
 		System.out.println("Enter Occupation: ");
 		String custOccu = sc.next();
 
-		System.out.println("Enter Emplower: ");
+		System.out.println("Enter Employer: ");
 		String custEmployer = sc.next();
 
 		String custId = getCustomerId(custType);
@@ -226,8 +240,6 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
-			
-			customerList.add(customerObj);
 		}
 		else if(custType.equals("2")) {
 			Customer customerObj = new Landlord(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -237,8 +249,6 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
-			
-			customerList.add(customerObj);
 		}
 		else if(custType.equals("3")) {
 			Customer customerObj = new Rentee(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -248,8 +258,6 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
-			
-			customerList.add(customerObj);
 		}
 		else if(custType.equals("4")) {
 			Customer customerObj = new Buyer(custId, custName, surName, custEmail, custPass, custIncome, custOccu, custEmployer );
@@ -259,11 +267,7 @@ public class RealEstate {
 			customerStr = customerObj.toString();
 			
 			customerStr = custType +","+ customerStr;
-			
-			customerList.add(customerObj);
 		}
-		
-		
 		
 		try
 		{
@@ -275,7 +279,8 @@ public class RealEstate {
 		catch(IOException ioe)
 		{
 		    System.err.println("IOException: " + ioe.getMessage());
-		}		
+		}
+			
 	}
 	
 	
@@ -372,25 +377,7 @@ public class RealEstate {
 	//menu for employee
 	public static void employeeMenu()
 	{
-//		System.out.println("----------------------");
-//		System.out.println("1.Login");
-//		
-//		try
-//		{
-//			ch = sc.nextInt();
-//			
-//			if (ch == 1)
-//			{
-//					
-//			}
-//			else if (ch == 2)
-//			{
-//				
-//			}
-//		} catch (Exception e)
-//		{				
-//			System.out.println("Invalid input. Please enter a valid input");
-//		}		
+	
 	}
 	
 	
@@ -458,13 +445,25 @@ public class RealEstate {
 	    read.useDelimiter("\\n|,");
 	    boolean loginFlag = false;
 	    while(read.hasNext()){
-	       String user = read.next().replaceAll("\\r|\\n", "");
-	       String pass = read.next().replaceAll("\\r|\\n", "");
-	       if(userName.equals(user)  && password.equals(pass)) {
-	    	   
-	    	   loginFlag = true;
-	    	   break;
+	       user = read.next().replaceAll("\\r|\\n", "");
+	      // pass = read.next().replaceAll("\\r|\\n", "");
+	       if(userName.equals(user))
+	       {
+	    	   while(read.hasNext())
+	    	   {
+	    		   pass = read.next().replaceAll("\\r|\\n", "");
+	    		   if(password.equals(pass))
+	    		   {
+	    			   loginFlag = true;
+	    			   break;
+	    		   }
+	    	   }
 	       }
+//	       if(userName.equals(user)  && password.equals(pass)) {
+//	    	   
+//	    	   loginFlag = true;
+//	    	   break;
+//	       }
 	    }
 	    read.close();
 	   

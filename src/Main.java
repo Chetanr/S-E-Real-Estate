@@ -55,18 +55,18 @@ public class Main {
 			System.out.println("Enter property id: ");
 			pid = sc.next();
 			
-//			for (Property i : property)
-//			{
-//				if(i.getProperty_id().equals(pid))
-//				{
-//					((Rental) i).viewOffer();
-//					break;
-//				}	
-//				else
-//				{
-//					System.out.println("Property id not found.");
-//				}
-//			}	
+			for (Property i : property)
+			{
+				if(i.getProperty_id().equals(pid))
+				{
+					((Rental) i).viewOffer();
+					break;
+				}	
+				else
+				{
+					System.out.println("Property id not found.");
+				}
+			}	
 			
 			rent1.viewOffer();
 		}
@@ -128,51 +128,51 @@ public class Main {
 			System.out.println("Enter the proposed contract years: ");
 			years = sc.nextInt();
 			
-//			if(searchproperty(pid))
-//			{
-//				for (Property i : property)
-//				{
-//					if(i.getProperty_id().equals(pid))
-//					{
-//						//enter customer details here
-//						((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
-//					}
-//					
-//				}
+			if(searchproperty(pid))
+			{
+				for (Property i : property)
+				{
+					if(i.getProperty_id().equals(pid))
+					{
+						//enter customer details here
+						((Rental) i).setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
+					}
+					
+				}
 				
 				rent1.setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
 				System.out.println("Successfully applied to property " + pid);
-//			}
-//			else
-//			{
-//				System.out.println("property not found. Please try again");
-//			}
+			}
+			else
+			{
+				System.out.println("property not found. Please try again");
+			}
 		}
 		else if (ch == 2)
 		{
 			System.out.println("Enter property id you want to view update: ");
 			pid = sc.next();
-//			if(searchproperty(pid))
-//			{
-//				for (Property i :property)
-//				{
-//					if(i.getProperty_id().equals(pid))
-//					{
-////						if(((Rental) i).getStatus().equals(null))
-////						{
-////							System.out.println("No update available");
-////						}
-//						if (((Rental) i).getStatus().equalsIgnoreCase("accept"))
-			            if (rent1.getStatus().equalsIgnoreCase("accept"))
+			if(searchproperty(pid))
+			{
+				for (Property i :property)
+				{
+					if(i.getProperty_id().equals(pid))
+					{
+						if(((Rental) i).getStatus().equals(null))
+						{
+							System.out.println("No update available");
+						}
+						if (((Rental) i).getStatus().equalsIgnoreCase("accept"))
+//			            if (rent1.getStatus().equalsIgnoreCase("accept"))
 						{
 							System.out.println("Congrats.! Your application has been accepted.!");
 							System.out.println("Please pay the advance to the landlord");
-//							break;
+							break;
 						}
-//					}
-//				}
+					}
+				}
 				
-//			}	
+			}	
 		}
 		else if (ch == 3)
 		{
@@ -183,19 +183,19 @@ public class Main {
 			ch = sc.nextInt();
 			if (ch == 1)
 			{
-//				for (Property i : property)
-//				{
-//					if(i.getProperty_id().equals(pid))
-//					{
-//						i.finaliseOffer();
-//						System.out.println("Yuu are now the tenant of the house. You are now responsible "
-//								+ "for the property. Please discuss the"
-//								+ "terms and conditions with the landlord."
-//								+ "Congratulation again.!");
-//						break;
-//					}
-//					
-//				}
+				for (Property i : property)
+				{
+					if(i.getProperty_id().equals(pid))
+					{
+						i.finaliseOffer();
+						System.out.println("Yuu are now the tenant of the house. You are now responsible "
+								+ "for the property. Please discuss the"
+								+ "terms and conditions with the landlord."
+								+ "Congratulation again.!");
+						break;
+					}
+					
+				}
 				rent1.finaliseOffer();
 				System.out.println("Yuu are now the tenant of the house. You are now responsible "
 						+ "for the property. Please discuss the"

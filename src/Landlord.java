@@ -7,8 +7,8 @@ public class Landlord extends Customer{
 	private ArrayList<Property> landlordProperty = new ArrayList<Property>();
 	
 	public Landlord(String customer_id, String firstname, String surename, String email_address, String password,
-			String income, String occupation, String present_employer) {
-		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
+			String custIncome, String occupation, String present_employer) {
+		super(customer_id, firstname, surename, email_address, password, custIncome, occupation, present_employer);
 		
 		this.landlordId       = customer_id;
 		//this.landlordProperty = landlordProperty;

@@ -4,7 +4,7 @@ public class Customer {
 	protected String surename;
 	protected String email_address;
 	protected String password;
-	protected String income;
+	protected double income;
 	protected String occupation;
 	protected String present_employer;
 	
@@ -16,11 +16,13 @@ public class Customer {
 		this.surename         = surename;
 		this.email_address    = email_address;
 		this.password         = password;
-		this.income           = income;
+		this.income           = Double.parseDouble(income);
 		this.occupation       = occupation;
 		this.present_employer = present_employer;
 	}
 	
+
+
 	public String getCustomer_id() {
 		return customer_id;
 	}
@@ -39,10 +41,10 @@ public class Customer {
 	public void setSurename(String surename) {
 		this.surename = surename;
 	}
-	public String getIncome() {
+	public double getIncome() {
 		return income;
 	}
-	public void setIncome(String income) {
+	public void setIncome(double income) {
 		this.income = income;
 	}
 	public String getOccupation() {
@@ -60,7 +62,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return customer_id + "," + firstname + "," + surename
-				+ "," + email_address + "," + income + ","
+				+ "," + email_address + "," + password + ","+ income + ","
 				+ occupation + "," + present_employer;
 	}
 	
