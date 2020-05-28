@@ -10,12 +10,9 @@ public class BranchAdministrator extends Employee
 		super(ID, password, name , type, salary, hourlyRate);
 	}
 	
-	public BranchAdministrator()
-	{
-		super();
-	}
+	
 
-	public void payroll(ArrayList<Employee> employees)
+	public void payroll(ArrayList<Employee> employees) throws PayrollException
 	{
 	    int currentDay = currentDate.getDayOfMonth();
 	    Calendar calendar = Calendar.getInstance();
@@ -35,10 +32,12 @@ public class BranchAdministrator extends Employee
 	    			}
 	    		}
 	    	}
+	    	System.out.println("The payroll for "+currentDate+" has been run successfully");
 	    }
 	    else
 	    {
-	    	System.out.println("Payroll runs on the end of every month");
+	    	//System.out.println("Unsuccessfull.Payroll runs on the end of every month");
+	    	throw new PayrollException("Unsuccessfull.Payroll runs on the end of every month");
 	    }
 	}
 	
