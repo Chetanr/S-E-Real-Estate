@@ -46,7 +46,7 @@ public class PropertyManager extends Employee
 		}
 		else if(index < 0)
 		{
-			System.out.println("Inspection id cannot be found");
+			System.out.println("Inspection "+inspectionID+" cannot be conducted as it is not assigned to you");
 		}
 		else
 		{
@@ -62,7 +62,7 @@ public class PropertyManager extends Employee
 		}
 		else if(!(this.getID().equalsIgnoreCase(rental.getPropertyManager().getID())))
 		{
-			System.out.println("Only employee assigned to property can create inspection");
+			System.out.println("Only employee assigned to property can cancel inspection");
 		}
 		else if(rental.getStatus().equalsIgnoreCase("Open"))
 		{
