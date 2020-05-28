@@ -59,7 +59,7 @@ public class BranchManagerTest
 		System.out.println("-------testAssignEmployee1-----");
 		branchManager.assignEmployee(propertyManager1, rentalProperty1);
 		Rental rentalProperty = (Rental)rentalProperty1;
-		assertEquals(propertyManager1,rentalProperty.getPropertyManager());
+		assertEquals(rentalProperty.getPropertyManager(), propertyManager1);
 	}
 	
 	//Positive JUnit Test case
@@ -70,7 +70,7 @@ public class BranchManagerTest
 		System.out.println("-------testAssignEmployee2-----");
 		branchManager.assignEmployee(saleConsultant1, saleProperty1);
 		Sale saleProperty = (Sale)saleProperty1;
-		assertEquals(saleConsultant1,saleProperty.getSalesConsultant());
+		assertEquals(saleProperty.getSalesConsultant(), saleConsultant1);
 	}
 		
 	//Negative JUnit Test case
@@ -91,6 +91,7 @@ public class BranchManagerTest
 		branchManager.assignEmployee(propertyManager1, rentalProperty1);
 		branchManager.assignEmployee(propertyManager2, rentalProperty1);
 	}
+	
 	//Positive test case showing that salesconsultant can be assigned more than one property
 	@Test
 	public void testAssignEmployee5() throws Exception
@@ -103,39 +104,18 @@ public class BranchManagerTest
 		assertEquals(salesConsultant.getProperty().get(1), saleProperty2);
 	}
 		
-		
-		
-		
-		
-		
-		
+	//Positive JUnit test case for approve hours	
+	@Test
+	public void testApproveHours() throws HourException
+	{
+		assertTrue(branchManager.approveHours(10));
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*@Test
-		public void testApproveHours() throws HourException
-		{
-			assertTrue(bm.approveHours(10));
-			System.out.println("Test approve hours passed");
-		}
-		
-		@Test (expected = HourException.class)
-		public void testApproveHours1() throws HourException
-		{
-			assertTrue(bm.approveHours(-10));
-		}*/
+	//Negative JUnit test case when invalid hours is entered by employee and sent for branch Manager approval
+	@Test (expected = HourException.class)
+	public void testApproveHours1() throws HourException
+	{
+		branchManager.approveHours(-10);
+	}
 
 }
