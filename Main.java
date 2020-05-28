@@ -56,7 +56,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 		boolean validateInput = true;
 		while (validateInput == true) {
 			try {
-				System.out.println("Welcome "+S1);
+				System.out.println(" ****Welcome**** "+S1);
 				System.out.println("****Real Estate Menu****");
 				System.out.println("1. New Auction Property");
 				System.out.println("2. New Negotiation Property");
