@@ -1,4 +1,6 @@
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class MenuEmployee
 {
@@ -21,8 +23,6 @@ public class MenuEmployee
 	properties.add(new Sale("Conder Street", "Burwood", 2,2,2,"house"));
 	properties.add(new Sale("Henry Street", "Kensington", 2,2,2,"house"));
 	properties.add(new Sale("Henry StreetTest", "Kensington", 2,2,2,"house"));
-	Sale sale = (Sale) properties.get(2);
-	sale.setSalesConsultantCommission(1000);
 	mainMenu();
 	}
 	
@@ -36,15 +36,27 @@ public class MenuEmployee
 	    	incorrectID = false;
 	    	incorrectPassword = false;
 	    	incorrectOption = false;
+	    	int choice = 0;
 	    	System.out.println("------Welcome to Real Estate System-----");
 	    	System.out.println("1.Login");
 	    	System.out.println("2.Logout");
 	    	System.out.println("Enter your choice");
-	    	int choice = Global.scanner.nextInt();
+	    	try
+	    	{
+	    		choice = Global.scanner.nextInt();
+	    	}
+	    	catch(InputMismatchException e)
+	    	{
+	    		
+	    		System.out.println("Please enter a number between 1-2 for the choice");
+	    		incorrectOption = true;
+	    		Global.scanner.nextLine();
+	    	}
 		
 	    	if(choice == 2)
 	    	{
 	    		System.out.println("Successfully Logged out");
+	    		
 	    	}
 	    	else if(choice == 1)
 	    	{
@@ -74,11 +86,10 @@ public class MenuEmployee
 	
 	    		}
 	    	}
-	    	else
+	    	else if(!incorrectOption)
 	    	{
 	    		System.out.println("Incorrect Option");
 	    		incorrectOption = true;
-	    		
 	    	}
 	    }while(incorrectID || incorrectPassword || incorrectOption);
 
@@ -141,8 +152,10 @@ public class MenuEmployee
 	public static void propertyManagerMenu(String empID)
 	{
 		boolean quit = false;
+		int choice = 0;
 		do
 		{
+			choice = 0;
 			quit = false;
 			System.out.println("Welcome Property Manager");
 			System.out.println("1. Create Inspection");
@@ -155,7 +168,15 @@ public class MenuEmployee
 			System.out.println("8. Enter Hours");
 			System.out.println("9. Logout");
 			System.out.println("Enter choice");
-			int choice = Global.scanner.nextInt();
+			try
+			{
+				choice = Global.scanner.nextInt();
+			}
+			catch(InputMismatchException e)
+			{
+				quit = false;
+				Global.scanner.nextLine();
+			}
 			int ind = searchEmployee(empID);
 			PropertyManager propertyManager = (PropertyManager)employees.get(ind);
 			int bIndex = searchBranchManager();
@@ -174,15 +195,18 @@ public class MenuEmployee
 				}
 				else
 				{
-					Rental rental = (Rental) properties.get(index);
 					try
 					{
+						Rental rental = (Rental) properties.get(index);
 						propertyManager.createInspection(rental, date);
 					}
 					catch (PropertyNotAssignedToEmployee e) 
 					{
-				// TODO Auto-generated catch block
 						System.out.println(e);
+					}
+					catch(Exception e)
+					{
+						System.out.println("Unable to create inspection.The property is not assigned to the employee");
 					}
 				}
 			break;
@@ -202,15 +226,20 @@ public class MenuEmployee
 				}
 				else
 				{
-					Rental rental = (Rental) properties.get(pos);
 					try
 					{
+						Rental rental = (Rental) properties.get(pos);
 						propertyManager.cancelInspection(rental);
 					}
 					catch (PropertyNotAssignedToEmployee e) 
 					{
 				// TODO Auto-generated catch block
 						System.out.println(e);
+					}
+					catch (Exception e) 
+					{
+					// TODO Auto-generated catch block
+						System.out.println("Unable to cancel Inspection.The property is not assigned to employee");
 					}
 				}
 				break;
@@ -271,7 +300,7 @@ public class MenuEmployee
 				mainMenu();
 				break;
 			default:
-				System.out.println("Invalid choice");
+				System.out.println("Invalid choice.Please enter a number between 1-9");
 				break;
 			}
 		
@@ -280,11 +309,13 @@ public class MenuEmployee
 	
 	public static void branchManagerMenu(String empID)
 	{
+		int choice = 0;
 		int ind = searchEmployee(empID);
 		BranchManager branchManager = (BranchManager)employees.get(ind);
 		boolean quit = false;
 		do
 		{
+			choice = 0;
 			quit = false;
 			System.out.println("Welcome Branch Manager");
 			System.out.println("1. View Property details");
@@ -293,7 +324,15 @@ public class MenuEmployee
 			System.out.println("4. View Salary");
 			System.out.println("5. Logout");
 			System.out.println("Enter choice");
-			int choice = Global.scanner.nextInt();
+			try
+			{
+				choice = Global.scanner.nextInt();
+			}
+			catch(InputMismatchException e)
+			{
+				quit = false;
+				Global.scanner.nextLine();
+			}
 			switch(choice)
 			{
 				case 1:
@@ -358,7 +397,7 @@ public class MenuEmployee
 					break;
 				
 				default:
-					System.out.println("Invalid choice");
+					System.out.println("Invalid choice.Please enter a number between 1-5");
 					break;
 			
 		 }
@@ -368,9 +407,11 @@ public class MenuEmployee
 	
 	public static void salesConsultantMenu(String empID)
 	{
+		int choice = 0;
 		boolean quit = false;
 		do
 		{
+			choice = 0;
 		quit = false;
 		System.out.println("Welcome Sales Consultant");
 		System.out.println("1. Create Inspection");
@@ -384,7 +425,15 @@ public class MenuEmployee
 		System.out.println("9. Enter Hours");
 		System.out.println("10. Logout");
 		System.out.println("Enter choice");
-		int choice = Global.scanner.nextInt();
+		try
+		{
+			choice = Global.scanner.nextInt();
+		}
+		catch(InputMismatchException e)
+		{
+			quit = false;
+			Global.scanner.nextLine();
+		}
 		int ind = searchEmployee(empID);
 		SalesConsultant salesConsultant = (SalesConsultant)employees.get(ind);
 		int bIndex = searchBranchManager();
@@ -403,15 +452,20 @@ public class MenuEmployee
 			}
 			else
 			{
-				Sale sale = (Sale) properties.get(index);
 				try
 				{
+					Sale sale = (Sale) properties.get(index);
 					salesConsultant.createInspection(sale, date);
 				}
 				catch (PropertyNotAssignedToEmployee e) 
 				{
 				// TODO Auto-generated catch block
 					System.out.println(e);
+				}
+				catch (Exception e) 
+				{
+				// TODO Auto-generated catch block
+					System.out.println("Unable to craete Inspection.The property is not assigned to employee");
 				}
 			}
 			break;
@@ -431,15 +485,20 @@ public class MenuEmployee
 			}
 			else
 			{
-				Sale sale = (Sale) properties.get(pos);
 				try
 				{
+					Sale sale = (Sale) properties.get(pos);
 					salesConsultant.cancelInspection(sale);
 				}
 				catch (PropertyNotAssignedToEmployee e) 
 				{
 				// TODO Auto-generated catch block
 					System.out.println(e);
+				}
+				catch (Exception e) 
+				{
+				// TODO Auto-generated catch block
+					System.out.println("Unable to cancel Inspection.The property is not assigned to employee");
 				}
 			}
 			break;
@@ -503,7 +562,7 @@ public class MenuEmployee
 			mainMenu();
 			break;
 		default:
-			System.out.println("Invalid choice");
+			System.out.println("Invalid choice.Please enter a number between 1-10");
 			break;
 		}
 		}while(!quit);
@@ -513,6 +572,7 @@ public class MenuEmployee
 	
 	public static void branchAdministratorMenu(String empID)
 	{
+		int choice = 0;
 		int ind = searchEmployee(empID);
 		BranchAdministrator branchAdministrator = (BranchAdministrator)employees.get(ind);
 		int bIndex = searchBranchManager();
@@ -520,6 +580,7 @@ public class MenuEmployee
 		boolean quit = false;
 		do
 		{
+			choice = 0;
 		quit = false;
 		System.out.println("Welcome Branch Administrator");
 		System.out.println("1. Run Payroll");
@@ -529,11 +590,32 @@ public class MenuEmployee
 		System.out.println("5. Current date to test");
 		System.out.println("6. Logout");
 		System.out.println("Enter choice");
-		int choice = Global.scanner.nextInt();
+		try
+		{
+			choice = Global.scanner.nextInt();
+		}
+		catch(InputMismatchException e)
+		{
+			quit = false;
+			Global.scanner.nextLine();
+		}
 		switch(choice)
 		{
 			case 1:
+			try 
+			{
 				branchAdministrator.payroll(employees);
+			} 
+			catch (PayrollException e1) 
+			{
+				// TODO Auto-generated catch block
+				System.out.println(e1);
+			}
+			catch (Exception e) 
+			{
+				// TODO Auto-generated catch block
+				System.out.println("Set date to current date or advance days for testing");
+			}
 				break;
 			case 2:
 				employees.get(ind).viewSalary();
@@ -549,7 +631,17 @@ public class MenuEmployee
 				}
 				break;
 			case 4:
-				branchAdministrator.advanceDate(9);
+				int days = 0;
+				System.out.println("Enter the days you want to advance");
+					try
+					{
+						days = Global.scanner.nextInt();
+						branchAdministrator.advanceDate(days);
+					}
+					catch(InputMismatchException e)
+					{
+						System.out.println("Please enter a number for days");
+					}
 				break;
 			case 5:
 				branchAdministrator.currentDate();
@@ -560,7 +652,7 @@ public class MenuEmployee
 				mainMenu();
 				break;
 			default:
-				System.out.println("Invalid choice");
+				System.out.println("Invalid choice.Please enter a number between 1-6");
 				break;
 		}
 	}while(!quit);
