@@ -24,7 +24,7 @@ public abstract class Property
     	propertyDetails += "propertyID: " + this.getPropertyID() + "\n";
     	propertyDetails += "address: "+ this.getAddress() + "\n";
     	propertyDetails += "suburb: "+ this.getSuburb() + "\n";
-    	propertyDetails += "propertyOwnerID: "+ this.getPropertyOwnerID() + "\n";
+    	propertyDetails += "propertyOwnerID : "+ this.getPropertyOwnerID() + "\n";
     	propertyDetails += "Status: "+ this.getStatus() +"\n";
     	
     	return propertyDetails;
