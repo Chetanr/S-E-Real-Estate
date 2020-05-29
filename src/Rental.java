@@ -21,7 +21,7 @@ public class Rental extends Property
 	private String presentEmployer;
 	private Rentee renteeId;
 	private Landlord landlordId;
-	private String status;
+	
 	
 	static Scanner sc = new Scanner (System.in);
 	
@@ -36,7 +36,7 @@ public class Rental extends Property
 
 
 	//calculate the management fee for a property
-	public double calculateMgmtFee(int property, int rental) throws Exception
+	public double calculateMgmtFee(int property, double rental) throws Exception
 	{
 		double temp;
 		temp = rental * MANAGEMENT_FEE;
@@ -133,17 +133,6 @@ public class Rental extends Property
 		setStatus(response);	
 	}
 
-
-	//get the applicant details for the property under rent
-//	public void setApplicantDetails(Customer customer) 
-//	{
-//		setCustomer_id(customer.getCustomer_id());
-//		setFirstname(customer.getFirstname());
-//		setSurename(customer.getSurename());
-//		setIncome(customer.getIncome());
-//		setOccupation(customer.getOccupation());
-//		setPresentEmployer(customer.getPresent_employer());
-//	}
 	
 	private String getOccupation() {
 		return occupation;
@@ -176,11 +165,6 @@ public class Rental extends Property
 	}
 
 
-
-
-
-
-	@Override
 	public boolean acceptOffer() {
 		setStatus("accept");
 		return true;
@@ -273,14 +257,7 @@ public class Rental extends Property
 	}
 	
 	
-	public String getStatus() {
-		return this.status;
-	}
 
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
 	
 	public void setIncome(double income) {

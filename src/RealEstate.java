@@ -26,10 +26,9 @@ public class RealEstate {
 		System.out.println("Welcome.!");
 		System.out.println("1. Customer Menu");
 		System.out.println("2. Employee Menu");			
-		System.out.println("3. Quit");
+		System.out.println("3. Logout");
 		
-		while (ch != 3)
-		{
+
 			ch = sc.nextInt();
 			switch (ch)
 			{
@@ -37,27 +36,23 @@ public class RealEstate {
 						break;
 				case 2: employeeMenu();
 						break;
-				case 3: System.exit(0);
+				case 3: break;
 				
 				default:System.out.println("Invalid input. Please enter a valid input.");
 						throw new Exception();
 			}
-		}
-		
-	
 	}
-		
 	
 	
 	//menu for customer
-	public static void customerMenu() throws FileNotFoundException, IOException
+	public static void customerMenu() throws Exception
 	{
-		while(ch != 3)
-		{
+//		while(ch < 3)
+//		{
 			System.out.println("----------------------");
-			System.out.println("1.Register");
-			System.out.println("2.Login");
-			System.out.println("3. Exit");
+			System.out.println("1. Register");
+			System.out.println("2. Login");
+			System.out.println("3. Main Menu");
 			
 			try
 			{
@@ -69,13 +64,13 @@ public class RealEstate {
 							break;
 					case 2 :login();
 							break;
-					default: break;
+					case 3: break;
 				}
 			} catch (InputMismatchException e)
 			{
 				System.out.println("Invalid input. Please enter a valid input");
 			}
-		}
+//		}
 		
 		
 	}
@@ -84,55 +79,55 @@ public class RealEstate {
 	private static  void fullRenteeMenu() {
 	
 	String pid;
-	String propertyStr = "";
-	
-	int months;
-	int years;
 	System.out.println("1. apply to property");
 	System.out.println("2. view update");
 	System.out.println("3. Update payment status");
+	System.out.println("4. Logout");
 	ch = sc.nextInt();
-	if (ch == 1)
+	
+	switch(ch)
 	{
+		case 1: applyToProperty();
+				break;
+		case 2: viewUpdate();
+				break;
+		case 3: updatePayment();
+				break;
+		case 4: break;
+	}
+}
+	
+	private static void updatePayment() {
+		String pid;
 		System.out.println("Enter property id: ");
 		pid = sc.next();
-		System.out.println("Enter the proposed contract months: ");
-		months = sc.nextInt();
-		System.out.println("Enter the proposed contract months: ");
-		years = sc.nextInt();
-		
-		if(searchproperty(pid))
+		System.out.println("1. I have made the payment to the property.!");
+		System.out.println("2. I am yet to make the payment.!");
+		ch = sc.nextInt();
+		if (ch == 1)
 		{
 			for (Property i : property)
 			{
 				if(i.getProperty_id().equals(pid))
 				{
-					//enter customer details here
-					for(Customer j : customerList)
-					{
-						if(j.getCustomer_id().equals(user))
-						{
-							((Rental) i).setApplicantDetails(j.getCustomer_id(), j.getFirstname(), j.getSurename(), j.getIncome(), j.getOccupation(), j.getPresent_employer(), months, years);
-						}
-					}
-					
-					
-				}
-				else
-				{
-					System.out.println("Property id not found. Please try again");
-				}
-				
-			}
-			System.out.println("Successfully applied to property " + pid);
+					((Rental) i).finaliseOffer();
+					System.out.println("Yuu are now the tenant of the house. You are now responsible "
+							+ "for the property. Please discuss the"
+							+ "terms and conditions with the landlord."
+							+ "Congratulation again.!");
+				}	
+			}	
 		}
-		else
+		else if (ch == 2)
 		{
-			System.out.println("property not found. Please try again");
-		}
+			System.out.println("Please make the payment and come back");
+		}				
 	}
-	else if (ch == 2)
-	{
+
+
+
+	private static void viewUpdate() {
+		String pid;
 		System.out.println("Enter property id you want to view update: ");
 		pid = sc.next();
 		if(searchproperty(pid))
@@ -155,37 +150,53 @@ public class RealEstate {
 			
 		}	
 	}
-	else if (ch == 3)
-	{
+
+
+
+	private static void applyToProperty() {
+		String pid;
+		int months;
+		int years;
 		System.out.println("Enter property id: ");
 		pid = sc.next();
-		System.out.println("1. I have made the payment to the property.!");
-		System.out.println("2. I am yet to make the payment.!");
-		ch = sc.nextInt();
-		if (ch == 1)
+		System.out.println("Enter the proposed contract months: ");
+		months = sc.nextInt();
+		System.out.println("Enter the proposed contract months: ");
+		years = sc.nextInt();
+		
+		if(searchproperty(pid))
 		{
 			for (Property i : property)
 			{
 				if(i.getProperty_id().equals(pid))
 				{
-					i.finaliseOffer();
-					System.out.println("Yuu are now the tenant of the house. You are now responsible "
-							+ "for the property. Please discuss the"
-							+ "terms and conditions with the landlord."
-							+ "Congratulation again.!");
+					for(Customer j : customerList)
+					{
+						if(j.getCustomer_id().equals(user))
+						{
+							((Rental) i).setApplicantDetails(j.getCustomer_id(), j.getFirstname(), j.getSurename(), j.getIncome(), j.getOccupation(), j.getPresent_employer(), months, years);
+						}
+					}
+					
+					
+				}
+				else
+				{
+					System.out.println("Property id not found. Please try again");
 				}
 				
 			}
-			
+			System.out.println("Successfully applied to property " + pid);
 		}
-		else if (ch == 2)
+		else
 		{
-			System.out.println("Please make the payment and come back");
+			System.out.println("property not found. Please try again");
 		}
 		
 	}
-	}
-	
+
+
+
 	private static  boolean searchproperty(String pid) {
 		for (Property i : property)
 		{
@@ -193,17 +204,13 @@ public class RealEstate {
 			{
 				return true;
 			}
-			
 		}
-		return false;
-		
+		return false;	
 	}
 	
 	
 	//register a customer
 	public static void register() throws FileNotFoundException , IOException {
-		
-	
 		
 		System.out.println("Enter Name: ");
 		String custName = sc.next();
@@ -285,37 +292,73 @@ public class RealEstate {
 	
 	
 	//menu for landlord
-	private static void fullLandlordMenu() {
+	private static void fullLandlordMenu() throws Exception {
 		String pid = "P";
 		System.out.println("1. Add Property");
 		System.out.println("2. View offers");
+		System.out.println("3. Negotiaite Management Feee");
+		System.out.println("4. Logout");
 		ch = sc.nextInt();
 		
-		if (ch == 1)
+		switch(ch)
 		{
-			addProperty();	
-		}
-		else if (ch == 2)
-		{
-			System.out.println("Enter property id: ");
-			pid = sc.next();
-			
-			for (Property i : property)
-			{
-				if(i.getProperty_id().equals(pid))
-				{
-					((Rental) i).viewOffer();
+			case 1: addProperty();
 					break;
-				}	
-				else
-				{
-					System.out.println("Property id not found.");
-				}
-			}				
+			case 2: offer();
+					break;
+			case 3: negotiateFee();
+					break;
+			default: break;
+					
 		}
+		
 	}
 	
 	
+	private static void negotiateFee() throws Exception {
+		String pid;
+		System.out.println("Enter the property id: ");
+		pid = sc.next();
+		for (Property i : property)
+		{
+			if(i.getProperty_id().equals(pid))
+			{
+				((Rental) i).calculateMgmtFee(1, ((Rental) i).getRentalAmount());
+				break;
+			}	
+			else
+			{
+				System.out.println("Property id not found.");
+			}
+		}
+		
+		
+	}
+
+
+
+	private static void offer() {
+		String pid;
+		System.out.println("Enter property id: ");
+		pid = sc.next();
+		
+		for (Property i : property)
+		{
+			if(i.getProperty_id().equals(pid))
+			{
+				((Rental) i).viewOffer();
+				break;
+			}	
+			else
+			{
+				System.out.println("Property id not found.");
+			}
+		}
+		
+	}
+
+
+
 	//adding the property for landlord
 	private static void addProperty() {
 		String pid = "P";
@@ -428,10 +471,10 @@ public class RealEstate {
 	
 	
 	//login menu
-	public static void login() throws IOException {
+	public static void login() throws Exception {
 
 		//String abc = getCustomerId("1");
-		System.out.println("Enter username: ");
+		System.out.println("Enter user: ");
 		String userName = sc.next();
 		userName= userName.replaceAll("\\r|\\n", "");
 		
@@ -446,7 +489,6 @@ public class RealEstate {
 	    boolean loginFlag = false;
 	    while(read.hasNext()){
 	       user = read.next().replaceAll("\\r|\\n", "");
-	      // pass = read.next().replaceAll("\\r|\\n", "");
 	       if(userName.equals(user))
 	       {
 	    	   while(read.hasNext())
@@ -458,42 +500,463 @@ public class RealEstate {
 	    			   break;
 	    		   }
 	    	   }
+	    	  break; 
 	       }
-//	       if(userName.equals(user)  && password.equals(pass)) {
-//	    	   
-//	    	   loginFlag = true;
-//	    	   break;
-//	       }
 	    }
 	    read.close();
 	   
 	    if(loginFlag == true) 
 	    {
-	    	Scanner reader = new Scanner(loginf);
-		    reader.useDelimiter("\\n|,");
-	    	while(reader.hasNext()){
-	 	       String user = reader.next().replaceAll("\\r|\\n", "");
-	 	       if(user.contains("REN")) 
+//	    	Scanner reader = new Scanner(loginf);
+//		    reader.useDelimiter("\\n|,");
+//	    	while(reader.hasNext()){
+//	 	        String u1 = reader.next().replaceAll("\\r|\\n", "");
+	 	       if(userName.contains("REN")) 
 	 	       {
 	 	    	  fullRenteeMenu();
 	 	       }
-	 	       else if(user.contains("LAN"))
+	 	       else if(userName.contains("LAN"))
 	 	       {
 	 	    	  fullLandlordMenu();
 	 	       }
-	 	       else if(user.contains("BUY"))
+	 	       else if(userName.contains("BUY"))
 	 	       {
-	    		 //method for buyer menu
+	    		 displayMenu(userName);
 	 	       }
-	 	       else if (user.contains("VEN"))
+	 	       else if (userName.contains("VEN"))
 	 	       {
-	    		 //method for vendor menu
+	 	    	  displayMenu(userName);
 	 	       }
-	    	}
+//	    	}
 	    }
 	    else  if(loginFlag == false) {
-	    	System.out.println("Wrong username and password.");
+	    	System.out.println("Wrong user and password.");
 	    }
+	}
+	
+	public static void displayMenu(String S1) {
+		Scanner in = new Scanner(System.in);
+		boolean validateInput = true;
+		while (validateInput == true) {
+			try {
+				System.out.println("Welcome "+S1);
+				System.out.println("****Real Estate Menu****");
+				System.out.println("1. New Auction Property");
+				System.out.println("2. New Negotiation Property");
+				System.out.println("3. Display my Auction Property");
+				System.out.println("4. Display My Negotiation Property");
+				System.out.println("5. Display All Properties");
+				System.out.println("6. Reply To Auction Property");		
+				System.out.println("7. Reply To Negotiation Property");		
+				System.out.println("8. Close Property");
+				System.out.println("9. Delete Property");
+				System.out.println("10. Log Out");
+				System.out.println("Enter your choice:"); 
+				String a = in.nextLine();
+				
+				if(a.equals("1")) {
+					NewAuctionProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("2")) {
+					NewNegotiationProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("3")) {
+					DisplayMyAuctionProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("4")) {
+					DisplayMyNegotiationProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("5")) {
+					DisplayAllProperties(S1);
+					validateInput = false;
+				}
+				else if(a.equals("6")) {
+					ReplyAuctionProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("7")) {
+					ReplyNegotiationProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("8")) {
+					CloseProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("9")) {
+					DeleteProperty(S1);
+					validateInput = false;
+				}
+				else if(a.equals("10")) {
+					customerMenu();
+					break;
+				}
+				else {
+					System.out.println("Invalid Choice, please choose between [1-9]");			
+				}
+			} catch(Exception ex) {
+				ex.printStackTrace(); 
+				System.out.println("Invalid Choice, please choose between [1-9]");
+				
+			}
+		}
+	}
+	
+	private static void DeleteProperty(String user) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter id of the Post or q to quit:");
+		String postId = in.nextLine();
+
+		if(postId.equals("q")) displayMenu(user);
+		
+		boolean NotFound = false;
+		boolean notOwner = true;
+		for(Property i : property)
+		{
+		    if(((Sale) i).getProperty_id().equals(postId)) {
+		    	NotFound = true;
+		    	if(((Sale)i).getPropertyOwnerID().equals(user) ) {
+		    		notOwner = false;
+		    		property.remove(i);
+		    	}
+		    } 
+		}
+		
+		if(NotFound == false) {
+			System.out.println("Not Found. Please try again");
+			displayMenu(user);
+		}
+
+		else if(notOwner == true) {
+			System.out.println("you are not owner. Please try again");
+			displayMenu(user);
+		}
+		else {
+			System.out.println("Delete successfully");
+			displayMenu(user);
+		}
+
+	}
+	
+	private static void CloseProperty(String user) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter id of the Post or q to quit:");
+		String postId = in.nextLine();
+
+		if(postId.equals("q")) displayMenu(user);
+		
+		boolean NotFound = false;
+		boolean notOwner = true;
+		for(Property i : property)
+		{
+			if(i.getPropertyOwnerID().equals(user))
+			{
+				 if(i.getProperty_id().equals(postId)) {
+				    	NotFound = true;
+				    	if(i.getPropertyOwnerID().equals(user)) {
+				    		notOwner = false;
+				    		i.setStatus("closed");
+				    	}
+				  } 
+			}
+		   
+		}
+		System.out.println("This action can be performed by property owner only");
+		
+		if(notOwner == true) {
+			System.out.println("you are not owner. Please try again");
+			displayMenu(user);
+		}
+		else if(NotFound == false) {
+			System.out.println("Not Found. Please try again");
+			displayMenu(user);
+		}
+		else {
+			System.out.println("Closed successfully");
+			displayMenu(user);
+		}
+	
+	}
+	
+	private static void DisplayAllProperties(String user) {
+		System.out.println("Display all Properties:");
+		System.out.println(property.size());
+		
+		for(Property i : property)
+		{
+			if (i instanceof Sale)
+			{
+				System.out.println(((Sale) i).getPropertyDetails());
+			}
+			
+		}
+		displayMenu(user);
+	}
+	
+	private static void DisplayMyAuctionProperty(String user) {//showing nego property as well
+		System.out.println("Display my Property:");
+		System.out.println(property.size());		
+		for(Property i : property)
+		{
+			if(i.getPropertyOwnerID().equals(user)) {
+				if(i.getProperty_id().contains("AUC"))
+				{
+					System.out.println(((Sale) i).getAuctionPropertyDetails());
+					System.out.println(((Sale) i).getAuctionReplyDetails());///////this as well
+					System.out.println("----------------------------\n");
+					System.out.println("\n");
+				}
+			}
+		}
+		displayMenu(user);
+	}
+	
+	private static void DisplayMyNegotiationProperty(String user) {
+		System.out.println("Display my Property:");
+		System.out.println(property.size());		
+		for(Property i : property)
+		{
+			if(i.getPropertyOwnerID().equals(user)) {
+				if(i.getProperty_id().contains("NEG"))
+				{
+					System.out.println(((Sale) i).getNegotiationPropertyDetails());
+				    System.out.println(((Sale) i).getNegotiationReplyDetails());///////this as well
+				    System.out.println("----------------------------\n");
+				    System.out.println("\n");
+				}
+			  
+			}
+		}
+		
+		displayMenu(user);
+	}
+	
+	private static void NewAuctionProperty(String user) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter details of the Auction property below:");
+		System.out.println("Address");
+		String Address = in.nextLine();
+		System.out.println("Suburb:");
+		String suburb = in.nextLine();
+		System.out.println("Asking Price:");
+		String askingPrice = in.nextLine();
+		System.out.println("Minimum raise:");
+		String minimumRaise = in.nextLine();
+		
+		int count = 1;
+		for(Property i : property)
+		{
+			if(i.toString().matches(".*Sale.*")) {
+				count++;
+			}
+		}
+
+		String eventId = "AUC"+String.format("%03d", count);
+		Sale postObj = new Sale(eventId, Address, suburb, askingPrice, minimumRaise, user);
+		property.add(postObj);
+		System.out.println("Success! Auction property created with id "+eventId);
+
+		displayMenu(user);
+	}
+	
+	private static void NewNegotiationProperty(String user) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter details of the Job below:");
+		System.out.println("Address:");
+		String Address = in.nextLine();
+		System.out.println("Suburb:");
+		String Suburb = in.nextLine();
+		System.out.println("Propose Price:");
+		String proposePrice = in.nextLine();
+		
+		int count = 1;
+		for(Property i : property)
+		{
+			if(i.toString().matches(".*Sale.*")) {
+				count++;
+			}
+		}
+
+		String eventId = "NEG"+String.format("%03d", count);
+		Sale postObj = new Sale(eventId, Address, Suburb, proposePrice, user);
+		property.add(postObj);
+		System.out.println("Success! Your job has been created with id "+eventId);
+		displayMenu(user);
+	}
+	
+	private static void ReplyNegotiationProperty(String user) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter id of the Post or q to quit:");
+		String postId = in.nextLine();
+		if(postId.equals("q")) displayMenu(user);
+		else {
+		 
+		
+		boolean NotFound = false;
+		boolean closed   = false;
+		boolean ownPost  = false;
+		for(Property i : property)
+		{
+			System.out.println("Hello");
+		    if(i.getProperty_id().equals(postId) ) {
+		    	if (i.getProperty_id().contains("NEG"))
+		    	{
+		    		NotFound = true;
+		    		if(i.getStatus().equals("closed")){
+		    		closed = true;
+                    break;
+		    		}
+		    		
+		    	}
+		    	
+		    	if(i.getPropertyOwnerID().equals(user)) {
+		    		ownPost = true;
+		    		break;
+		    	}
+		    	//For Negotiation    	
+       if(i.toString().matches(".*Sale.*")) {
+		    		System.out.println(((Sale)i).getNegotiationPropertyDetails());//*****//yaha p propose price show kar******
+    	
+		    		
+		    		boolean validateInput = true;
+		    		while (validateInput == true)
+		            {
+		    			System.out.println("Enter your offer or q to quit: ");
+			    		String replyValueJ = in.nextLine();
+			    		boolean isDouble = true;
+			    		
+			    		if(replyValueJ.equals("q")) {
+			    			System.out.println("Quit from negotiation");
+			    			validateInput = false;
+			    			displayMenu(user);
+			    		}
+			    		else if(isDouble == true) {
+			    		
+				    		boolean cheackAlreadyExists = ((Sale) i).checkAlreadyJoin(user);
+					    		if(cheackAlreadyExists == true) {
+					    		Reply replyObj = new Reply(postId, replyValueJ, user);
+			    				boolean flag = ((Sale) i).negotiationReply(replyObj);
+			    				if(flag == true) validateInput = false;
+			    				
+				    		}
+					    	
+		    				System.out.println("FROM Negotiation LOOP");
+		    				displayMenu(user);
+			    		}
+			    		else {
+			    			System.out.println("Invalid offer !");
+			    		}
+		            }
+		    	} 	
+		    	
+		    }
+		}
+		
+		if(NotFound == false) {
+			System.out.println("Not Found. Please try again");
+			ReplyNegotiationProperty(user);
+		}
+
+		else if(closed == true) {
+			System.out.println("you can not reply to closed post. Please try again");
+			displayMenu(user);
+		}
+		else if(ownPost == true) {
+			System.out.println("Replying to your own post is invalid.");
+			displayMenu(user);
+		}
+		}
+		
+	
+	}
+	
+	private static void ReplyAuctionProperty(String user) {
+	Scanner in = new Scanner(System.in);
+	System.out.println("Enter id of the Post or q to quit:");
+	String postId = in.nextLine();
+	if(postId.equals("q")) displayMenu(user);
+	else {
+	 
+	
+	boolean NotFound = false;
+	boolean closed   = false;
+	boolean ownPost  = false;
+	for(Property i : property)
+	{
+		System.out.println("**Auction Property Details***");
+	    if(i.getProperty_id().equals(postId) ) {
+	    	if (i.getProperty_id().contains("AUC"))
+	    	{
+	    		NotFound = true;
+		    	
+		    	if(i.getStatus().equalsIgnoreCase("closed")) {
+		    		closed = true;
+	                break;
+		    	}
+	    	
+	    	}
+	    	if(i.getPropertyOwnerID().equals(user)) {
+	    		ownPost = true;
+	    		break;
+	    	}
+	    	
+	    	if(i.toString().matches(".*Sale.*")) {
+	    		//System.out.println(i.getPropertyDetails());
+	    		System.out.println(((Sale)i).getAuctionPropertyDetails());
+
+	    		boolean validateOffer = true;
+	    		while (validateOffer == true)
+	            {
+	    			System.out.println("Enter your offer or q to quit: ");
+		    		String replyValueJ = in.nextLine();
+		    		System.out.println("You entered: " +replyValueJ );
+		    		boolean isDouble = true;
+		    		
+		    		if(replyValueJ.equals("q")) {
+		    			System.out.println("FROM Sale QUIT");
+		    			validateOffer = false;
+		    			displayMenu(user);
+		    		}
+		    		else if(isDouble == true) {
+		    			
+			    		boolean cheackAlreadyExists = ((Sale) i).checkAlreadyJoin(user);
+				    		if(cheackAlreadyExists == true) {
+				    		Reply replyObj = new Reply(postId, replyValueJ, user);
+				    		boolean flag = ((Sale) i).auctionReply(replyObj);
+				    		//boolean flag = (((Sale)i).auctionReply(replyObj)));
+		    				if(flag == true) validateOffer = false;
+			    		}
+	    				
+				    	//validateInput = false;
+				    		System.out.println("Exit auction");
+				    		displayMenu(user);
+	                }
+		    		else {
+		    			System.out.println("Invalid offer !");
+		    		}
+	            }
+	    		
+	    	}
+	    
+	 }
+	}//for
+	if(NotFound == false) {
+		System.out.println("Not Found. Please try again");
+		ReplyAuctionProperty(user);
+	}
+
+	else if(closed == true) {
+		System.out.println("you can not reply to closed post. Please try again");
+		displayMenu(user);
+	}
+	else if(ownPost == true) {
+		System.out.println("Replying to your own post is invalid.");
+		displayMenu(user);
+	}
+	}
 	}
 
 }

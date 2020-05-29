@@ -10,18 +10,11 @@ public class Main {
 	
 	static ArrayList<Property> property = new ArrayList<Property>();
 	
-	static Rental rent1 = new Rental ("P1", 2, 2, 1, "33 Rose Lane", "Melbourne",  "flat" , 
-			6, 1, 1000);
-	Rental rent2 = new Rental ("P2", 2, 2, 1, "44 Cleve Lane", "Melbourne",  "flat" , 
-			6, 0, 1000);
 	
 	
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) throws Exception {
 		
-		
-		
-		//property.add(rent1);
-		//property.add(rent2);
 		while(ch != 3)
 		{
 			System.out.println("1. Rentee Login");
@@ -40,10 +33,11 @@ public class Main {
 	}
 	
 	
-	private static void fullLandlordMenu() {
+	private static void fullLandlordMenu() throws Exception {
 		String pid = "P";
 		System.out.println("1. Add Property");
 		System.out.println("2. View offers");
+		System.out.println("3. Negotiaite Management Fee");
 		ch = sc.nextInt();
 		
 		if (ch == 1)
@@ -67,8 +61,23 @@ public class Main {
 					System.out.println("Property id not found.");
 				}
 			}	
-			
-			rent1.viewOffer();
+		}
+		else
+		{
+			System.out.println("Enter the property id: ");
+			pid = sc.next();
+			for (Property i : property)
+			{
+				if(i.getProperty_id().equals(pid))
+				{
+					((Rental) i).calculateMgmtFee(1, ((Rental) i).getRentalAmount());
+					break;
+				}	
+				else
+				{
+					System.out.println("Property id not found.");
+				}
+			}
 		}
 	}
 	private static void addProperty() {
@@ -106,12 +115,11 @@ public class Main {
 		Rental rental = new Rental(pid, numBed, numBath, numCarSpace, addr, suburb, houseType, contractMonth,
 				contractYear, rentalAmount);
 		property.add(rental);
-		System.out.println("Property successfully added.");
-		
+		System.out.println("Property successfully added.");	
 	}
 
 
-	private static  void fullRenteeMenu() {
+	private static void fullRenteeMenu() {
 		String pid;
 		int months;
 		int years;
@@ -140,7 +148,7 @@ public class Main {
 					
 				}
 				
-				rent1.setApplicantDetails("R1", "Jack", "Reacher", 20000, "IT", "RMIT", months, years);
+				
 				System.out.println("Successfully applied to property " + pid);
 			}
 			else
@@ -187,22 +195,15 @@ public class Main {
 				{
 					if(i.getProperty_id().equals(pid))
 					{
-						i.finaliseOffer();
-						System.out.println("Yuu are now the tenant of the house. You are now responsible "
+						((Rental) i).finaliseOffer();
+						System.out.println("You are now the tenant of the house. You are now responsible "
 								+ "for the property. Please discuss the"
 								+ "terms and conditions with the landlord."
-								+ "Congratulation again.!");
+								+ "Congratulations	 again.!");
 						break;
 					}
 					
 				}
-				rent1.finaliseOffer();
-				System.out.println("Yuu are now the tenant of the house. You are now responsible "
-						+ "for the property. Please discuss the"
-						+ "terms and conditions with the landlord."
-						+ "Congratulation again.!");
-				
-				
 			}
 			else if (ch == 2)
 			{
@@ -223,8 +224,7 @@ public class Main {
 			}
 			
 		}
-		return false;
-		
+		return false;		
 	}
 
 }

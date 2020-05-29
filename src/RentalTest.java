@@ -10,7 +10,9 @@ class RentalTest
 	@BeforeEach
 	void setUp() throws Exception 
 	{
-		r = new Rental (6, 1, 6, 0, 50000.0);
+//		r = new Rental (6, 1, 6, 0, 50000.0);
+		r = new Rental("P1", 2, 2, 1, "roselane", "Melb", "flat", 6,
+				1, 1000);
 	}
 
 	@AfterEach
