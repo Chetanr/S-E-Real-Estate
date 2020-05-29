@@ -14,15 +14,18 @@ public class RealEstate {
 	
 	static int propCount = 1;
 	
-	static String user;
-    static String pass;
 	
 	static ArrayList<Property> property = new ArrayList<Property>();
 	static ArrayList<Customer> customerList = new ArrayList<Customer>();
 	static ArrayList<Inspection> inspectionList = new ArrayList<Inspection>();
 
 	public static void main(String[] args) throws Exception {
+		mainMenu();
 		
+	}
+	
+	public static void mainMenu() throws Exception
+	{
 		System.out.println("Welcome.!");
 		System.out.println("1. Customer Menu");
 		System.out.println("2. Employee Menu");			
@@ -42,7 +45,6 @@ public class RealEstate {
 						throw new Exception();
 			}
 	}
-	
 	
 	//menu for customer
 	public static void customerMenu() throws Exception
@@ -64,7 +66,8 @@ public class RealEstate {
 							break;
 					case 2 :login();
 							break;
-					case 3: break;
+					case 3: mainMenu();
+							break;
 				}
 			} catch (InputMismatchException e)
 			{
@@ -76,7 +79,7 @@ public class RealEstate {
 	}
 	
 	//menu for rentee
-	private static  void fullRenteeMenu() {
+	private static  void fullRenteeMenu(String userName) throws Exception {
 	
 	String pid;
 	System.out.println("1. apply to property");
@@ -87,17 +90,18 @@ public class RealEstate {
 	
 	switch(ch)
 	{
-		case 1: applyToProperty();
+		case 1: applyToProperty(userName);
 				break;
 		case 2: viewUpdate();
 				break;
-		case 3: updatePayment();
+		case 3: updatePayment(userName);
 				break;
-		case 4: break;
+		case 4: mainMenu();
+				break;
 	}
 }
 	
-	private static void updatePayment() {
+	private static void updatePayment(String userName) throws Exception {
 		String pid;
 		System.out.println("Enter property id: ");
 		pid = sc.next();
@@ -121,7 +125,8 @@ public class RealEstate {
 		else if (ch == 2)
 		{
 			System.out.println("Please make the payment and come back");
-		}				
+		}	
+		fullRenteeMenu(userName);
 	}
 
 
@@ -153,7 +158,7 @@ public class RealEstate {
 
 
 
-	private static void applyToProperty() {
+	private static void applyToProperty(String userName) throws Exception {
 		String pid;
 		int months;
 		int years;
@@ -161,7 +166,7 @@ public class RealEstate {
 		pid = sc.next();
 		System.out.println("Enter the proposed contract months: ");
 		months = sc.nextInt();
-		System.out.println("Enter the proposed contract months: ");
+		System.out.println("Enter the proposed contract years: ");
 		years = sc.nextInt();
 		
 		if(searchproperty(pid))
@@ -172,13 +177,13 @@ public class RealEstate {
 				{
 					for(Customer j : customerList)
 					{
-						if(j.getCustomer_id().equals(user))
+						if(j.getCustomer_id().equals(userName))
 						{
 							((Rental) i).setApplicantDetails(j.getCustomer_id(), j.getFirstname(), j.getSurename(), j.getIncome(), j.getOccupation(), j.getPresent_employer(), months, years);
 						}
-					}
-					
-					
+						else
+							continue;
+					}	
 				}
 				else
 				{
@@ -192,7 +197,7 @@ public class RealEstate {
 		{
 			System.out.println("property not found. Please try again");
 		}
-		
+		fullRenteeMenu(userName);
 	}
 
 
@@ -210,7 +215,7 @@ public class RealEstate {
 	
 	
 	//register a customer
-	public static void register() throws FileNotFoundException , IOException {
+	public static void register() throws Exception {
 		
 		System.out.println("Enter Name: ");
 		String custName = sc.next();
@@ -287,12 +292,14 @@ public class RealEstate {
 		{
 		    System.err.println("IOException: " + ioe.getMessage());
 		}
+		
+		mainMenu();
 			
 	}
 	
 	
 	//menu for landlord
-	private static void fullLandlordMenu() throws Exception {
+	private static void fullLandlordMenu(String userName) throws Exception {
 		String pid = "P";
 		System.out.println("1. Add Property");
 		System.out.println("2. View offers");
@@ -302,13 +309,14 @@ public class RealEstate {
 		
 		switch(ch)
 		{
-			case 1: addProperty();
+			case 1: addProperty(userName);
 					break;
-			case 2: offer();
+			case 2: offer(userName);
 					break;
 			case 3: negotiateFee();
 					break;
-			default: break;
+			default: mainMenu();
+					break;
 					
 		}
 		
@@ -337,7 +345,7 @@ public class RealEstate {
 
 
 
-	private static void offer() {
+	private static void offer(String userName) throws Exception {
 		String pid;
 		System.out.println("Enter property id: ");
 		pid = sc.next();
@@ -354,13 +362,14 @@ public class RealEstate {
 				System.out.println("Property id not found.");
 			}
 		}
+		fullLandlordMenu(userName);
 		
 	}
 
 
 
 	//adding the property for landlord
-	private static void addProperty() {
+	private static void addProperty(String userName) throws Exception {
 		String pid = "P";
 		int numBed;
 		int numBath;
@@ -413,6 +422,7 @@ public class RealEstate {
 		    System.err.println("IOException: " + ioe.getMessage());
 		}
 		
+		fullLandlordMenu(userName);
 	}
 
 
@@ -420,7 +430,7 @@ public class RealEstate {
 	//menu for employee
 	public static void employeeMenu()
 	{
-	
+		
 	}
 	
 	
@@ -488,12 +498,12 @@ public class RealEstate {
 	    read.useDelimiter("\\n|,");
 	    boolean loginFlag = false;
 	    while(read.hasNext()){
-	       user = read.next().replaceAll("\\r|\\n", "");
+	       String user = read.next().replaceAll("\\r|\\n", "");
 	       if(userName.equals(user))
 	       {
 	    	   while(read.hasNext())
 	    	   {
-	    		   pass = read.next().replaceAll("\\r|\\n", "");
+	    		   String pass = read.next().replaceAll("\\r|\\n", "");
 	    		   if(password.equals(pass))
 	    		   {
 	    			   loginFlag = true;
@@ -513,11 +523,11 @@ public class RealEstate {
 //	 	        String u1 = reader.next().replaceAll("\\r|\\n", "");
 	 	       if(userName.contains("REN")) 
 	 	       {
-	 	    	  fullRenteeMenu();
+	 	    	  fullRenteeMenu(userName);
 	 	       }
 	 	       else if(userName.contains("LAN"))
 	 	       {
-	 	    	  fullLandlordMenu();
+	 	    	  fullLandlordMenu(userName);
 	 	       }
 	 	       else if(userName.contains("BUY"))
 	 	       {

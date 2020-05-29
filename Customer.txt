@@ -1,4 +1,2 @@
-1,VEN001,chetan,chetan,abc@gmail.com,blah,100.0,it,rmit
-4,BUY001,kunal,pahuja,xyz@gmail.com,huha,100.0,it,rmit
-4,BUY002,mohit,pahuja,kaka,qwerty,3000.0,pepe,popo
-12,LAN001,sharma,sharma,asdasd,abc,1.2312312E7,it,awasd
+2,LAN001,chetan,abc,abcasda,abc,100.0,it,rmit
+3,REN001,huha,huha,huha,huha,456.0,it,rmit
