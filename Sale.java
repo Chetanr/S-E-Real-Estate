@@ -1,6 +1,4 @@
 /////////SEF
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.*;
 public class Sale extends Property {
 	private String askingPrice;
@@ -14,7 +12,10 @@ public class Sale extends Property {
 	private double NegotiationSalePrice;
 	private double negotiationDownpayment;
 	private double negotiationDeposit;
+	private double saleCommission;
+	private double saleCommissionRate;
 	
+
 	//constructor for Auction
 	public Sale(String propertyID, String address, String suburb,String askingPrice, String minimumRaise,String propertyOwnerID ) {
 		super(propertyID, address, suburb, propertyOwnerID);
@@ -52,6 +53,19 @@ public class Sale extends Property {
 
 	public void setHighestOffer(String max_offer) {
 		this.max_offer = max_offer;
+	}
+	
+	public double getSaleCommissionRate() {
+		return saleCommissionRate;
+	}
+	public void setSaleCommissionRate(double saleCommissionRate) {
+		this.saleCommissionRate = saleCommissionRate;
+	}
+	public double getSaleCommission() {
+		return saleCommission;
+	}
+	public void setSaleCommission(double saleCommission) {
+		this.saleCommission = saleCommission;
 	}
 
 	public String getMinimumRaise() {
@@ -113,14 +127,15 @@ public class Sale extends Property {
 		else {
 			
 			this.replyList.add(reply);
-		    System.out.println("Valid Bid Recorded");
+		    System.out.println("Highest Bid");
 		    this.finalizeSaleOffer=Double.parseDouble(reply.getReplyValue());
 		    System.out.println("the Selling Price of the property is $" + finalizeSaleOffer);
 		    initialDownpayment=finalizeSaleOffer*0.10;
 		    System.out.println("Downpayment to be payed by the buyer is within 1 day is $ "+ initialDownpayment);
 		    System.out.println("Do you want " +reply.getResponderId()+ " to pay the downpayment with in 1 day");
 		    System.out.println("Yes to PAY" + "\n");
-		    String check= ball.nextLine();
+		     String check= ball.nextLine(); //change for junit
+		  //  String check="yes";
 		       if(check.equalsIgnoreCase("yes"))
 		        {
 		    	   System.out.println("Property is underContract Under" + reply.getResponderId() +"\n");
@@ -128,7 +143,8 @@ public class Sale extends Property {
 		    	   auctionDeposit=(finalizeSaleOffer-initialDownpayment);
 		    	   System.out.println("Do you want to pay the deposit $" +auctionDeposit );
 		    	   System.out.println("Yes to PAY" + "\n");
-		    	   String check1= ball.nextLine();
+		    	   String check1= ball.nextLine();// change for junit
+		    	  // String check1="yes";
 		    	   if(check1.equalsIgnoreCase("yes"))
 		    	   {
 		    		System.out.println("Now the property Belongs to " + reply.getResponderId());   
@@ -177,7 +193,9 @@ public class Sale extends Property {
 		System.out.println("Downpayment to be payed by the buyer is within 1 day is $ "+ negotiationDownpayment);
 	    System.out.println("Do you want " +reply.getResponderId()+ " to pay the downpayment with in 1 day");
 	    System.out.println("Yes to PAY" + "\n");
-	    String check2= bat.nextLine();
+	    String check2= bat.nextLine(); /////change made here for junit
+	    //String check2="yes";
+	    
 	       if(check2.equalsIgnoreCase("yes"))
 	       {
 	    	   System.out.println("Property is underContract Under" + reply.getResponderId() +"\n");
@@ -185,8 +203,9 @@ public class Sale extends Property {
     	       negotiationDeposit=(NegotiationSalePrice-negotiationDownpayment);
     	   System.out.println("Do you want to pay the deposit $" +negotiationDeposit );
     	   System.out.println("Yes to PAY" + "\n");
-    	   String check3= bat.nextLine();
-    	      if(check3.equalsIgnoreCase("yes"))
+    	   String check3= bat.nextLine(); // change made here for junit
+    	   //String check3="yes" ;  
+    	   if(check3.equalsIgnoreCase("yes"))
     	      {
     		   System.out.println("Now the property Belongs to " + reply.getResponderId());   
     		   this.setPropertyOwnerID(reply.getResponderId());
@@ -282,6 +301,30 @@ public class Sale extends Property {
     	
     	return propertyDetails;
 	}
+	public void checkAuctionCommisionrate(Reply reply,double NegotiationSalePrice)//negotiation
+	//commission rate between vendor and sales consultant is decided 
+	{
+		Scanner bo=new Scanner(System.in);
+	  System.out.println("Enter the commision rate that is negotiated between the Sale Consultant and the vendor ");
+	  double rate= bo.nextDouble();
+	  try {
+		  if(rate>=2 && rate<=5)
+		  {
+			  setSaleCommissionRate(rate);
+			  saleCommission=((NegotiationSalePrice*rate)/100);
+			  System.out.println("the Sales consultant will get $"+saleCommission+" for" + reply.getSaleIdId() + "property");
+			  
+			  // this is given to sale consultant for the final selling price
+		  }
+		  
+	  }catch(Exception e)
+	  {
+		  System.out.println("Kindly enter between 2 and 5");
+	  }
+	  
+		
+	}
+	
 	}
 
 	
