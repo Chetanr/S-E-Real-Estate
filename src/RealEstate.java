@@ -56,8 +56,7 @@ public class RealEstate {
 	//menu for customer
 	public static void customerMenu() throws Exception
 	{
-//		while(ch < 3)
-//		{
+
 			System.out.println("----------------------");
 			System.out.println("1. Register");
 			System.out.println("2. Login");
@@ -80,9 +79,6 @@ public class RealEstate {
 			{
 				System.out.println("Invalid input. Please enter a valid input");
 			}
-//		}
-		
-		
 	}
 	
 	//menu for rentee
@@ -1623,7 +1619,7 @@ public class RealEstate {
 	    	}
 	    
 	 }
-	}//for
+	}
 	if(NotFound == false) {
 		System.out.println("Not Found. Please try again");
 		ReplyAuctionProperty(user);
