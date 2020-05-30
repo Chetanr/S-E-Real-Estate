@@ -13,6 +13,8 @@ public class Sale extends Property {
 	private double negotiationDeposit;
 	private double saleCommission;
 	private double saleCommissionRate;
+	private SalesConsultant salesConsultant;
+	private double salesConsultantCommission;
 	
 
 	//constructor for Auction
@@ -40,6 +42,15 @@ public class Sale extends Property {
 	
 	public String getAskingPrice() {
 		return askingPrice;
+	}
+		public SalesConsultant getSalesConsultant() 
+	{
+		return this.salesConsultant;
+	}
+
+	public void setSalesConsultant(SalesConsultant salesConsultant) 
+	{
+		this.salesConsultant = salesConsultant;
 	}
 
 	public void setAskingPrice(String askingPrice) {
@@ -148,6 +159,9 @@ public class Sale extends Property {
 		    	   {
 		    		System.out.println("Now the property Belongs to " + reply.getResponderId());   
 		    		this.setPropertyOwnerID(reply.getResponderId());
+		    		setSaleCommissionRate(0.02);
+		    		saleCommission=((finalizeSaleOffer*0.02));
+		    		calculateCommission();
 		    	   }
 		    	   else {
 		    		   System.out.println("property goes to Auction again");
@@ -208,6 +222,9 @@ public class Sale extends Property {
     	      {
     		   System.out.println("Now the property Belongs to " + reply.getResponderId());   
     		   this.setPropertyOwnerID(reply.getResponderId());
+    		   setSaleCommissionRate(0.03);
+    		   saleCommission=((NegotiationSalePrice*0.03));
+    		   calculateCommission();
     	      }
     	      else {
     		   System.out.println("property goes to Negotiation again");
@@ -324,4 +341,21 @@ public class Sale extends Property {
 		
 	}
 	
+	public double getSalesConsultantCommission() 
+	{
+		// TODO Auto-generated method stub
+		return salesConsultantCommission;
 	}
+	
+	public double setSalesConsultantCommission(int salesConsultantCommission) 
+	{
+		// TODO Auto-generated method stub
+		return this.salesConsultantCommission = salesConsultantCommission;
+	}
+	
+	public void calculateCommission()
+	{
+		salesConsultantCommission = salesConsultant.getRate() * saleCommission;
+	}
+	
+}

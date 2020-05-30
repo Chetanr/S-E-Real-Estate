@@ -21,6 +21,7 @@ public class Rental extends Property
 	private String presentEmployer;
 	private Rentee renteeId;
 	private Landlord landlordId;
+	private PropertyManager propertyManager;
 	
 	
 	static Scanner sc = new Scanner (System.in);
@@ -32,7 +33,17 @@ public class Rental extends Property
 		this.contractMonths = contract_months;
 		this.contractYears = contract_years;
 		this.rentalAmount = rental_amount;
-	}		
+	}
+	
+	public PropertyManager getPropertyManager() 
+	{
+		return this.propertyManager;
+	}
+
+	public void setPropertyManager(PropertyManager propertyManager) 
+	{
+		this.propertyManager = propertyManager;
+	}
 
 
 	//calculate the management fee for a property
