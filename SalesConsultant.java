@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.*;
-public class SalesConsultant extends Employee
+public class SalesConsultant extends Employee implements Serializable
 {
 	private static final double RATE = 0.4;
 	private ArrayList<Sale> properties;
@@ -15,7 +16,7 @@ public class SalesConsultant extends Employee
 		createInspection = false;
 	}
 
-	
+	//This method is used to create inspection
 	public void createInspection(Sale sale, String date) throws PropertyNotAssignedToEmployee
 	{
 		if(sale.getSalesConsultant() == null)
@@ -37,7 +38,7 @@ public class SalesConsultant extends Employee
 			System.out.println("Inspection cannot be created as property is under contract");
 		}
 	}
-	
+	//This method is used to conduct inspection
 	public void conductInspection(String inspectionID)
 	{
 		int index = searchInspection(inspectionID);
@@ -57,7 +58,7 @@ public class SalesConsultant extends Employee
 		
 		
 	}
-	
+	//This method is used to cancel inspection
 	public void cancelInspection(Sale sale) throws PropertyNotAssignedToEmployee
 	{
 		if(sale.getSalesConsultant() == null)
@@ -85,7 +86,7 @@ public class SalesConsultant extends Employee
 		}
 		
 	}
-	
+	//Method to search inspections created by employee
 	public int searchInspection(String inspectionID)
 	{
 		int index = -1;
