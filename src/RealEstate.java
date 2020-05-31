@@ -6,14 +6,14 @@ import java.io.File;
 public class RealEstate {
 	
 	static Scanner sc = new Scanner(System.in);
-	static int ch = 0;
+	private static int ch = 0;
 	
-	static int propCount = 1;
+	private static int propCount = 1;
 	
 	
-	static ArrayList<Property> property = new ArrayList<Property>();
-	static ArrayList<Customer> customerList = new ArrayList<Customer>();
-	static ArrayList<Inspection> inspectionList = new ArrayList<Inspection>();
+	private static ArrayList<Property> property = new ArrayList<Property>();
+	private static ArrayList<Customer> customerList = new ArrayList<Customer>();
+	private static ArrayList<Inspection> inspectionList = new ArrayList<Inspection>();
 	private static  ArrayList<Employee> employees = new ArrayList<>();
 	
 
