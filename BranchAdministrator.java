@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class BranchAdministrator extends Employee
+public class BranchAdministrator extends Employee implements Serializable
 {
 	private LocalDate currentDate;
 	public BranchAdministrator(String ID,String password , String name, String type, double salary, double hourlyRate)
@@ -11,7 +12,7 @@ public class BranchAdministrator extends Employee
 	}
 	
 	
-
+	//Runs Payroll at the end of month
 	public void payroll(ArrayList<Employee> employees) throws PayrollException
 	{
 	    int currentDay = currentDate.getDayOfMonth();
@@ -40,11 +41,12 @@ public class BranchAdministrator extends Employee
 	    	throw new PayrollException("Unsuccessfull.Payroll runs on the end of every month");
 	    }
 	}
-	
+	//Advance the date to specified number of days for testing payroll functionality
 	public void advanceDate(long days)
 	{
 		currentDate = LocalDate.now().plusDays(days);
 	}
+	//Set date to current date for testing payroll functionality
 	public void currentDate()
 	{
 		currentDate = LocalDate.now();
