@@ -1,4 +1,4 @@
-import java.text.SimpleDateFormat;
+
 
 public class Inspection 
 {
@@ -21,7 +21,7 @@ public class Inspection
 		this.dateTime = dateTime;
 		this.status = "Created";
 	}
-	
+	//To generate inspection id
 	public String setInspectionID()
 	{
 		inspectionCounter++;
