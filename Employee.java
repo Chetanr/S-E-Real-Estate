@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.*;
-public class Employee 
+public class Employee implements Serializable
 {
 	private String ID;
 	private String password;
@@ -54,7 +55,7 @@ public class Employee
 		}
 		
 	}
-	//change method name to enter hours
+	//This method allows part time employees to enter hours
 	public void enterHours(BranchManager bm) throws HourException
 	{
 		if(type.equalsIgnoreCase("PT"))
