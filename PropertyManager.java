@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PropertyManager extends Employee
+public class PropertyManager extends Employee implements Serializable
 {
 	private ArrayList<Rental> properties;
 	private ArrayList<Inspection> inspection;
@@ -13,7 +14,7 @@ public class PropertyManager extends Employee
 		properties = new ArrayList<Rental>();
 	}
 	
-	
+	//This method is used to create inspection
 	public void createInspection(Rental rental,String date) throws PropertyNotAssignedToEmployee
 	{
 		if(rental.getPropertyManager() == null)
@@ -35,7 +36,7 @@ public class PropertyManager extends Employee
 			System.out.println("Inspection cannot be created as property is let");
 		}
 	}
-	
+	//This method is used to conduct inspection
 	public void conductInspection(String inspectionID)
 	{
 		int index = searchInspection(inspectionID);
@@ -53,7 +54,7 @@ public class PropertyManager extends Employee
 			System.out.println("Inspection cannot be conducted as it cancelled/already conducted");
 		}
 	}
-	
+	//This method is used to cancel Inspection
 	public void cancelInspection(Rental rental) throws PropertyNotAssignedToEmployee
 	{
 		if(rental.getPropertyManager() == null)
@@ -80,6 +81,7 @@ public class PropertyManager extends Employee
 			}
 		}
 	}
+	//Method to search Inspection
 	public int searchInspection(String inspectionID)
 	{
 		int index = -1;
