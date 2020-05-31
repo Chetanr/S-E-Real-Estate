@@ -124,7 +124,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	
 	private static void DeleteProperty(String userName) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter id of the Post or q to quit:");
+		System.out.println("Enter id of the Property or q to quit:");
 		String postId = in.nextLine();
 
 		if(postId.equals("q")) displayMenu(userName);
@@ -160,7 +160,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	
 	private static void CloseProperty(String userName) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter id of the Post or q to quit:");
+		System.out.println("Enter id of the Property or q to quit:");
 		String postId = in.nextLine();
 
 		if(postId.equals("q")) displayMenu(userName);
@@ -211,6 +211,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 		for(int i = 0; i < propertyList.size(); i++)
 		{
 			if(propertyList.get(i).getPropertyOwnerID().equals(userName)) {
+			
 		      //System.out.println(propertyList.get(i).getPropertyDetails());////////figure out this part
 			  System.out.println(((Sale) propertyList.get(i)).getAuctionPropertyDetails());
 		      System.out.println(((Sale) propertyList.get(i)).getAuctionReplyDetails());///////this as well
@@ -269,7 +270,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	
 	private static void NewNegotiationProperty(String userName) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter details of the Job below:");
+		System.out.println("Enter details of the property below:");
 		System.out.println("Address:");
 		String Address = in.nextLine();
 		System.out.println("Suburb:");
@@ -288,13 +289,13 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 		String eventId = "NEG"+String.format("%03d", count);
 		Property postObj = new Sale(eventId, Address, Suburb, proposePrice, userName);
 		propertyList.add(postObj);
-		System.out.println("Success! Your job has been created with id "+eventId);
+		System.out.println("Success! Your Negotiation property has been created with id "+eventId);
 		displayMenu(userName);
 	}
 	
 	private static void ReplyNegotiationProperty(String userName) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter id of the Post or q to quit:");
+		System.out.println("Enter id of the Property or q to quit:");
 		String postId = in.nextLine();
 		if(postId.equals("q")) displayMenu(userName);
 		else {
@@ -305,7 +306,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 		boolean ownPost  = false;
 		for(int i = 0; i < propertyList.size(); i++)
 		{
-			System.out.println("Hello");
+		
 		    if(propertyList.get(i).getPropertyID().equals(postId) ) {
 		    	NotFound = true;
 		    	if(propertyList.get(i).getStatus() == 1) {
@@ -343,7 +344,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 			    				
 				    		}
 					    	
-		    				System.out.println("FROM Negotiation LOOP");
+		    				System.out.println("Quit from negotiation loop");
 		    				displayMenu(userName);
 			    		}
 			    		else {
@@ -361,11 +362,11 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 		}
 
 		else if(closed == true) {
-			System.out.println("you can not reply to closed post. Please try again");
+			System.out.println("you can not reply to closed property. Please try again");
 			displayMenu(userName);
 		}
 		else if(ownPost == true) {
-			System.out.println("Replying to your own post is invalid.");
+			System.out.println("Replying to your own property is invalid.");
 			displayMenu(userName);
 		}
 		}
@@ -375,7 +376,7 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	
 	private static void ReplyAuctionProperty(String userName) {
 	Scanner in = new Scanner(System.in);
-	System.out.println("Enter id of the Post or q to quit:");
+	System.out.println("Enter id of the Property or q to quit:");
 	String postId = in.nextLine();
 	if(postId.equals("q")) displayMenu(userName);
 	else {
@@ -406,13 +407,13 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	    		boolean validateOffer = true;
 	    		while (validateOffer == true)
 	            {
-	    			System.out.println("Enter your offer or q to quit: ");
+	    			System.out.println("Enter your Auction offer or q to quit: ");
 		    		String replyValueJ = in.nextLine();
 		    		System.out.println("You entered: " +replyValueJ );
 		    		boolean isDouble = true;
 		    		
 		    		if(replyValueJ.equals("q")) {
-		    			System.out.println("FROM Sale QUIT");
+		    			System.out.println("Quit from Auction Sale");
 		    			validateOffer = false;
 		    			displayMenu(userName);
 		    		}
@@ -445,11 +446,11 @@ static ArrayList<Property> propertyList = new ArrayList<Property>();
 	}
 
 	else if(closed == true) {
-		System.out.println("you can not reply to closed post. Please try again");
+		System.out.println("you can not reply to closed property. Please try again");
 		displayMenu(userName);
 	}
 	else if(ownPost == true) {
-		System.out.println("Replying to your own post is invalid.");
+		System.out.println("Replying to your own property is invalid.");
 		displayMenu(userName);
 	}
 	}
