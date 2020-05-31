@@ -1,4 +1,11 @@
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
@@ -6,23 +13,111 @@ public class MenuEmployee
 {
 	private static  ArrayList<Employee> employees;
 	private static ArrayList<Property> properties;
+	private static File employeeFile = new File("C:\\temp\\Employee.dat");
+	private static File propertyFile = new File("C:\\temp\\Properties.dat");
 	public static void main(String args[])
 	{
 	employees = new ArrayList<>();
 	properties = new ArrayList<>();
-	employees.add(new BranchManager("BM001", "welcome123","Branch Manager", "FT", 5000, 0));
-	employees.add(new PropertyManager("PM001", "welcome123!W","Property Manager 1", "PT", 0.0, 25.0));
-	employees.add(new PropertyManager("PM002", "welcome123","Property Manager 2", "PT", 0.0, 25.0));
-	employees.add(new PropertyManager("PM003", "welcome123W@","Property Manager 3", "PT", 0.0, 25.0));
-	employees.add(new BranchAdministrator("BA001", "welcome123!!","Branch Administrator", "FT", 6000, 0.0));
-	employees.add(new SalesConsultant("SC001", "welcome123Sc1","Sales Consultant 1", "PT", 0.0, 25.0));
-	employees.add(new SalesConsultant("SC002", "welcome123Sc2","Sales Consultant 2", "PT", 0.0, 25.0));
-	employees.add(new SalesConsultant("SC003", "welcome123Sc3","Sales Consultant 3", "PT", 0.0, 25.0));
-	properties.add(new Rental ("Henry Street", "Kensington", 2,2,2,"apartment"));
-	properties.add(new Rental ("Bangalore Street", "Spotswood", 2,2,2,"apartment"));
-	properties.add(new Sale("Conder Street", "Burwood", 2,2,2,"house"));
-	properties.add(new Sale("Henry Street", "Kensington", 2,2,2,"house"));
-	properties.add(new Sale("Henry StreetTest", "Kensington", 2,2,2,"house"));
+	if(!employeeFile.exists())
+	{
+		employees.add(new BranchManager("BM001", "welcome123","Branch Manager", "FT", 5000, 0));
+		employees.add(new PropertyManager("PM001", "welcome123!W","Property Manager 1", "PT", 0.0, 25.0));
+		employees.add(new PropertyManager("PM002", "welcome123","Property Manager 2", "PT", 0.0, 25.0));
+		employees.add(new PropertyManager("PM003", "welcome123W@","Property Manager 3", "PT", 0.0, 25.0));
+		employees.add(new BranchAdministrator("BA001", "welcome123!!","Branch Administrator", "FT", 6000, 0.0));
+		employees.add(new SalesConsultant("SC001", "welcome123Sc1","Sales Consultant 1", "PT", 0.0, 25.0));
+		employees.add(new SalesConsultant("SC002", "welcome123Sc2","Sales Consultant 2", "PT", 0.0, 25.0));
+		employees.add(new SalesConsultant("SC003", "welcome123Sc3","Sales Consultant 3", "PT", 0.0, 25.0));
+		try 
+		{ 	
+			employeeFile.createNewFile();
+			System.out.println("New Employee File created");
+		}
+		catch(IOException io)
+		{
+			System.out.println("Problem creating a new employee file");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Program terminated due to unhandled exception while creating employee file");
+		}
+	}
+	else
+	{
+		try 
+		{
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(employeeFile));              
+			employees =  (ArrayList<Employee>) in.readObject(); 
+			System.out.println("Employee File read");
+			in.close();
+		}
+		catch(FileNotFoundException f)
+		{
+			System.out.println("Employee file cannot be found");
+		}
+    
+		catch(IOException io)
+		{
+			System.out.println("Employee file cannot be read");
+		}
+		catch(ClassNotFoundException c)
+		{
+			System.out.println("Class to read the Employee file cannot be found");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Program terminated due to unhandled exception while reading Employee file");
+		}
+	}
+	if(!propertyFile.exists())
+	{
+		properties.add(new Rental ("Henry Street", "Kensington", 2,2,2,"apartment"));
+		properties.add(new Rental ("Bangalore Street", "Spotswood", 2,2,2,"apartment"));
+		properties.add(new Sale("Conder Street", "Burwood", 2,2,2,"house"));
+		properties.add(new Sale("Henry Street", "Kensington", 2,2,2,"house"));
+		properties.add(new Sale("Henry StreetTest", "Kensington", 2,2,2,"house"));
+		try
+		{
+			propertyFile.createNewFile();
+			System.out.println("New property file created");
+		}
+		catch(IOException io)
+		{
+			System.out.println("Problem creating a new property file");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Program terminated due to unhandled exception while creating property file");
+		}
+	}
+	else
+	{
+		try
+		{
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(propertyFile));              
+			properties =  (ArrayList<Property>) in.readObject(); 
+			System.out.println("Property File read");
+			in.close(); 
+		}
+		catch(FileNotFoundException f)
+		{
+			System.out.println("Property file cannot be found");
+		}
+    
+		catch(IOException io)
+		{
+			System.out.println("Property file cannot be read");
+		}
+		catch(ClassNotFoundException c)
+		{
+			System.out.println("Class to read the property file cannot be found");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Program terminated due to unhandled exception while reading property file");
+		}
+}
 	mainMenu();
 	}
 	
@@ -56,6 +151,7 @@ public class MenuEmployee
 	    	if(choice == 2)
 	    	{
 	    		System.out.println("Successfully Logged out");
+	    		writeToFile();
 	    		
 	    	}
 	    	else if(choice == 1)
@@ -683,8 +779,52 @@ public class MenuEmployee
 		}
 		return index;
 	}
-
-	
 	
 
+public static void writeToFile()
+{
+	try
+
+{
+	   ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(employeeFile));       
+		out.writeObject(employees);   
+		System.out.println("Employee objects stored into file successfully");
+		out.close();  
 }
+catch(FileNotFoundException fn)
+{
+		System.out.println("File not found, Please check the filename and path specified and try again...Exiting");
+		System.out.println(fn);
+		System.exit(1);
+}
+catch(IOException io)
+{
+		System.out.println("Problem reading from file, Please check and retry...Exiting");
+		System.out.println(io);
+		System.exit(1);
+}
+		
+	try
+	{
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(propertyFile));       
+		out.writeObject(properties);   
+		System.out.println("Property objects stored into file successfully");
+		out.close();  
+	}
+	catch(FileNotFoundException fnfe)
+	{
+		System.out.println("File not found, Please check the filename and path specified and try again...Exiting");
+		System.out.println(fnfe);
+		System.exit(1);
+	}
+	catch(IOException ioe)
+	{
+		System.out.println("Problem reading from file, Please check and retry...Exiting");
+		System.out.println(ioe);
+		System.exit(1);
+	}
+}
+}
+
+
+
