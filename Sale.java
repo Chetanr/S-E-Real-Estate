@@ -1,4 +1,4 @@
-/////////SEF
+
 import java.util.*;
 public class Sale extends Property {
 	private String askingPrice;
@@ -275,10 +275,10 @@ public class Sale extends Property {
     	
     	if(this.getStatus() == 0) propertyDetails += "Status: Open\n";
     	if(this.getStatus() == 1) propertyDetails += "Status: Close\n";
-    	//postDetails += "Highest Offer: "+ this.getHighestOffer() + "\n";
+    	
     	propertyDetails += "Minimum Raise: "+ this.getMinimumRaise() + "\n";
     	propertyDetails += "Asking Price: "+ this.getAskingPrice()+ "\n";
-    	//propertyDetails += "finalizeSaleOffer : "+ this.finalizeSaleOffer+"\n"; 
+    	
     	
     	return propertyDetails;
 		
@@ -295,9 +295,9 @@ public class Sale extends Property {
     	
     	propertyDetails += "PropertyOwnerID: "+ this.getPropertyOwnerID() + "\n";
     	propertyDetails += "Propose Price: "+ this.getProposePrice() + "\n";
-    	//propertyDetails += "finalizeSaleOffer"+ this.finalizeSaleOffer+"\n"; 
     	
-    	//postDetails += "HIGHEST Price: "+ this.getHighestoffer() + "\n";
+    	
+    	
     	
     	return propertyDetails;
 	}
