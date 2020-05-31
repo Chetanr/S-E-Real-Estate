@@ -19,7 +19,7 @@ public abstract class Property
 		this.propertyOwnerID = propertyOwnerID;
 	}
 	
-	public String getPropertyDetails() {
+	public String getPropertyDetails() { //gives property details
     	String propertyDetails = "";
     	propertyDetails += "propertyID: " + this.getPropertyID() + "\n";
     	propertyDetails += "address: "+ this.getAddress() + "\n";
