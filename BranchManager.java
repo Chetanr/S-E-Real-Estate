@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BranchManager extends Employee 
+public class BranchManager extends Employee implements Serializable
 {   
 	private ArrayList<Property> properties;
 
@@ -9,7 +10,7 @@ public class BranchManager extends Employee
 		super(ID, password, name, type, salary, hourlyRate);
 	}
 	
-	
+	//Branch Manager Assigns Employee to property
 	public void assignEmployee(Employee employee, Property property) throws PropertyAlreadyAssignedEmployee, IncorrectEmployeeAssigned
 	{
 		if((employee instanceof SalesConsultant) && (property instanceof Sale))
@@ -49,7 +50,7 @@ public class BranchManager extends Employee
 		
 	}
 	
-	
+	//Branch manager approves hours
 	public boolean approveHours(double hours) throws HourException
 	{
 		if(hours < 0)
