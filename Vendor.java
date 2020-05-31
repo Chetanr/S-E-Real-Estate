@@ -7,7 +7,7 @@ public class Vendor extends Customer{
 		super(customer_id, firstname, surename, email_address, password, income, occupation, present_employer);
 		
 		this.vendorId = customer_id;
-		//this.vendorProperty = vendorProperty;
+		
 	}
 
 	public String getVendorId() {
